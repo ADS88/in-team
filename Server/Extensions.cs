@@ -2,7 +2,7 @@ using System;
 using Server.Dtos;
 using Server.Entities;
 
-namespace apitestreal
+namespace Server
 {
     public static class Extensions {
         public static UserDto AsDto(this User user) {

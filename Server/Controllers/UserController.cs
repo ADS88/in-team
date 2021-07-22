@@ -5,8 +5,9 @@ using Server.Dtos;
 using Server.Entities;
 using Server.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
-namespace apitestreal.Controllers
+namespace Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -21,9 +22,9 @@ namespace apitestreal.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<UserDto> GetUser(Guid id)
+        public async Task<ActionResult<UserDto>> GetUser(Guid id)
         {
-            var user = repository.GetUser(id);
+            var user = await repository.Get(id);
             if (user is null)
             {
                 return NotFound();
@@ -32,7 +33,7 @@ namespace apitestreal.Controllers
         }
 
         [HttpPost]
-        public ActionResult<UserDto> CreateUser(CreateUserDto userDto)
+        public async Task<ActionResult<UserDto>> CreateUser(CreateUserDto userDto)
         {
             User user = new()
             {
@@ -41,7 +42,7 @@ namespace apitestreal.Controllers
                 LastName = userDto.LastName,
                 CreatedDate = DateTimeOffset.UtcNow
             };
-            repository.CreateUser(user);
+            await repository.Add(user);
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user.AsDto());
         }
     }

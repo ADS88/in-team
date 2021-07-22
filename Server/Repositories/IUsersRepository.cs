@@ -7,10 +7,10 @@ namespace Server.Repositories
 {
     public interface IUsersRepository
     {
-        User GetUser(Guid guid);
-        IEnumerable<User> GetUsers();
-        void CreateUser(User item);
-        void UpdateUser(User item);
-        void DeleteUser(Guid id);
+        Task<User> Get(Guid guid);
+        Task<IEnumerable<User>> GetAll();
+        Task Add(User item);
+        Task Delete(Guid id);
+        Task Update(User id);
     }
 }
