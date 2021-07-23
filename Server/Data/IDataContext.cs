@@ -7,7 +7,7 @@ namespace Server.Data
 {
     public interface IDataContext
     {
-         DbSet<User> Users { get; init; }
+        DbSet<Course> Courses { get; init; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

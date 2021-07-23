@@ -5,13 +5,12 @@ using Server.Entities;
 namespace Server
 {
     public static class Extensions {
-        public static UserDto AsDto(this User user) {
-            return new UserDto
+        public static CourseDto AsDto(this Course course) {
+            return new CourseDto
             {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                CreatedDate = user.CreatedDate
+                Id = course.Id,
+                Name = course.Name,
+                CreatedDate = course.CreatedDate
             };
         }
     }
