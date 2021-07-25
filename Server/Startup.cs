@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using Server.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
+using System.Threading.Tasks;
+using Server.Enums;
 
 namespace Server
 {
@@ -25,9 +27,13 @@ namespace Server
 
         public IConfiguration Configuration { get; }
 
+        readonly string AllowSpecificOrigins = "_AllowSpecificOrigins";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors();
 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
             var connectionString = Configuration.GetSection(nameof(PostgresSettings)).Get<PostgresSettings>().ConnectionString;
@@ -54,6 +60,7 @@ namespace Server
 
             //Check this context if there is error
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<DataContext>();
 
             services.AddScoped<ICoursesRepository, CoursesRepository>();
@@ -65,8 +72,15 @@ namespace Server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<IdentityRole> roleManager)
         {
+
+            app.UseCors(builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -76,14 +90,26 @@ namespace Server
             }
 
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            CreateRoles(roleManager);
+        }
+
+        private void CreateRoles(RoleManager<IdentityRole> roleManager){
+            string[] roleNames = {Roles.STUDENT, Roles.LECTURER};
+            foreach (var roleName in roleNames){
+                Task<bool> roleExists = roleManager.RoleExistsAsync(roleName);
+                roleExists.Wait();
+                if (!roleExists.Result){
+                    var roleResult = roleManager.CreateAsync(new IdentityRole(roleName));
+                    roleResult.Wait();
+                }
+            }
         }
     }
 }

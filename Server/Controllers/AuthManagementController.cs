@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using Server.Enums;
 
 
 namespace Server.Controllers
@@ -27,7 +28,7 @@ namespace Server.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(UserLoginRequest user){
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest user){
             if(!ModelState.IsValid){
                 return BadRequest(new UserRegistrationResponseDto(){
                     Errors = new List<string>{
@@ -46,7 +47,7 @@ namespace Server.Controllers
                 });
             }
 
-            var isCorrectPassword = await userManager.CheckPasswordAsync(existingUser, user.password);
+            var isCorrectPassword = await userManager.CheckPasswordAsync(existingUser, user.Password);
             if(!isCorrectPassword){
                 return BadRequest(new UserRegistrationResponseDto(){
                     Errors = new List<string>{
@@ -85,6 +86,9 @@ namespace Server.Controllers
 
             var newUser = new IdentityUser() {Email = user.Email, UserName = user.Username};
             var isCreated = await userManager.CreateAsync(newUser, user.Password);
+
+            var addRole = await userManager.AddToRoleAsync(newUser, Roles.STUDENT);
+
             if(isCreated.Succeeded){
                 var jwtToken = GenerateJwtToken(newUser);
                 return Ok(new UserRegistrationResponseDto(){
