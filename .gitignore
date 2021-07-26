@@ -4,6 +4,6 @@ client/.DS_Store
 .DS_Store
 .vscode
 
-Server/obj/
-Server/bin/
-Server/.env
+Server/Server.Api/obj/
+Server/Server.Api/bin/
+Server/Servier.Api/.env
