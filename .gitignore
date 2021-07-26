@@ -6,4 +6,6 @@ client/.DS_Store
 
 Server/Server.Api/obj/
 Server/Server.Api/bin/
-Server/Servier.Api/.env
+Server/Server.Api/.env
+Server/Server.UnitTests/obj
+Server/Server.UnitTests/bin/*

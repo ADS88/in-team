@@ -36,7 +36,7 @@ namespace Server.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CourseDto>> CreateUser(CreateCourseDto courseDto)
+        public async Task<ActionResult<CourseDto>> CreateCourse(CreateCourseDto courseDto)
         {
             Course course = new()
             {
