@@ -20,7 +20,7 @@ namespace Server.UnitTests
             var controller = new CourseController(repositoryStub.Object);
 
             var result = await controller.GetCourse(1);
-            Assert.IsType<NotFoundResult>(result.Result);
+            Assert.IsType<int>(result.Result);
         }
     }
 }
