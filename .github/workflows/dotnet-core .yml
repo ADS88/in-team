@@ -5,19 +5,19 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: ["5.0.x"]
-
     steps:
       - uses: actions/checkout@v2
-      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      - name: Setup .NET Core
+        working-directory: ./Server
         uses: actions/setup-dotnet@v1.7.2
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          dotnet-version: 5.0.x
       - name: Install dependencies
+        working-directory: ./Server
         run: dotnet restore
       - name: Build
+        working-directory: ./Server
         run: dotnet build --configuration Release --no-restore
       - name: Test
+        working-directory: ./Server
         run: dotnet test --no-restore --verbosity normal
