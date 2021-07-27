@@ -1,14 +1,13 @@
+.DS_Store
+.vscode
+.env
+
 Client/node_modules/
 Client/.DS_Store
 Client/build
-
-
-.DS_Store
-.vscode
 
 Server/Server.Api/obj/
 Server/obj
 Server/Server.UnitTests/obj
 Server/Server.Api/bin/
-Server/Server.Api/.env
 Server/Server.UnitTests/bin/*
