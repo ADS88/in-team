@@ -6,8 +6,5 @@ Client/node_modules/
 Client/.DS_Store
 Client/build
 
-Server/Server.Api/obj/
-Server/obj
-Server/Server.UnitTests/obj
-Server/Server.Api/bin/
-Server/Server.UnitTests/bin/*
+**/obj
+**/bin
