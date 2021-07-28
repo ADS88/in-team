@@ -4,7 +4,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
   Link,
   Button,
@@ -12,13 +11,16 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { useHistory } from "react-router"
+import { AuthContext } from "../../store/auth-context"
 
-const axios = require("axios")
+import axios from "../../axios-config"
 
 const Login = () => {
   const history = useHistory()
+
+  const authContext = useContext(AuthContext)
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -26,11 +28,12 @@ const Login = () => {
 
   const login = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/AuthManagement/Login",
-        { email, password }
-      )
-      history.push("/dashboard")
+      const response = await axios.post("AuthManagement/Login", {
+        email,
+        password,
+      })
+      authContext.login(response.data.token)
+      history.push("/")
     } catch (error) {
       setError(true)
     }

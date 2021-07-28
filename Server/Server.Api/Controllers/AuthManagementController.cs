@@ -64,7 +64,7 @@ namespace Server.Api.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(UserRegistrationDto user){
+        public async Task<IActionResult> Register([FromBody] UserRegistrationDto user){
             if(!ModelState.IsValid){
                 return BadRequest(new UserRegistrationResponseDto(){
                     Errors = new List<string>{

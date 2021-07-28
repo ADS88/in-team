@@ -1,24 +1,34 @@
-import React from "react"
-import logo from "./logo.svg"
+import { useContext } from "react"
 import "./App.css"
-import { Route, BrowserRouter as Router } from "react-router-dom"
+import { Route, BrowserRouter as Router, Redirect } from "react-router-dom"
 
-import { Badge } from "@chakra-ui/react"
 import Login from "./components/authentication/Login"
-import WithSubnavigation from "./ui/Navbar"
+import Navbar from "./components/ui/Navbar"
 import Register from "./components/authentication/Register"
 import Dashboard from "./components/dashboard/Dashboard"
-import Landing from "./components/landing/Landing"
+import { AuthContext } from "./store/auth-context"
+import LandingPage from "./components/landing/LandingPage"
 
 function App() {
+  const authContext = useContext(AuthContext)
+
   return (
     <Router>
       <div className="App">
-        <WithSubnavigation />
-        <Route exact path="/" component={Landing} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/dashboard" component={Dashboard} />
+        <Navbar />
+        {authContext.isLoggedIn && (
+          <Route exact path="/" component={Dashboard} />
+        )}
+        {!authContext.isLoggedIn && (
+          <>
+            <Route exact path="/" component={LandingPage} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+          </>
+        )}
+        <Route path="*">
+          <Redirect to="/" />
+        </Route>
       </div>
     </Router>
   )

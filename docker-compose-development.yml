@@ -14,19 +14,38 @@ services:
       - "./client:/app"
       - "/app/node_modules"
 
-  server:
-    build: ./Server/Server.Api
-    ports:
-      - "8080:80"
-    environment:
-      - JWTCONFIG:SECRET=${JWT_KEY}
-      - POSTGRESSETTINGS:PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRESSETTINGS:HOST=${POSTGRES_HOST}
-    depends_on:
-      - "postgresql_database"
-    networks:
-      - mynetwork
-    restart: always
+  # server_hot_reload:
+  #   image: mcr.microsoft.com/dotnet/sdk:5.0-buster-slim
+  #   ports:
+  #     - 5001:5001
+  #   volumes:
+  #     - ./Server/Server.Api:/app
+  #   working_dir: /app
+  #   command: dotnet watch run
+  #   environment:
+  #     - JWTCONFIG:SECRET=${JWT_KEY}
+  #     - POSTGRESSETTINGS:PASSWORD=${POSTGRES_PASSWORD}
+  #     - POSTGRESSETTINGS:HOST=${POSTGRES_HOST}
+  #   depends_on:
+  #     - "postgresql_database"
+  #   networks:
+  #     - mynetwork
+
+  # server:
+  #   build:
+  #     context: ./Server/Server.Api
+  #     dockerfile: Dockerfile.development
+  #   ports:
+  #     - "5000:80"
+  #   environment:
+  #     - JWTCONFIG:SECRET=${JWT_KEY}
+  #     - POSTGRESSETTINGS:PASSWORD=${POSTGRES_PASSWORD}
+  #     - POSTGRESSETTINGS:HOST=${POSTGRES_HOST}
+  #   depends_on:
+  #     - "postgresql_database"
+  #   networks:
+  #     - mynetwork
+  #   restart: always
 
   postgresql_database:
     image: postgres:latest

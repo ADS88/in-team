@@ -7,3 +7,19 @@ services:
       dockerfile: Dockerfile
     ports:
       - "80:80"
+
+server:
+  build:
+    context: ./Server/Server.Api
+    dockerfile: Dockerfile.development
+  ports:
+    - "8080:80"
+  environment:
+    - JWTCONFIG:SECRET=${JWT_KEY}
+    - POSTGRESSETTINGS:PASSWORD=${POSTGRES_PASSWORD}
+    - POSTGRESSETTINGS:HOST=${POSTGRES_HOST}
+  depends_on:
+    - "postgresql_database"
+  networks:
+    - mynetwork
+  restart: always

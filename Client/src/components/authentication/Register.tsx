@@ -11,7 +11,31 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react"
 
+import { useState } from "react"
+import { useHistory } from "react-router"
+import axios from "../../axios-config"
+
 const Register = () => {
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setlastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState(false)
+  const history = useHistory()
+
+  const register = async () => {
+    try {
+      const response = await axios.post("AuthManagement/Register", {
+        userName: `${firstName}${lastName}`,
+        email,
+        password,
+      })
+      history.push("/login")
+    } catch (error) {
+      setError(true)
+    }
+  }
+
   return (
     <Flex
       minH={"90vh"}
@@ -35,39 +59,51 @@ const Register = () => {
           <Stack spacing={4}>
             <FormControl id="firstName">
               <FormLabel>First name</FormLabel>
-              <Input type="text" />
+              <Input
+                minLength={2}
+                type="text"
+                onChange={e => setFirstName(e.target.value)}
+              />
             </FormControl>
             <FormControl id="lastName">
               <FormLabel>Last name</FormLabel>
-              <Input type="text" />
+              <Input
+                minLength={2}
+                type="text"
+                onChange={e => setlastName(e.target.value)}
+              />
             </FormControl>
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input
+                minLength={4}
+                type="email"
+                onChange={e => setEmail(e.target.value)}
+              />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <Input
+                minLength={6}
+                type="password"
+                onChange={e => setPassword(e.target.value)}
+              />
             </FormControl>
             <Stack spacing={10}>
-              {/* <Stack
-                direction={{ base: "column", sm: "row" }}
-                align={"start"}
-                justify={"space-between"}
-              >
-                <Checkbox>Remember me</Checkbox>
-                <Link color={"blue.400"}>Forgot password?</Link>
-              </Stack> */}
               <Button
                 bg={"blue.400"}
                 color={"white"}
                 _hover={{
                   bg: "blue.500",
                 }}
+                onClick={register}
               >
                 Create Account
               </Button>
             </Stack>
+            {error && (
+              <Text color={"red.500"}>Incorrect registration details!</Text>
+            )}
           </Stack>
         </Box>
       </Stack>

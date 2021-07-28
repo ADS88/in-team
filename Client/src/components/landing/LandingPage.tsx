@@ -1,7 +1,7 @@
 import CallToAction from "./CallToAction"
 import { Flex, useColorModeValue } from "@chakra-ui/react"
 
-const Landing = () => {
+const LandingPage = () => {
   return (
     <Flex
       minH={"90vh"}
@@ -14,4 +14,4 @@ const Landing = () => {
   )
 }
 
-export default Landing
+export default LandingPage
