@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Server.Api.Data
 {
-    public class DataContext: IdentityDbContext, IDataContext
+    public class DataContext: IdentityDbContext<AppUser>, IDataContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {

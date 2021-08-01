@@ -12,6 +12,7 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using Server.Api.Enums;
+using Server.Api.Entities;
 
 
 namespace Server.Api.Controllers
@@ -19,10 +20,10 @@ namespace Server.Api.Controllers
     [Route("api/[controller]")]
     public class AuthManagementController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<AppUser> userManager;
         private readonly JwtConfig jwtConfig;
 
-        public AuthManagementController(UserManager<IdentityUser> userManager, IOptionsMonitor<JwtConfig> optionsMonitor){
+        public AuthManagementController(UserManager<AppUser> userManager, IOptionsMonitor<JwtConfig> optionsMonitor){
             this.userManager = userManager;
             jwtConfig = optionsMonitor.CurrentValue;
         }
@@ -84,7 +85,7 @@ namespace Server.Api.Controllers
                 });
             }
 
-            var newUser = new IdentityUser() {Email = user.Email, UserName = user.Username};
+            var newUser = new AppUser() {UserName = user.Email, Email = user.Email, FirstName=user.FirstName, LastName=user.LastName};
             var isCreated = await userManager.CreateAsync(newUser, user.Password);
 
             var addRole = await userManager.AddToRoleAsync(newUser, Roles.STUDENT);

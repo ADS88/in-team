@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using System.Threading.Tasks;
 using Server.Api.Enums;
+using Server.Api.Entities;
 
 namespace Server.Api
 {
@@ -57,10 +57,8 @@ namespace Server.Api
             });
 
             //Check this context if there is error
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddRoles<IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<DataContext>();
-
             services.AddScoped<ICoursesRepository, CoursesRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>

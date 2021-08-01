@@ -26,11 +26,11 @@ const Register = () => {
   const register = async () => {
     try {
       const response = await axios.post("AuthManagement/Register", {
-        userName: `${firstName}${lastName}`,
+        firstName,
+        lastName,
         email,
         password,
       })
-      history.push("/login")
     } catch (error) {
       setError(true)
     }
