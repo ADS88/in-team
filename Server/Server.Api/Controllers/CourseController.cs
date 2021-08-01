@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Server.Api.Services;
 
 namespace Server.Api.Controllers
 {
@@ -17,17 +18,17 @@ namespace Server.Api.Controllers
     //Gives controller same name as class (route/items)
     public class CourseController : ControllerBase
     {
-        private readonly ICoursesRepository repository;
+        private readonly ICourseService service;
 
-        public CourseController(ICoursesRepository repository)
+        public CourseController(ICourseService service)
         {
-            this.repository = repository;
+            this.service = service;
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<CourseDto>> GetCourse(int id)
         {
-            var course = await repository.Get(id);
+            var course = await service.GetById(id);
             if (course is null)
             {
                 return NotFound();
@@ -38,13 +39,7 @@ namespace Server.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<CourseDto>> CreateCourse(CreateCourseDto courseDto)
         {
-            Course course = new()
-            {
-                Id = 1,
-                Name = courseDto.Name,
-                CreatedDate = DateTimeOffset.UtcNow
-            };
-            await repository.Add(course);
+            var course = await service.Create(courseDto.Name);
             return CreatedAtAction(nameof(GetCourse), new { id = course.Id }, course.AsDto());
         }
     }

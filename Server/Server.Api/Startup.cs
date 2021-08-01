@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using System.Threading.Tasks;
 using Server.Api.Enums;
+using Server.Api.Services;
 using Server.Api.Entities;
 
 namespace Server.Api
@@ -60,6 +61,7 @@ namespace Server.Api
             services.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<DataContext>();
             services.AddScoped<ICoursesRepository, CoursesRepository>();
+            services.AddScoped<ICourseService, CourseService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
