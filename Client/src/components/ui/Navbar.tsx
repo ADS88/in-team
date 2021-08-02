@@ -69,6 +69,19 @@ export default function WithSubnavigation() {
     </Button>
   )
 
+  const coursesButton = (
+    <Button
+      display={{ base: "none", md: "inline-flex" }}
+      as={"a"}
+      fontSize={"sm"}
+      fontWeight={400}
+      variant={"link"}
+      href={"courses"}
+    >
+      Courses
+    </Button>
+  )
+
   return (
     <Box>
       <Flex
@@ -117,7 +130,10 @@ export default function WithSubnavigation() {
           spacing={6}
         >
           {isLoggedIn ? (
-            logoutButton
+            <>
+              {coursesButton}
+              {logoutButton}
+            </>
           ) : (
             <>
               {loginButton}
@@ -138,6 +154,10 @@ const MobileNav = () => {
   const authContext = useContext(AuthContext)
   const NAV_ITEMS: Array<NavItem> = []
   if (authContext.isLoggedIn) {
+    NAV_ITEMS.push({
+      label: "Courses",
+      href: "courses",
+    })
   } else {
     NAV_ITEMS.push({
       label: "Register",

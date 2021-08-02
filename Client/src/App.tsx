@@ -8,6 +8,8 @@ import Register from "./components/authentication/Register"
 import Dashboard from "./components/dashboard/Dashboard"
 import { AuthContext } from "./store/auth-context"
 import LandingPage from "./components/landing/LandingPage"
+import CoursesPage from "./components/courses/CoursesPage"
+import CourseDetailPage from "./components/courses/CourseDetailPage"
 
 function App() {
   const authContext = useContext(AuthContext)
@@ -17,7 +19,14 @@ function App() {
       <div className="App">
         <Navbar />
         {authContext.isLoggedIn && (
-          <Route exact path="/" component={Dashboard} />
+          <>
+            <Route exact path="/" component={Dashboard} />
+            <Route path="/courses" component={CoursesPage} />
+            <Route
+              path="/course/:id"
+              component={(props: any) => <CourseDetailPage id={props.id} />}
+            />
+          </>
         )}
         {!authContext.isLoggedIn && (
           <>
@@ -26,9 +35,9 @@ function App() {
             <Route path="/register" component={Register} />
           </>
         )}
-        <Route path="*">
+        {/* <Route path="*">
           <Redirect to="/" />
-        </Route>
+        </Route> */}
       </div>
     </Router>
   )
