@@ -13,5 +13,15 @@ namespace Server.Api
                 CreatedDate = course.CreatedDate
             };
         }
+
+        public static TeamDto AsDto(this Team team) {
+            return new TeamDto
+            {
+                Id = team.Id,
+                Name = team.Name,
+                CreatedDate = team.CreatedDate,
+                Members = team.Members
+            };
+        }
     }
 }

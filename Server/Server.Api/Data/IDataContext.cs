@@ -8,6 +8,7 @@ namespace Server.Api.Data
     public interface IDataContext
     {
         DbSet<Course> Courses { get; init; }
+        DbSet<Team> Teams { get; init; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

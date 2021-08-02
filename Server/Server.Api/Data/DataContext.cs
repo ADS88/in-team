@@ -12,5 +12,6 @@ namespace Server.Api.Data
         }
  
         public DbSet<Course> Courses { get; init; }
+        public DbSet<Team> Teams { get; init; }
     }
 }

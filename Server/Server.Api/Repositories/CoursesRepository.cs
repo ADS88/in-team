@@ -31,10 +31,10 @@ namespace Server.Api.Repositories
             await context.SaveChangesAsync();
         }
 
-        public async Task Update(Course user)
+        public async Task Update(Course course)
         {
-            var userToUpdate = await context.Courses.FindAsync(user.Id);
-            if(userToUpdate == null){
+            var courseToUpdate = await context.Courses.FindAsync(course.Id);
+            if(courseToUpdate == null){
                 throw new NullReferenceException();
             }
 

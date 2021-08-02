@@ -62,6 +62,8 @@ namespace Server.Api
             .AddEntityFrameworkStores<DataContext>();
             services.AddScoped<ICoursesRepository, CoursesRepository>();
             services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<ITeamsRepository, TeamsRepository>();
+            services.AddScoped<ITeamService, TeamService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

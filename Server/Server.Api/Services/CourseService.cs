@@ -2,13 +2,14 @@ using Server.Api.Entities;
 using Server.Api.Repositories;
 using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 
 namespace Server.Api.Services
 {
     public class CourseService: ICourseService
     {
 
-    private readonly ICoursesRepository repository;
+        private readonly ICoursesRepository repository;
 
         public CourseService(ICoursesRepository repository)
         {
@@ -27,6 +28,10 @@ namespace Server.Api.Services
 
         public async Task<Course> GetById(int id){
             return await repository.Get(id);
+        }
+
+         public async Task<IEnumerable<Course>> GetAll(){
+            return await repository.GetAll();
         }
     }
 }

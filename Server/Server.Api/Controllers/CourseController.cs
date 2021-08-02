@@ -9,12 +9,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Server.Api.Services;
+using System.Collections.Generic;
 
 namespace Server.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Route("api/[controller]")]
+   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     //Gives controller same name as class (route/items)
     public class CourseController : ControllerBase
     {
@@ -34,6 +35,13 @@ namespace Server.Api.Controllers
                 return NotFound();
             }
             return course.AsDto();
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<CourseDto>> GetAllCourses(int id)
+        {
+            var courses = (await service.GetAll()).Select(course => course.AsDto());
+            return courses;
         }
 
         [HttpPost]
