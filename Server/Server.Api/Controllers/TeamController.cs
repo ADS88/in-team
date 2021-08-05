@@ -37,10 +37,10 @@ namespace Server.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CourseDto>> CreateTeam(CreateTeamDto teamDto)
+        public async Task<ActionResult<TeamDto>> CreateTeam(CreateTeamDto teamDto)
         {
-            var team = await service.Create(teamDto.Name, teamDto.Members);
-            return CreatedAtAction(nameof(teamDto), new { id = team.Id }, team.AsDto());
+            var team = await service.Create(teamDto.Name, teamDto.CourseId);
+            return CreatedAtAction(nameof(GetTeam), new { id = team.Id }, team.AsDto());
         }
     }
 }

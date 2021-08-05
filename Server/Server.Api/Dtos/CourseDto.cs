@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+
 namespace Server.Api.Dtos
 {
     public record CourseDto
@@ -6,5 +8,7 @@ namespace Server.Api.Dtos
         public int Id { get; init; }
         public String Name { get; init; }
         public DateTimeOffset CreatedDate { get; init; }
+
+        public virtual ICollection<TeamDto> Teams { get; init ;}
     }
 }

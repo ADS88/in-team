@@ -8,6 +8,6 @@ namespace Server.Api.Services
     {
         Task<Team> GetById(int id);
 
-        Task<Team> Create(string name, ICollection<string> memberIds);
+        Task<Team> Create(string name, int courseId);
     }
 }

@@ -13,6 +13,6 @@ namespace Server.Api.Entities
         [Required]
         public DateTimeOffset CreatedDate { get; init; }
 
-        public ICollection<Team> Teams {get; init;}
+        public virtual ICollection<Team> Teams {get; init;}
     }
 }

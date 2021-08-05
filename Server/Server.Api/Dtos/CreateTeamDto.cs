@@ -9,6 +9,9 @@ namespace Server.Api.Dtos
         public string Name { get; init; }
 
         public ICollection<string> Members { get; init; }
+
+        [Required]
+        public int CourseId { get; init; }
         
     }
 }

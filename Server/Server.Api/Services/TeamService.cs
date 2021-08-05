@@ -23,20 +23,21 @@ namespace Server.Api.Services
             return await repository.Get(id);
         }
 
-        public async Task<Team> Create(string name, ICollection<string> membersIds){
-            var members = new List<AppUser>();
-            if(membersIds is not null){
-                foreach(var memberId in membersIds){
-                    var member = await userManager.FindByIdAsync(memberId);
-                    members.Add(member);
-                }
-            }
+        public async Task<Team> Create(string name, int courseId){
+            // var members = new List<AppUser>();
+            // if(membersIds is not null){
+            //     foreach(var memberId in membersIds){
+            //         var member = await userManager.FindByIdAsync(memberId);
+            //         members.Add(member);
+            //     }
+            // }
             Team team = new()
             {
                 Name = name,
                 CreatedDate = DateTimeOffset.UtcNow,
-                Members = members
+                CourseId = courseId
             };
+
             await repository.Add(team);
             return team;
         }
