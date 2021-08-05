@@ -14,9 +14,12 @@ namespace Server.Api.Entities
         [Required]
         public DateTimeOffset CreatedDate { get; init; }
 
+        [Required]
         public Course Course { get; init; }
-
+        [Required]
         public int CourseId { get; init; }
+
+        public ICollection<AppUser> Members { get; set; }
 
     }
 }

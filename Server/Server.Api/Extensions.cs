@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System;
 using Server.Api.Dtos;
@@ -9,8 +10,6 @@ namespace Server.Api
 {
     public static class Extensions {
         public static CourseDto AsDto(this Course course) {
-            Console.WriteLine($"{course}");
-             Console.WriteLine($"{course.Teams}");
             ICollection<TeamDto> teams = course.Teams is null ? new Collection<TeamDto>() : course.Teams.Select(team => team.AsDto()).ToList();
             return new CourseDto
             {
@@ -27,6 +26,16 @@ namespace Server.Api
                 Id = team.Id,
                 Name = team.Name,
                 CreatedDate = team.CreatedDate,
+                Members = team.Members
+            };
+        }
+
+        public static UserDto AsDto(this AppUser user) {
+            return new UserDto
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
             };
         }
     }

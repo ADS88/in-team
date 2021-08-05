@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Server.Api.Entities;
 using Server.Api.Data;
 using System.Threading.Tasks;
@@ -22,7 +21,7 @@ namespace Server.Api.Repositories
 
         public async Task<Team> Get(int id)
         {
-            return await context.Teams.FindAsync(id);
+            return await context.Teams.Include(team => team.Members).FirstOrDefaultAsync(team => team.Id == id);
         }
 
         public async Task Add(Team team)

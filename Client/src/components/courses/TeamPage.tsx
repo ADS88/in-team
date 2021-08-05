@@ -3,10 +3,6 @@ import { useEffect, useState } from "react"
 import { RouteComponentProps } from "react-router"
 import Student from "./student"
 
-interface TeamPageProps {
-  name: string
-}
-
 const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const id = props.match.params.id
   const [students, setStudents] = useState<Student[]>([])

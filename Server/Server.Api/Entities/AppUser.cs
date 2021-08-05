@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 namespace Server.Api.Entities
 
 {
@@ -9,5 +10,7 @@ namespace Server.Api.Entities
         public string FirstName {get; set;}
         [Required]
         public string LastName {get; set;}
+
+        public ICollection<Team> Teams { get; set; }
     }
 }
