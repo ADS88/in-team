@@ -1,14 +1,11 @@
-using System;
-using System.Linq;
-using Server.Api.Dtos;
-using Server.Api.Entities;
-using Server.Api.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Server.Api.Services;
+using AutoMapper;
+using Server.Api.Dtos;
 
 namespace Server.Api.Controllers
 {
@@ -20,9 +17,12 @@ namespace Server.Api.Controllers
     {
         private readonly ITeamService service;
 
-        public TeamController(ITeamService service)
+        private readonly IMapper mapper;
+
+        public TeamController(ITeamService service, IMapper mapper)
         {
             this.service = service;
+            this.mapper = mapper;
         }
 
         [HttpGet("{id}")]
@@ -33,14 +33,14 @@ namespace Server.Api.Controllers
             {
                 return NotFound();
             }
-            return team.AsDto();
+            return mapper.Map<TeamDto>(team);
         }
 
         [HttpPost]
         public async Task<ActionResult<TeamDto>> CreateTeam(CreateTeamDto teamDto)
         {
             var team = await service.Create(teamDto.Name, teamDto.CourseId);
-            return CreatedAtAction(nameof(GetTeam), new { id = team.Id }, team.AsDto());
+            return CreatedAtAction(nameof(GetTeam), new { id = team.Id }, mapper.Map<TeamDto>(team));
         }
     }
 }

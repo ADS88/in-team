@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using Microsoft.AspNetCore.Identity;
 using System.Collections;
+using Server.Api.Dtos;
 
 
 namespace Server.Api.Services
@@ -24,13 +25,6 @@ namespace Server.Api.Services
         }
 
         public async Task<Team> Create(string name, int courseId){
-            // var members = new List<AppUser>();
-            // if(membersIds is not null){
-            //     foreach(var memberId in membersIds){
-            //         var member = await userManager.FindByIdAsync(memberId);
-            //         members.Add(member);
-            //     }
-            // }
             Team team = new()
             {
                 Name = name,

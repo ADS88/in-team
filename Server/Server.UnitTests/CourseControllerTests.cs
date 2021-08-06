@@ -14,10 +14,11 @@ namespace Server.UnitTests
         public async void Login_WithNonExistentUser_ReturnsNotFound()
         {
             var serviceStub = new Mock<ICourseService>();
+            var mapperStub = 
             serviceStub.Setup(service => service.GetById(It.IsAny<int>()))
             .ReturnsAsync((Course)null);
 
-            var controller = new CourseController(serviceStub.Object);
+            var controller = new CourseController(serviceStub.Object, );
 
             var result = await controller.GetCourse(1);
             Assert.IsType<NotFoundResult>(result.Result);

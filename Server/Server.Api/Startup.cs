@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Server.Api.Enums;
 using Server.Api.Services;
 using Server.Api.Entities;
+using AutoMapper;
 
 namespace Server.Api
 {
@@ -33,6 +34,8 @@ namespace Server.Api
         {
 
             services.AddCors();
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
             var connectionString = Configuration.GetSection(nameof(PostgresSettings)).Get<PostgresSettings>().ConnectionString;

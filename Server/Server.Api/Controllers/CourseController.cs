@@ -1,8 +1,6 @@
 using System;
 using System.Linq;
 using Server.Api.Dtos;
-using Server.Api.Entities;
-using Server.Api.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -10,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Server.Api.Services;
 using System.Collections.Generic;
+using AutoMapper;
 
 namespace Server.Api.Controllers
 {
@@ -21,9 +20,12 @@ namespace Server.Api.Controllers
     {
         private readonly ICourseService service;
 
-        public CourseController(ICourseService service)
+        private readonly IMapper mapper;
+
+        public CourseController(ICourseService service, IMapper mapper)
         {
             this.service = service;
+            this.mapper = mapper;
         }
 
         [HttpGet("{id}")]
@@ -33,13 +35,13 @@ namespace Server.Api.Controllers
             if (course is null){
                 return NotFound();
             }
-            return course.AsDto();
+            return mapper.Map<CourseDto>(course);
         }
 
         [HttpGet]
         public async Task<IEnumerable<CourseDto>> GetAllCourses(int id)
         {
-            var courses = (await service.GetAll()).Select(course => course.AsDto());
+            var courses = (await service.GetAll()).Select(course => mapper.Map<CourseDto>(course));
             return courses;
         }
 
@@ -47,7 +49,7 @@ namespace Server.Api.Controllers
         public async Task<ActionResult<CourseDto>> CreateCourse(CreateCourseDto courseDto)
         {
             var course = await service.Create(courseDto.Name);
-            return CreatedAtAction(nameof(GetCourse), new { id = course.Id }, course.AsDto());
+            return CreatedAtAction(nameof(GetCourse), new { id = course.Id }, mapper.Map<CourseDto>(course));
         }
     }
 }
