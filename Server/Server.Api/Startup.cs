@@ -67,6 +67,8 @@ namespace Server.Api
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<ITeamsRepository, TeamsRepository>();
             services.AddScoped<ITeamService, TeamService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -83,15 +85,7 @@ namespace Server.Api
             .AllowAnyMethod()
             .AllowAnyHeader());
 
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Server v1"));
-                app.UseHttpsRedirection();
-            }
-
+            app.UseExceptionHandler("/error");
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -99,6 +93,16 @@ namespace Server.Api
             {
                 endpoints.MapControllers();
             });
+
+
+            if (env.IsDevelopment())
+            {
+                //app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Server v1"));
+                app.UseHttpsRedirection();
+            }
+
 
             CreateRoles(roleManager);
         }

@@ -32,9 +32,6 @@ namespace Server.Api.Controllers
         public async Task<ActionResult<CourseDto>> GetCourse(int id)
         {
             var course = await service.GetById(id);
-            if (course is null){
-                return NotFound();
-            }
             return mapper.Map<CourseDto>(course);
         }
 

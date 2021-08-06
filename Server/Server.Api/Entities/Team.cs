@@ -19,7 +19,7 @@ namespace Server.Api.Entities
         [Required]
         public int CourseId { get; init; }
 
-        public ICollection<AppUser> Members { get; set; }
+        public virtual ICollection<AppUser> Members { get; set; }
 
     }
 }

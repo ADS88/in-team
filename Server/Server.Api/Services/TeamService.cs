@@ -35,5 +35,9 @@ namespace Server.Api.Services
             await repository.Add(team);
             return team;
         }
+
+        public async Task AddMember(int teamId, string memberId){
+            await repository.AddMember(teamId, memberId);
+        }
     }
 }

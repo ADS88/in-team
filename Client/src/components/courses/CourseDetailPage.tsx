@@ -16,7 +16,7 @@ const CourseDetailPage: React.FunctionComponent<RouteComponentProps<any>> =
 
     useEffect(() => {
       getCourse().then(response => setTeams(response.data.teams))
-    }, [teams])
+    }, [])
 
     const addTeam = () => {
       // const team: Team =

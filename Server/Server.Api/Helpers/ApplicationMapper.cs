@@ -9,6 +9,7 @@ namespace Server.Api.Helpers
         public ApplicationMapper(){
             CreateMap<Team, TeamDto>().ReverseMap();
             CreateMap<Course, CourseDto>().ReverseMap();
+            CreateMap<AppUser, UserDto>().ReverseMap();
         }
     }
 }

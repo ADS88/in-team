@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Server.Api.Services;
 using AutoMapper;
 using Server.Api.Dtos;
+using System;
 
 namespace Server.Api.Controllers
 {
@@ -29,6 +30,7 @@ namespace Server.Api.Controllers
         public async Task<ActionResult<TeamDto>> GetTeam(int id)
         {
             var team = await service.GetById(id);
+            Console.WriteLine(team);
             if (team is null)
             {
                 return NotFound();
@@ -41,6 +43,13 @@ namespace Server.Api.Controllers
         {
             var team = await service.Create(teamDto.Name, teamDto.CourseId);
             return CreatedAtAction(nameof(GetTeam), new { id = team.Id }, mapper.Map<TeamDto>(team));
+        }
+
+        [HttpPost("{teamId}/addstudent/{studentId}")]
+        public async Task<ActionResult<TeamDto>> CreateTeam(int teamId, string studentId)
+        {
+            await service.AddMember(teamId, studentId);
+            return Ok();
         }
     }
 }
