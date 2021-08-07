@@ -7,7 +7,7 @@ namespace Server.Api.Helpers
     public class ApplicationMapper : Profile
     {
         public ApplicationMapper(){
-            CreateMap<Team, TeamDto>().ReverseMap();
+            CreateMap<Team, TeamDto>().PreserveReferences();
             CreateMap<Course, CourseDto>().ReverseMap();
             CreateMap<AppUser, UserDto>().ReverseMap();
         }

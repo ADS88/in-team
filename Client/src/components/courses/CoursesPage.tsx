@@ -4,7 +4,8 @@ import Course from "./course"
 import CourseOverview from "./CourseOverview"
 import { useHistory } from "react-router-dom"
 
-import { Text, Stack } from "@chakra-ui/react"
+import { Text, Stack, Flex } from "@chakra-ui/react"
+import AddCourse from "./AddCourse"
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState<Course[]>([])
@@ -31,12 +32,18 @@ const CoursesPage = () => {
   ))
 
   return (
-    <>
+    <Flex
+      minH={"90vh"}
+      align={"center"}
+      justify={"center"}
+      direction={"column"}
+    >
       <Text fontSize="6xl">All Courses</Text>
       <Stack spacing="8" p="4">
         {allCourses}
       </Stack>
-    </>
+      <AddCourse />
+    </Flex>
   )
 }
 

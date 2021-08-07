@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 using Server.Api.Enums;
 using Server.Api.Services;
 using Server.Api.Entities;
-using AutoMapper;
+
 
 namespace Server.Api
 {
@@ -69,7 +69,7 @@ namespace Server.Api
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Server", Version = "v1" });

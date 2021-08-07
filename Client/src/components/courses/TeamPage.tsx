@@ -20,7 +20,7 @@ const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   return (
     <Flex minH={"90vh"} align={"center"} justify={"center"}>
       <Stack minW={"30vw"} spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-        <Text fontSize="4xl">Students</Text>
+        <Text fontSize="3xl">Students</Text>
         {studentsInCourse.map(student => (
           <h4>{`${student.firstName} ${student.lastName}`}</h4>
         ))}

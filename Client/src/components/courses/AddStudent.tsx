@@ -30,7 +30,7 @@ export default function AddStudent({ courseId }: AddStudentProps) {
         id="students"
         onChange={e => setStudentIdToAdd(e.target.value)}
       >
-        {allStudents.map(student => (
+        {allStudents?.map(student => (
           <option key={student.id} value={student.id}>
             {student.firstName} {student.lastName}
           </option>
