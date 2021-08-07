@@ -1,5 +1,4 @@
 import axios from "../../axios-config"
-import { useState } from "react"
 import {
   FormControl,
   FormErrorMessage,
@@ -9,12 +8,17 @@ import {
 } from "@chakra-ui/react"
 
 import { useForm } from "react-hook-form"
+import Course from "./course"
 
 interface AddCourseFormValues {
   name: string
 }
 
-export default function AddCourse() {
+interface AddCourseProps {
+  addCourseToList: (course: Course) => void
+}
+
+export default function AddCourse({ addCourseToList }: AddCourseProps) {
   const {
     register,
     handleSubmit,
@@ -22,7 +26,12 @@ export default function AddCourse() {
   } = useForm<AddCourseFormValues>()
 
   const addCourse = async (data: AddCourseFormValues) => {
-    axios.post("course", data)
+    try {
+      const response = await axios.post("course", data)
+      addCourseToList({ name: data.name, id: response.data.id })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

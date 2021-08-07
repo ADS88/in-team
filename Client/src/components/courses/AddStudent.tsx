@@ -35,7 +35,6 @@ export default function AddStudent({ courseId }: AddStudentProps) {
             {student.firstName} {student.lastName}
           </option>
         ))}
-        <option value="beans">beans</option>
       </Select>
       <Button onClick={addStudentToCourse}>Add to team</Button>
     </>

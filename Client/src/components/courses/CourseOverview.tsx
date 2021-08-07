@@ -1,11 +1,12 @@
-import Course from "../courses/course"
+import Card from "../ui/Card"
+import { Text } from "@chakra-ui/react"
 
 interface CourseOverviewProps {
   name: string
 }
 
 const CourseOverview = ({ name }: CourseOverviewProps) => {
-  return <h1>{name}</h1>
+  return <Card title={name} />
 }
 
 export default CourseOverview

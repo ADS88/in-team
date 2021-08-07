@@ -1,0 +1,23 @@
+import { useColorModeValue, Box, Text } from "@chakra-ui/react"
+
+interface CardProps {
+  title: string
+}
+
+const Card = ({ title }: CardProps) => {
+  return (
+    <Box
+      minW={"400px"}
+      w={"full"}
+      bg={useColorModeValue("white", "gray.900")}
+      boxShadow={"md"}
+      rounded={"lg"}
+      p={6}
+      textAlign={"center"}
+    >
+      <Text>{title}</Text>
+    </Box>
+  )
+}
+
+export default Card

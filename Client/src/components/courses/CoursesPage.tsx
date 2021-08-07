@@ -15,6 +15,10 @@ const CoursesPage = () => {
     return axios.get<Course[]>("/course")
   }
 
+  const addCourse = (course: Course) => {
+    setCourses(prevCourses => [...prevCourses, course])
+  }
+
   useEffect(() => {
     getAllCourses().then(courses => {
       setCourses(courses.data)
@@ -38,11 +42,11 @@ const CoursesPage = () => {
       justify={"center"}
       direction={"column"}
     >
-      <Text fontSize="6xl">All Courses</Text>
+      <Text fontSize="6xl">Courses</Text>
       <Stack spacing="8" p="4">
         {allCourses}
       </Stack>
-      <AddCourse />
+      <AddCourse addCourseToList={addCourse} />
     </Flex>
   )
 }
