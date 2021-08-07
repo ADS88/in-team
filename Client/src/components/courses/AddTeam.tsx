@@ -11,35 +11,36 @@ import {
 import { useForm } from "react-hook-form"
 import Course from "./course"
 
-interface AddCourseFormValues {
+interface AddTeamFormValues {
   name: string
 }
 
-interface AddCourseProps {
-  addCourseToList: (course: Course) => void
+interface AddTeamProps {
+  addTeamToList: (course: Course) => void
+  courseId: number
 }
 
-export default function AddCourse({ addCourseToList }: AddCourseProps) {
+export default function AddTeam({ addTeamToList, courseId }: AddTeamProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AddCourseFormValues>()
+  } = useForm<AddTeamFormValues>()
 
-  const addCourse = async (data: AddCourseFormValues) => {
+  const addTeam = async (data: AddTeamFormValues) => {
     try {
-      const response = await axios.post("course", data)
-      addCourseToList({ name: data.name, id: response.data.id })
+      const response = await axios.post(`team`, { ...data, courseId })
+      addTeamToList({ name: data.name, id: response.data.id })
     } catch (error) {
       console.log(error)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit(addCourse)}>
+    <form onSubmit={handleSubmit(addTeam)}>
       <Flex direction="row" align="flex-end">
         <FormControl id="name" isInvalid={errors.name != undefined}>
-          <FormLabel>Course name</FormLabel>
+          <FormLabel>Team name</FormLabel>
           <Input
             {...register("name", {
               required: "You must enter an course name",

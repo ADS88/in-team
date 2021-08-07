@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
 using Server.Api.Services;
 using System.Collections.Generic;
 using AutoMapper;
@@ -13,8 +12,7 @@ namespace Server.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    //Gives controller same name as class (route/items)
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class StudentController : ControllerBase
     {
 

@@ -45,8 +45,8 @@ const CoursesPage = () => {
       <Text fontSize="6xl">Courses</Text>
       <Stack spacing="8" p="4">
         {allCourses}
+        <AddCourse addCourseToList={addCourse} />
       </Stack>
-      <AddCourse addCourseToList={addCourse} />
     </Flex>
   )
 }

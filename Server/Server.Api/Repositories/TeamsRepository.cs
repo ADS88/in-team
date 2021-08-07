@@ -49,9 +49,6 @@ namespace Server.Api.Repositories
         public async Task Delete(int id)
         {
             var teamToDelete = await context.Teams.FindAsync(id);
-            if(teamToDelete == null){
-                throw new NullReferenceException();
-            }
             context.Teams.Remove(teamToDelete);;
             await context.SaveChangesAsync();
         }

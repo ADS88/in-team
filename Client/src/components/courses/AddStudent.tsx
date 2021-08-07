@@ -36,7 +36,16 @@ export default function AddStudent({ courseId }: AddStudentProps) {
           </option>
         ))}
       </Select>
-      <Button onClick={addStudentToCourse}>Add to team</Button>
+      <Button
+        onClick={addStudentToCourse}
+        bg={"blue.400"}
+        color={"white"}
+        _hover={{
+          bg: "blue.500",
+        }}
+      >
+        Add Student to team
+      </Button>
     </>
   )
 }

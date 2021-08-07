@@ -24,6 +24,15 @@ namespace Server.Api.Services
             return await repository.Get(id);
         }
 
+        public async Task<Boolean> DeleteTeam(int id){
+            var team = await GetById(id);
+            if(team is null){
+                return false;
+            }
+            await repository.Delete(id);
+            return true;
+        }
+
         public async Task<Team> Create(string name, int courseId){
             Team team = new()
             {
