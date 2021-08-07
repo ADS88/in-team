@@ -1,5 +1,4 @@
 import Card from "../ui/Card"
-import { Text } from "@chakra-ui/react"
 
 interface CourseOverviewProps {
   name: string

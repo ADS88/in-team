@@ -14,6 +14,8 @@ import {
 } from "@chakra-ui/react"
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons"
 
+import { Link as RouterLink } from "react-router-dom"
+
 import { useHistory } from "react-router-dom"
 import { AuthContext } from "../../store/auth-context"
 import { useContext } from "react"
@@ -26,12 +28,11 @@ export default function WithSubnavigation() {
 
   const loginButton = (
     <Button
-      as={"a"}
+      as={RouterLink}
       fontSize={"sm"}
       fontWeight={400}
       variant={"link"}
-      href={"#"}
-      onClick={() => history.push("/login")}
+      to={"login"}
     >
       Sign In
     </Button>
@@ -40,12 +41,13 @@ export default function WithSubnavigation() {
   const signUpButton = (
     <Button
       display={{ base: "none", md: "inline-flex" }}
+      to={"register"}
+      as={RouterLink}
       fontSize={"sm"}
-      onClick={() => history.push("/register")}
       fontWeight={600}
       color={"white"}
       bg={"pink.400"}
-      href={"#"}
+      href={"register"}
       _hover={{
         bg: "pink.300",
       }}
@@ -56,11 +58,9 @@ export default function WithSubnavigation() {
 
   const logoutButton = (
     <Button
-      as={"a"}
       fontSize={"sm"}
       fontWeight={400}
       variant={"link"}
-      href={"#"}
       onClick={() => {
         authContext.logout()
       }}
@@ -72,11 +72,11 @@ export default function WithSubnavigation() {
   const coursesButton = (
     <Button
       display={{ base: "none", md: "inline-flex" }}
-      as={"a"}
+      as={RouterLink}
       fontSize={"sm"}
       fontWeight={400}
       variant={"link"}
-      href={"courses"}
+      to={"courses"}
     >
       Courses
     </Button>
@@ -237,28 +237,3 @@ interface NavItem {
   children?: Array<NavItem>
   href?: string
 }
-
-//   {
-//     label: "Find Work",
-//     children: [
-//       {
-//         label: "Job Board",
-//         subLabel: "Find your dream design job",
-//         href: "#",
-//       },
-//       {
-//         label: "Freelance Projects",
-//         subLabel: "An exclusive list for contract work",
-//         href: "#",
-//       },
-//     ],
-//   },
-//   {
-//     label: "Learn Design",
-//     href: "#",
-//   },
-//   {
-//     label: "Hire Designers",
-//     href: "#",
-//   },
-// ]

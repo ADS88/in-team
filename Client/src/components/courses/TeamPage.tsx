@@ -12,20 +12,20 @@ const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const [teamName, setTeamName] = useState("")
   const history = useHistory()
 
-  const getTeam = () => {
-    return axios.get(`team/${id}`)
-  }
-
   const deleteTeam = () => {
     axios.delete(`team/${id}`).then(() => history.goBack())
   }
 
   useEffect(() => {
+    const getTeam = () => {
+      return axios.get(`team/${id}`)
+    }
+
     getTeam().then(response => {
       setStudentsInCourse(response.data.members)
       setTeamName(response.data.name)
     })
-  }, [])
+  }, [id])
 
   return (
     <Flex minH={"90vh"} align={"center"} justify={"center"}>
@@ -45,7 +45,7 @@ const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
           type="submit"
           onClick={deleteTeam}
         >
-          Delete Team
+          Delete team
         </Button>
       </Stack>
     </Flex>

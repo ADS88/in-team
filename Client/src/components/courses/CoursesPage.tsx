@@ -30,6 +30,7 @@ const CoursesPage = () => {
     <div
       onClick={() => history.push(`course/${id}`)}
       style={{ cursor: "pointer" }}
+      key={id}
     >
       <CourseOverview name={name} key={id} />
     </div>

@@ -39,7 +39,7 @@ export default function AddTeam({ addTeamToList, courseId }: AddTeamProps) {
   return (
     <form onSubmit={handleSubmit(addTeam)}>
       <Flex direction="row" align="flex-end">
-        <FormControl id="name" isInvalid={errors.name != undefined}>
+        <FormControl id="name" isInvalid={errors.name !== undefined}>
           <FormLabel>Team name</FormLabel>
           <Input
             {...register("name", {

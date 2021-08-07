@@ -1,7 +1,7 @@
 import Team from "../courses/team"
 import { useEffect, useState } from "react"
 import axios from "../../axios-config"
-import { RouteComponentProps } from "react-router"
+import { RouteComponentProps, useHistory } from "react-router"
 import { Button, Flex, Stack, Text } from "@chakra-ui/react"
 import TeamOverview from "./TeamOverview"
 import AddTeam from "./AddTeam"
@@ -10,22 +10,28 @@ const CourseDetailPage: React.FunctionComponent<RouteComponentProps<any>> =
   props => {
     const [teams, setTeams] = useState<Team[]>([])
     const [courseName, setCourseName] = useState("")
+    const history = useHistory()
 
     const addTeam = (team: Team) => {
       setTeams(prevTeams => [...prevTeams, team])
     }
 
     const id = props.match.params.id
-    const getCourse = () => {
-      return axios.get(`course/${id}`)
+
+    const deleteCourse = () => {
+      axios.delete(`course/${id}`).then(() => history.goBack())
     }
 
     useEffect(() => {
+      const getCourse = () => {
+        return axios.get(`course/${id}`)
+      }
+
       getCourse().then(response => {
         setTeams(response.data.teams)
         setCourseName(response.data.name)
       })
-    }, [])
+    }, [id])
 
     return (
       <Flex
@@ -41,6 +47,17 @@ const CourseDetailPage: React.FunctionComponent<RouteComponentProps<any>> =
             <TeamOverview name={team.name} id={team.id} />
           ))}
           <AddTeam addTeamToList={addTeam} courseId={id} />
+          <Button
+            bg={"red.400"}
+            color={"white"}
+            _hover={{
+              bg: "red.500",
+            }}
+            type="submit"
+            onClick={deleteCourse}
+          >
+            Delete Course
+          </Button>
         </Stack>
       </Flex>
     )

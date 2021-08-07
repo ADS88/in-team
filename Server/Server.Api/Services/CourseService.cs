@@ -35,5 +35,14 @@ namespace Server.Api.Services
          public async Task<IEnumerable<Course>> GetAll(){
             return await repository.GetAll();
         }
+
+        public async Task<Boolean> DeleteCourse(int id){
+            var course = await GetById(id);
+            if(course is null){
+                return false;
+            }
+            await repository.Delete(course);
+            return true;
+        }
     }
 }

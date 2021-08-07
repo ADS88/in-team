@@ -15,7 +15,7 @@ const Card = ({ title }: CardProps) => {
       p={6}
       textAlign={"center"}
     >
-      <Text>{title}</Text>
+      <Text fontSize="xl">{title}</Text>
     </Box>
   )
 }

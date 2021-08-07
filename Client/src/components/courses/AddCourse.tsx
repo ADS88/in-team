@@ -38,7 +38,7 @@ export default function AddCourse({ addCourseToList }: AddCourseProps) {
   return (
     <form onSubmit={handleSubmit(addCourse)}>
       <Flex direction="row" align="flex-end">
-        <FormControl id="name" isInvalid={errors.name != undefined}>
+        <FormControl id="name" isInvalid={errors.name !== undefined}>
           <FormLabel>Course name</FormLabel>
           <Input
             {...register("name", {

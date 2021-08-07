@@ -10,7 +10,7 @@ namespace Server.Api.Repositories
         Task<Course> Get(int id);
         Task<IEnumerable<Course>> GetAll();
         Task Add(Course course);
-        Task Delete(int id);
+        Task Delete(Course course);
         Task Update(Course id);
     }
 }

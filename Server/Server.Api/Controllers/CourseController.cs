@@ -33,6 +33,17 @@ namespace Server.Api.Controllers
             return mapper.Map<CourseDto>(course);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteCourse(int id)
+        {
+            var deleted = await service.DeleteCourse(id);
+            if (!deleted)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+
         [HttpGet]
         public async Task<IEnumerable<CourseDto>> GetAllCourses(int id)
         {

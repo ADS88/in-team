@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react"
 
 import { useState } from "react"
-import { useHistory } from "react-router"
 import axios from "../../axios-config"
 
 const Register = () => {
@@ -21,11 +20,10 @@ const Register = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState(false)
-  const history = useHistory()
 
   const register = async () => {
     try {
-      const response = await axios.post("AuthManagement/Register", {
+      await axios.post("AuthManagement/Register", {
         firstName,
         lastName,
         email,

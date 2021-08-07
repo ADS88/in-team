@@ -42,13 +42,9 @@ namespace Server.Api.Repositories
 
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(Course course)
         {
-            var courseToDelete = await context.Courses.FindAsync(id);
-            if(courseToDelete == null){
-                throw new NullReferenceException();
-            }
-            context.Courses.Remove(courseToDelete);;
+            context.Courses.Remove(course);
             await context.SaveChangesAsync();
         }
     }

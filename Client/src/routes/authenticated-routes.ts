@@ -1,10 +1,7 @@
-import Login from "../components/authentication/Login"
-import Register from "../components/authentication/Register"
 import CourseDetailPage from "../components/courses/CourseDetailPage"
 import CoursesPage from "../components/courses/CoursesPage"
 import TeamPage from "../components/courses/TeamPage"
 import Dashboard from "../components/dashboard/Dashboard"
-import LandingPage from "../components/landing/LandingPage"
 import IRoute from "./IRoute"
 
 const authenticatedRoutes: IRoute[] = [
