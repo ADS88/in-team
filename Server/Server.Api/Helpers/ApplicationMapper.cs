@@ -10,6 +10,7 @@ namespace Server.Api.Helpers
             CreateMap<Team, TeamDto>().PreserveReferences();
             CreateMap<Course, CourseDto>().ReverseMap();
             CreateMap<AppUser, UserDto>().ReverseMap();
+            CreateMap<Iteration, IterationDto>().ReverseMap();
         }
     }
 }

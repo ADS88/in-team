@@ -47,5 +47,11 @@ namespace Server.Api.Repositories
             context.Courses.Remove(course);
             await context.SaveChangesAsync();
         }
+
+         public async Task AddIteration(Iteration iteration)
+        {
+            context.Iterations.Add(iteration);
+            await context.SaveChangesAsync();
+        }
     }
 }

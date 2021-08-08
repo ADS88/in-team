@@ -11,6 +11,7 @@ namespace Server.Api.Services
         Task<Course> GetById(int id);
         Task<IEnumerable<Course>> GetAll();
         Task<Course> Create(string name);
+        Task<Iteration> AddIteration(string name, DateTimeOffset start, DateTimeOffset end, int courseId);
         Task<Boolean> DeleteCourse(int id);
     }
 }

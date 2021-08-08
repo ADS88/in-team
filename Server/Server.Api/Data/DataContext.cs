@@ -13,7 +13,7 @@ namespace Server.Api.Data
  
         public DbSet<Course> Courses { get; init; }
         public DbSet<Team> Teams { get; init; }
-
         public DbSet<AppUser> AppUsers { get; init; }
+        public DbSet<Iteration> Iterations { get; init; }
     }
 }

@@ -13,7 +13,7 @@ namespace Server.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CourseController : ControllerBase
     {
         private readonly ICourseService service;
@@ -56,6 +56,17 @@ namespace Server.Api.Controllers
         {
             var course = await service.Create(courseDto.Name);
             return CreatedAtAction(nameof(GetCourse), new { id = course.Id }, mapper.Map<CourseDto>(course));
+        }
+
+        [HttpPost("{id}/iteration")]
+        public async Task<ActionResult<IterationDto>> AddIteration(CreateIterationDto iterationDto, int id)
+        {
+            Console.WriteLine(iterationDto.StartDate);
+            var iteration = await service.AddIteration(iterationDto.Name, iterationDto.StartDate, iterationDto.EndDate, id);
+            if(iteration is null){
+                return UnprocessableEntity();
+            }
+            return CreatedAtAction(nameof(GetCourse), new { id = iteration.Id }, mapper.Map<IterationDto>(iteration));
         }
     }
 }

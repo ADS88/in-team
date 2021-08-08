@@ -3,6 +3,7 @@ using Server.Api.Repositories;
 using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Server.Api.Services
 {
@@ -16,10 +17,10 @@ namespace Server.Api.Services
             this.repository = repository;
         }
 
-        public async Task<Course> Create(string Name){
-             Course course = new()
+        public async Task<Course> Create(string name){
+            Course course = new()
             {
-                Name = Name,
+                Name = name,
                 CreatedDate = DateTimeOffset.UtcNow
             };
             await repository.Add(course);
@@ -43,6 +44,24 @@ namespace Server.Api.Services
             }
             await repository.Delete(course);
             return true;
+        }
+
+        public async Task<Iteration> AddIteration(string name, DateTimeOffset start, DateTimeOffset end, int courseId){
+            Iteration iteration = new()
+            {
+                Name = name,
+                CreatedDate = DateTimeOffset.UtcNow,
+                StartDate = start,
+                EndDate = end,
+                CourseId = courseId
+            };
+            try {
+            await repository.AddIteration(iteration);
+            return iteration;
+            } catch (DbUpdateException e){
+                return null;
+            }
+           
         }
     }
 }

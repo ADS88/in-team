@@ -9,7 +9,7 @@ namespace Server.Api.Data
     {
         DbSet<Course> Courses { get; init; }
         DbSet<Team> Teams { get; init; }
-
+        DbSet<Iteration> Iterations { get; init; }
         DbSet<AppUser> AppUsers { get; init; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
