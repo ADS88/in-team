@@ -2,6 +2,7 @@ import {
   Flex,
   Box,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input,
   Stack,
@@ -12,26 +13,34 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react"
 import { useState, useContext } from "react"
+import { useForm } from "react-hook-form"
+import { emailRegex } from "../../validation/regex"
 import { useHistory } from "react-router"
 import { AuthContext } from "../../store/auth-context"
 
 import axios from "../../axios-config"
+
+interface LoginFormValues {
+  email: string
+  password: string
+}
 
 const Login = () => {
   const history = useHistory()
 
   const authContext = useContext(AuthContext)
 
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormValues>()
+
   const [error, setError] = useState(false)
 
-  const login = async () => {
+  const login = async (data: LoginFormValues) => {
     try {
-      const response = await axios.post("AuthManagement/Login", {
-        email,
-        password,
-      })
+      const response = await axios.post("AuthManagement/Login", data)
       authContext.login(response.data.token)
       history.push("/")
     } catch (error) {
@@ -59,32 +68,51 @@ const Login = () => {
           boxShadow={"lg"}
           p={8}
         >
-          <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" onChange={e => setEmail(e.target.value)} />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input
-                type="password"
-                onChange={e => setPassword(e.target.value)}
-              />
-            </FormControl>
-            <Button
-              bg={"blue.400"}
-              color={"white"}
-              _hover={{
-                bg: "blue.500",
-              }}
-              onClick={login}
-            >
-              Sign in
-            </Button>
-            {error && (
-              <Text color={"red.500"}>Incorrect username or password!</Text>
-            )}
-          </Stack>
+          <form onSubmit={handleSubmit(login)}>
+            <Stack spacing={4}>
+              <FormControl id="email" isInvalid={errors.email !== undefined}>
+                <FormLabel>Email address</FormLabel>
+                <Input
+                  type="email"
+                  {...register("email", {
+                    required: "You must enter an email",
+                    pattern: {
+                      value: emailRegex,
+                      message: "Email is not valid",
+                    },
+                  })}
+                />
+                <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+              </FormControl>
+              <FormControl
+                id="password"
+                isInvalid={errors.password !== undefined}
+              >
+                <FormLabel>Password</FormLabel>
+                <Input
+                  type="password"
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
+                  minLength={6}
+                />
+                <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+              </FormControl>
+              <Button
+                bg={"blue.400"}
+                color={"white"}
+                _hover={{
+                  bg: "blue.500",
+                }}
+                type="submit"
+              >
+                Sign in
+              </Button>
+              {error && (
+                <Text color={"red.500"}>Incorrect username or password!</Text>
+              )}
+            </Stack>
+          </form>
         </Box>
       </Stack>
     </Flex>

@@ -58,6 +58,8 @@ export default function WithSubnavigation() {
 
   const logoutButton = (
     <Button
+      as={RouterLink}
+      to="/login"
       fontSize={"sm"}
       fontWeight={400}
       variant={"link"}
@@ -76,7 +78,7 @@ export default function WithSubnavigation() {
       fontSize={"sm"}
       fontWeight={400}
       variant={"link"}
-      to={"courses"}
+      to={"/courses"}
     >
       Courses
     </Button>

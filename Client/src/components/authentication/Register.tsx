@@ -9,26 +9,39 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  FormErrorMessage,
 } from "@chakra-ui/react"
-
-import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { useState, useContext } from "react"
+import { useHistory } from "react-router"
 import axios from "../../axios-config"
+import { AuthContext } from "../../store/auth-context"
+
+import { emailRegex } from "../../validation/regex"
+
+interface RegisterFormValues {
+  email: string
+  password: string
+  firstName: string
+  lastName: string
+}
 
 const Register = () => {
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setlastName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
   const [error, setError] = useState(false)
+  const history = useHistory()
+  const authContext = useContext(AuthContext)
 
-  const register = async () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormValues>()
+
+  const registerUser = async (data: RegisterFormValues) => {
     try {
-      await axios.post("AuthManagement/Register", {
-        firstName,
-        lastName,
-        email,
-        password,
-      })
+      const response = await axios.post("AuthManagement/Register", data)
+      authContext.login(response.data.token)
+      history.push("/")
     } catch (error) {
       setError(true)
     }
@@ -54,55 +67,84 @@ const Register = () => {
           boxShadow={"lg"}
           p={8}
         >
-          <Stack spacing={4}>
-            <FormControl id="firstName">
-              <FormLabel>First name</FormLabel>
-              <Input
-                minLength={2}
-                type="text"
-                onChange={e => setFirstName(e.target.value)}
-              />
-            </FormControl>
-            <FormControl id="lastName">
-              <FormLabel>Last name</FormLabel>
-              <Input
-                minLength={2}
-                type="text"
-                onChange={e => setlastName(e.target.value)}
-              />
-            </FormControl>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input
-                minLength={4}
-                type="email"
-                onChange={e => setEmail(e.target.value)}
-              />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input
-                minLength={6}
-                type="password"
-                onChange={e => setPassword(e.target.value)}
-              />
-            </FormControl>
-            <Stack spacing={10}>
-              <Button
-                bg={"blue.400"}
-                color={"white"}
-                _hover={{
-                  bg: "blue.500",
-                }}
-                onClick={register}
-              >
-                Create Account
-              </Button>
+          <form onSubmit={handleSubmit(registerUser)}>
+            <Stack spacing={4}>
+              <FormControl id="firstName">
+                <FormLabel>First name</FormLabel>
+                <Input
+                  {...register("firstName", {
+                    required: "You must enter a first name",
+                    minLength: {
+                      value: 2,
+                      message: "First name must have at least 2 characters!",
+                    },
+                  })}
+                  type="text"
+                />
+                <FormErrorMessage>{errors.firstName?.message}</FormErrorMessage>
+              </FormControl>
+              <FormControl id="lastName">
+                <FormLabel>Last name</FormLabel>
+                <Input
+                  {...register("lastName", {
+                    required: "You must enter a last name",
+                    minLength: {
+                      value: 2,
+                      message: "Last name must have at least 2 characters!",
+                    },
+                  })}
+                  minLength={2}
+                  type="text"
+                />
+                <FormErrorMessage>{errors.lastName?.message}</FormErrorMessage>
+              </FormControl>
+              <FormControl id="email">
+                <FormLabel>Email address</FormLabel>
+                <Input
+                  minLength={4}
+                  type="email"
+                  {...register("email", {
+                    required: "You must enter an email",
+                    pattern: {
+                      value: emailRegex,
+                      message: "Email is not valid",
+                    },
+                  })}
+                />
+                <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+              </FormControl>
+              <FormControl id="password">
+                <FormLabel>Password</FormLabel>
+                <Input
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters!",
+                    },
+                  })}
+                  minLength={6}
+                  type="password"
+                />
+                <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+              </FormControl>
+              <Stack spacing={10}>
+                <Button
+                  type="submit"
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                >
+                  Create Account
+                </Button>
+              </Stack>
+              {error && (
+                <Text color={"red.500"}>Incorrect registration details!</Text>
+              )}
             </Stack>
-            {error && (
-              <Text color={"red.500"}>Incorrect registration details!</Text>
-            )}
-          </Stack>
+          </form>
         </Box>
       </Stack>
     </Flex>
