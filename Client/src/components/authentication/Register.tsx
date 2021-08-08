@@ -69,7 +69,10 @@ const Register = () => {
         >
           <form onSubmit={handleSubmit(registerUser)}>
             <Stack spacing={4}>
-              <FormControl id="firstName">
+              <FormControl
+                id="firstName"
+                isInvalid={errors.firstName !== undefined}
+              >
                 <FormLabel>First name</FormLabel>
                 <Input
                   {...register("firstName", {
@@ -83,7 +86,10 @@ const Register = () => {
                 />
                 <FormErrorMessage>{errors.firstName?.message}</FormErrorMessage>
               </FormControl>
-              <FormControl id="lastName">
+              <FormControl
+                id="lastName"
+                isInvalid={errors.lastName !== undefined}
+              >
                 <FormLabel>Last name</FormLabel>
                 <Input
                   {...register("lastName", {
@@ -98,7 +104,7 @@ const Register = () => {
                 />
                 <FormErrorMessage>{errors.lastName?.message}</FormErrorMessage>
               </FormControl>
-              <FormControl id="email">
+              <FormControl id="email" isInvalid={errors.email !== undefined}>
                 <FormLabel>Email address</FormLabel>
                 <Input
                   minLength={4}
@@ -113,7 +119,10 @@ const Register = () => {
                 />
                 <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
               </FormControl>
-              <FormControl id="password">
+              <FormControl
+                id="password"
+                isInvalid={errors.password !== undefined}
+              >
                 <FormLabel>Password</FormLabel>
                 <Input
                   {...register("password", {
@@ -141,7 +150,9 @@ const Register = () => {
                 </Button>
               </Stack>
               {error && (
-                <Text color={"red.500"}>Incorrect registration details!</Text>
+                <Text color={"red.500"}>
+                  Email already in use, please use another!
+                </Text>
               )}
             </Stack>
           </form>
