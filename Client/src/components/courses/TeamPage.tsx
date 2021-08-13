@@ -1,7 +1,7 @@
 import axios from "../../axios-config"
 import { useEffect, useState } from "react"
 import { RouteComponentProps } from "react-router"
-import Student from "./student"
+import Student from "../../models/student"
 import AddStudent from "./AddStudent"
 import { Flex, Stack, Text, Button } from "@chakra-ui/react"
 import { useHistory } from "react-router-dom"

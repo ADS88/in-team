@@ -1,6 +1,6 @@
 import axios from "../../axios-config"
 import { useEffect, useState } from "react"
-import Student from "./student"
+import Student from "../../models/student"
 import { Select, Button } from "@chakra-ui/react"
 
 interface AddStudentProps {

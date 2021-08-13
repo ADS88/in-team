@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react"
 
 import { useForm } from "react-hook-form"
-import Course from "./course"
+import Course from "../../models/course"
 
 interface AddTeamFormValues {
   name: string

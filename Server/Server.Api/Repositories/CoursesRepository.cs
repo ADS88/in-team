@@ -22,7 +22,10 @@ namespace Server.Api.Repositories
 
         public async Task<Course> Get(int id)
         {
-            return await context.Courses.Include(course => course.Teams).FirstOrDefaultAsync(course => course.Id == id);
+            return await context.Courses.
+            Include(course => course.Teams)
+            .Include(course => course.Iterations)
+            .FirstOrDefaultAsync(course => course.Id == id);
         }
 
         public async Task Add(Course course)

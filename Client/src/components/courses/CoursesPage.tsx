@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from "../../axios-config"
-import Course from "./course"
+import Course from "../../models/course"
 import CourseOverview from "./CourseOverview"
 import { useHistory } from "react-router-dom"
 

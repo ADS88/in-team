@@ -25,7 +25,7 @@ interface LoginFormValues {
   password: string
 }
 
-const Login = () => {
+const LoginPage = () => {
   const history = useHistory()
 
   const authContext = useContext(AuthContext)
@@ -119,4 +119,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default LoginPage

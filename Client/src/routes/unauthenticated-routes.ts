@@ -1,5 +1,5 @@
-import Login from "../components/authentication/Login"
-import Register from "../components/authentication/Register"
+import LoginPage from "../components/authentication/LoginPage"
+import RegisterPage from "../components/authentication/RegisterPage"
 import LandingPage from "../components/landing/LandingPage"
 import IRoute from "./IRoute"
 
@@ -8,14 +8,14 @@ const unAuthenticatedRoutes: IRoute[] = [
     path: "/login",
     name: "Login page",
     exact: true,
-    component: Login,
+    component: LoginPage,
   },
 
   {
     path: "/register",
     name: "Register page",
     exact: true,
-    component: Register,
+    component: RegisterPage,
   },
   {
     path: "/",

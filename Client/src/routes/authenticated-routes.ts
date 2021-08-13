@@ -1,4 +1,4 @@
-import CourseDetailPage from "../components/courses/CourseDetailPage"
+import CoursePage from "../components/courses/CoursePage"
 import CoursesPage from "../components/courses/CoursesPage"
 import TeamPage from "../components/courses/TeamPage"
 import Dashboard from "../components/dashboard/Dashboard"
@@ -9,7 +9,7 @@ const authenticatedRoutes: IRoute[] = [
     path: "/course/:id",
     name: "Single course page",
     exact: true,
-    component: CourseDetailPage,
+    component: CoursePage,
   },
   {
     path: "/team/:id",

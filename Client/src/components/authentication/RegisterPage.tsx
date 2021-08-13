@@ -26,7 +26,7 @@ interface RegisterFormValues {
   lastName: string
 }
 
-const Register = () => {
+const RegisterPage = () => {
   const [error, setError] = useState(false)
   const history = useHistory()
   const authContext = useContext(AuthContext)
@@ -162,4 +162,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default RegisterPage
