@@ -11,6 +11,9 @@ namespace Server.Api.Data
         DbSet<Team> Teams { get; init; }
         DbSet<Iteration> Iterations { get; init; }
         DbSet<AppUser> AppUsers { get; init; }
+        DbSet<Alpha> Alphas { get; init; }
+        DbSet<State> States { get; init; }
+        DbSet<Question> Questions { get; init; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -15,5 +15,8 @@ namespace Server.Api.Data
         public DbSet<Team> Teams { get; init; }
         public DbSet<AppUser> AppUsers { get; init; }
         public DbSet<Iteration> Iterations { get; init; }
+        public DbSet<Alpha> Alphas { get; init; }
+        public DbSet<State> States { get; init; }
+        public DbSet<Question> Questions { get; init; }
     }
 }
