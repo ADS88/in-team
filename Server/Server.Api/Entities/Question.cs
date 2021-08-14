@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Server.Api.Entities
 {
-    public class Question
+    public record Question
     {
         public int Id { get; init; }
 
