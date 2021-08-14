@@ -18,5 +18,6 @@ namespace Server.Api.Data
         public DbSet<Alpha> Alphas { get; init; }
         public DbSet<State> States { get; init; }
         public DbSet<Question> Questions { get; init; }
+        public DbSet<Survey> Surveys { get; init; }
     }
 }

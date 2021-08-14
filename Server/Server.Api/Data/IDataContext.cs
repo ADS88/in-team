@@ -14,6 +14,7 @@ namespace Server.Api.Data
         DbSet<Alpha> Alphas { get; init; }
         DbSet<State> States { get; init; }
         DbSet<Question> Questions { get; init; }
+        DbSet<Survey> Surveys { get; init; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace Server.Api.Entities
 {
@@ -18,5 +19,7 @@ namespace Server.Api.Entities
 
         [Required]
         public DateTimeOffset CreatedDate { get; init; }
+
+        public ICollection<Survey> Surveys { get; init; }
     }
 }
