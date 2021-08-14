@@ -84,6 +84,19 @@ export default function WithSubnavigation() {
     </Button>
   )
 
+  const alphasButton = (
+    <Button
+      display={{ base: "none", md: "inline-flex" }}
+      as={RouterLink}
+      fontSize={"sm"}
+      fontWeight={400}
+      variant={"link"}
+      to={"/alphas"}
+    >
+      Alphas
+    </Button>
+  )
+
   return (
     <Box>
       <Flex
@@ -133,6 +146,7 @@ export default function WithSubnavigation() {
         >
           {isLoggedIn ? (
             <>
+              {alphasButton}
               {coursesButton}
               {logoutButton}
             </>
@@ -159,6 +173,10 @@ const MobileNav = () => {
     NAV_ITEMS.push({
       label: "Courses",
       href: "courses",
+    })
+    NAV_ITEMS.push({
+      label: "Alphas",
+      href: "alphas",
     })
   } else {
     NAV_ITEMS.push({
