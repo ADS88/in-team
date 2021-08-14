@@ -12,7 +12,6 @@ namespace Server.Api.Entities
         public String Name { get; init; }
         [Required]
         public DateTimeOffset CreatedDate { get; init; }
-
         public virtual ICollection<Team> Teams {get; init;}
         public virtual ICollection<Iteration> Iterations {get; init;}
     }

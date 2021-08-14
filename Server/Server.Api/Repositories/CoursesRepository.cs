@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Server.Api.Entities;
 using Server.Api.Data;
 using System.Threading.Tasks;
@@ -32,17 +31,6 @@ namespace Server.Api.Repositories
         {
             context.Courses.Add(course);
             await context.SaveChangesAsync();
-        }
-
-        public async Task Update(Course course)
-        {
-            var courseToUpdate = await context.Courses.FindAsync(course.Id);
-            if(courseToUpdate == null){
-                throw new NullReferenceException();
-            }
-
-            //TODO: Update work here
-
         }
 
         public async Task Delete(Course course)

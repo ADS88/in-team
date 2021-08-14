@@ -26,24 +26,12 @@ namespace Server.Api.Repositories
         public async Task<Team> Get(int id)
         {
             return await context.Teams.Include(team => team.Members).FirstOrDefaultAsync(team => team.Id == id);
-            //return await context.Teams.FirstOrDefaultAsync(team => team.Id == id);
         }
 
         public async Task Add(Team team)
         {
             context.Teams.Add(team);
             await context.SaveChangesAsync();
-        }
-
-        public async Task Update(Team team)
-        {
-            var teamToUpdate = await context.Courses.FindAsync(team.Id);
-            if(teamToUpdate == null){
-                throw new NullReferenceException();
-            }
-
-            //TODO: Update work here
-
         }
 
         public async Task Delete(int id)

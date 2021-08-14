@@ -1,22 +1,18 @@
-using System;
 using System.ComponentModel.DataAnnotations;
+using System;
 
-namespace Server.Api.Entities
+namespace Server.Api.Dtos
 {
-    public class Question
+    public class QuestionDto
     {
         public int Id { get; init; }
 
         [Required]
         public String Content { get; init; }
-
         [Required]
-        public State State { get; init; }
+        public DateTimeOffset CreatedDate { get; init; }
 
         [Required]
         public int StateId { get; init; }
-
-        [Required]
-        public DateTimeOffset CreatedDate { get; init; }
     }
 }

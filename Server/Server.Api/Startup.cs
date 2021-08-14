@@ -63,12 +63,8 @@ namespace Server.Api
             //Check this context if there is error
             services.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<DataContext>();
-            services.AddScoped<ICoursesRepository, CoursesRepository>();
-            services.AddScoped<ICourseService, CourseService>();
-            services.AddScoped<ITeamsRepository, TeamsRepository>();
-            services.AddScoped<ITeamService, TeamService>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService, UserService>();
+            AddServices(services);
+            AddRepositories(services);
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
@@ -105,6 +101,20 @@ namespace Server.Api
 
 
             CreateRoles(roleManager);
+        }
+
+        private void AddServices(IServiceCollection services){
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<ITeamService, TeamService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAlphaService, AlphaService>();
+        }
+
+        private void AddRepositories(IServiceCollection services){
+            services.AddScoped<ICoursesRepository, CoursesRepository>();
+            services.AddScoped<ITeamsRepository, TeamsRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAlphasRepository, AlphasRepository>();
         }
 
         private void CreateRoles(RoleManager<IdentityRole> roleManager){

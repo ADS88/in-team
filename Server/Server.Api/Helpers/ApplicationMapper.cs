@@ -8,6 +8,9 @@ namespace Server.Api.Helpers
     {
         public ApplicationMapper(){
             CreateMap<Team, TeamDto>().PreserveReferences();
+            CreateMap<Alpha, AlphaDto>().PreserveReferences();
+            CreateMap<State, StateDto>().PreserveReferences();
+            CreateMap<Question, QuestionDto>().ReverseMap();
             CreateMap<Course, CourseDto>().ReverseMap();
             CreateMap<AppUser, UserDto>().ReverseMap();
             CreateMap<Iteration, IterationDto>().ReverseMap();
