@@ -17,6 +17,9 @@ namespace Server.Api.Entities
 
         [Required]
         public DateTimeOffset EndDate { get; init; }
+
+        [Required]
+        public DateTimeOffset CreatedDate { get; init; }
         public ICollection<Question> Questions { get; init; }
     }
 }
