@@ -5,7 +5,7 @@ import CourseOverview from "./CourseOverview"
 import { useHistory } from "react-router-dom"
 
 import { Text, Stack, Flex } from "@chakra-ui/react"
-import AddCourse from "./AddCourse"
+import SingleRowForm from "../ui/SingleRowForm"
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState<Course[]>([])
@@ -15,8 +15,13 @@ const CoursesPage = () => {
     return axios.get<Course[]>("/course")
   }
 
-  const addCourse = (course: Course) => {
-    setCourses(prevCourses => [...prevCourses, course])
+  const addCourse = async (course: Course) => {
+    try {
+      const response = await axios.post("course", course)
+      setCourses(prevCourses => [...prevCourses, course])
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
@@ -46,7 +51,7 @@ const CoursesPage = () => {
       <Text fontSize="6xl">Courses</Text>
       <Stack spacing="8" p="4">
         {allCourses}
-        <AddCourse addCourseToList={addCourse} />
+        <SingleRowForm addToList={addCourse} content="course" />
       </Stack>
     </Flex>
   )

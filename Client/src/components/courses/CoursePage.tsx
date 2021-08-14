@@ -4,9 +4,9 @@ import axios from "../../axios-config"
 import { RouteComponentProps, useHistory } from "react-router"
 import { Button, Flex, Stack, Text } from "@chakra-ui/react"
 import TeamOverview from "./TeamOverview"
-import AddTeam from "./AddTeam"
 import Iteration from "../../models/iteration"
 import AddIteration from "./AddIteration"
+import SingleRowForm from "../ui/SingleRowForm"
 
 const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const [teams, setTeams] = useState<Team[]>([])
@@ -14,19 +14,15 @@ const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const [courseName, setCourseName] = useState("")
   const history = useHistory()
 
-  const addTeam = (team: Team) => {
-    setTeams(prevTeams => [...prevTeams, team])
-  }
-
-  const id = props.match.params.id
+  const courseId = props.match.params.id
 
   const deleteCourse = () => {
-    axios.delete(`course/${id}`).then(() => history.goBack())
+    axios.delete(`course/${courseId}`).then(() => history.goBack())
   }
 
   useEffect(() => {
     const getCourse = () => {
-      return axios.get(`course/${id}`)
+      return axios.get(`course/${courseId}`)
     }
 
     getCourse().then(response => {
@@ -34,7 +30,19 @@ const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
       setCourseName(response.data.name)
       setIterations(response.data.iterations)
     })
-  }, [id])
+  }, [courseId])
+
+  const addTeam = async (team: Team) => {
+    try {
+      const response = await axios.post(`team`, { ...team, courseId })
+      setTeams(prevTeams => [
+        ...prevTeams,
+        { name: team.name, id: response.data.id },
+      ])
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <Flex
@@ -49,7 +57,8 @@ const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
         {teams.map(team => (
           <TeamOverview name={team.name} id={team.id} />
         ))}
-        <AddTeam addTeamToList={addTeam} courseId={id} />
+
+        <SingleRowForm addToList={addTeam} content="team" />
 
         <Text fontSize="2xl">Iterations</Text>
 
@@ -57,7 +66,7 @@ const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
           <TeamOverview name={iteration.name} id={iteration.id} />
         ))}
 
-        <AddIteration courseId={id} />
+        <AddIteration courseId={courseId} />
 
         <Button
           bg={"red.400"}

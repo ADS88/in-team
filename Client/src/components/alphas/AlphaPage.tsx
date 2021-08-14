@@ -4,13 +4,18 @@ import { RouteComponentProps } from "react-router"
 import { Flex, Stack, Text } from "@chakra-ui/react"
 import Card from "../ui/Card"
 import Alpha from "../../models/alpha"
-import AddAlpha from "./AddAlpha"
+import SingleRowForm from "../ui/SingleRowForm"
 
 const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const [alphas, setAlphas] = useState<Alpha[]>([])
 
-  const addAlpha = (alpha: Alpha) => {
-    setAlphas(prevAlphas => [...prevAlphas, alpha])
+  const addAlpha = async (alpha: Alpha) => {
+    try {
+      await axios.post("alpha", alpha)
+      setAlphas(prevAlphas => [...prevAlphas, alpha])
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
@@ -36,7 +41,7 @@ const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
           <Card title={alpha.name} key={alpha.id} />
         ))}
 
-        <AddAlpha addAlphaToList={() => {}} />
+        <SingleRowForm content="alpha" addToList={addAlpha} />
       </Stack>
     </Flex>
   )

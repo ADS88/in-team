@@ -11,39 +11,36 @@ import {
 import { useForm } from "react-hook-form"
 import Course from "../../models/course"
 
-interface AddTeamFormValues {
+interface SingleRowFormValues {
   name: string
 }
 
-interface AddTeamProps {
-  addTeamToList: (course: Course) => void
-  courseId: number
+interface SingleRowFormProps {
+  addToList: (content: any) => void
+  content: string
 }
 
-export default function AddTeam({ addTeamToList, courseId }: AddTeamProps) {
+const capitalize = (string: string) =>
+  string.charAt(0).toUpperCase() + string.slice(1)
+
+export default function SingleRowForm({
+  addToList,
+  content,
+}: SingleRowFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AddTeamFormValues>()
-
-  const addTeam = async (data: AddTeamFormValues) => {
-    try {
-      const response = await axios.post(`team`, { ...data, courseId })
-      addTeamToList({ name: data.name, id: response.data.id })
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  } = useForm<SingleRowFormValues>()
 
   return (
-    <form onSubmit={handleSubmit(addTeam)}>
+    <form onSubmit={handleSubmit(addToList)}>
       <Flex direction="row" align="flex-end">
-        <FormControl id="name" isInvalid={errors.name !== undefined}>
-          <FormLabel>Team name</FormLabel>
+        <FormControl id="field" isInvalid={errors.name !== undefined}>
+          <FormLabel>{capitalize(content)} name</FormLabel>
           <Input
             {...register("name", {
-              required: "You must enter an course name",
+              required: `You must enter an ${content} name`,
             })}
           />
           <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
