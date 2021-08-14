@@ -28,9 +28,7 @@ namespace Server.Api.Services
         }
 
         public async Task<Course> GetById(int id){
-            var course =  await repository.Get(id);
-            if(course is null) throw new NullReferenceException();
-            return course;
+            return await repository.Get(id);
         }
 
          public async Task<IEnumerable<Course>> GetAll(){
