@@ -1,5 +1,4 @@
 import { useContext } from "react"
-import "./App.css"
 import {
   Route,
   BrowserRouter as Router,

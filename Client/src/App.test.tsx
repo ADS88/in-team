@@ -1,5 +1,5 @@
 import React from "react"
 
-test("renders learn react link", () => {
+test("Frontend unit tests run", () => {
   expect(true).toBeTruthy()
 })
