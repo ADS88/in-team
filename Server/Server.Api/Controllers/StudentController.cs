@@ -34,9 +34,9 @@ namespace Server.Api.Controllers
         }
 
         [HttpGet("course/{courseId}")]
-        public async Task<IEnumerable<UserDto>> GetStudentsEligibleForCourse(int courseId, [FromQuery]string searchString)
+        public async Task<IEnumerable<UserDto>> GetStudentsEligibleForCourse(int courseId, [FromQuery]string search)
         {
-            var students = (await service.GetEligibleForCourse(courseId, searchString)).Select(student => mapper.Map<UserDto>(student));
+            var students = (await service.GetEligibleForCourse(courseId, search)).Select(student => mapper.Map<UserDto>(student));
             return students;
         }
 

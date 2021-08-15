@@ -1,12 +1,8 @@
 using Server.Api.Entities;
 using Server.Api.Repositories;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using System;
 using Microsoft.AspNetCore.Identity;
-using System.Collections;
-using Server.Api.Dtos;
-
 
 namespace Server.Api.Services
 {

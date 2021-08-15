@@ -5,6 +5,7 @@ import Student from "../../models/student"
 import AddStudent from "./AddStudent"
 import { Flex, Stack, Text, Button } from "@chakra-ui/react"
 import { useHistory } from "react-router-dom"
+import AutoComplete from "../ui/AutoComplete"
 
 const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const id = props.match.params.id
@@ -14,6 +15,14 @@ const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
 
   const deleteTeam = () => {
     axios.delete(`team/${id}`).then(() => history.goBack())
+  }
+
+  const addStudentToTeam = (student: Student) => {
+    axios
+      .post(`team/${id}/addstudent/${student.id}`)
+      .then(() =>
+        setStudentsInCourse(prevStudents => [...prevStudents, student])
+      )
   }
 
   useEffect(() => {
@@ -35,7 +44,7 @@ const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
         {studentsInCourse.map(student => (
           <h4>{`${student.firstName} ${student.lastName}`}</h4>
         ))}
-        <AddStudent courseId={id} />
+        <AutoComplete courseId={id} addToTeam={addStudentToTeam} />
         <Button
           bg={"red.400"}
           color={"white"}
