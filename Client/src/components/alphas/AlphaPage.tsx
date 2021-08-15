@@ -1,32 +1,39 @@
 import { useEffect, useState } from "react"
 import axios from "../../axios-config"
-import { RouteComponentProps } from "react-router"
+import { RouteComponentProps, useHistory } from "react-router"
 import { Flex, Stack, Text } from "@chakra-ui/react"
-import Card from "../ui/Card"
-import Alpha from "../../models/alpha"
+import State from "../../models/state"
 import SingleRowForm from "../ui/SingleRowForm"
+import Card from "../ui/Card"
 
-const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
-  const [alphas, setAlphas] = useState<Alpha[]>([])
+const AlphaPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
+  const [states, setStates] = useState<State[]>([])
+  const [alphaName, setAlphaName] = useState("")
 
-  const addAlpha = async (alpha: Alpha) => {
+  const alphaId = props.match.params.id
+
+  useEffect(() => {
+    const getAlpha = () => {
+      return axios.get(`alpha/${alphaId}`)
+    }
+
+    getAlpha().then(response => {
+      setStates(response.data.states)
+      setAlphaName(response.data.name)
+    })
+  }, [alphaId])
+
+  const addState = async (state: State) => {
     try {
-      await axios.post("alpha", alpha)
-      setAlphas(prevAlphas => [...prevAlphas, alpha])
+      const response = await axios.post(`alpha/${alphaId}/state`, state)
+      setStates(prevStates => [
+        ...prevStates,
+        { name: state.name, id: response.data.id },
+      ])
     } catch (error) {
       console.log(error)
     }
   }
-
-  useEffect(() => {
-    const getAlphas = () => {
-      return axios.get(`alpha`)
-    }
-
-    getAlphas().then(response => {
-      setAlphas(response.data)
-    })
-  }, [])
 
   return (
     <Flex
@@ -35,16 +42,17 @@ const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
       justify={"center"}
       direction={"column"}
     >
-      <Text fontSize="6xl">Alphas</Text>
+      <Text fontSize="6xl">{alphaName}</Text>
+      <Text fontSize="2xl">States</Text>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-        {alphas.map(alpha => (
-          <Card title={alpha.name} key={alpha.id} />
+        {states.map(state => (
+          <Card title={state.name} key={state.id} />
         ))}
 
-        <SingleRowForm content="alpha" addToList={addAlpha} />
+        <SingleRowForm addToList={addState} content="state" />
       </Stack>
     </Flex>
   )
 }
 
-export default CoursePage
+export default AlphaPage

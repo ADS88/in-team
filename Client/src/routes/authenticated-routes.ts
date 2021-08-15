@@ -2,6 +2,7 @@ import CoursePage from "../components/courses/CoursePage"
 import CoursesPage from "../components/courses/CoursesPage"
 import TeamPage from "../components/courses/TeamPage"
 import Dashboard from "../components/dashboard/Dashboard"
+import AlphasPage from "../components/alphas/AlphasPage"
 import AlphaPage from "../components/alphas/AlphaPage"
 import IRoute from "./IRoute"
 
@@ -33,6 +34,12 @@ const authenticatedRoutes: IRoute[] = [
   {
     path: "/alphas",
     name: "Alpha page",
+    exact: true,
+    component: AlphasPage,
+  },
+  {
+    path: "/alpha/:id",
+    name: "Team page",
     exact: true,
     component: AlphaPage,
   },

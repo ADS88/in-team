@@ -32,32 +32,32 @@ namespace Server.Api.Controllers
             return alphas;
         }
 
-        [HttpGet("{alphaId}/states")]
-        public async Task<IEnumerable<StateDto>> GetStates(int alphaId)
+        [HttpGet("{id}")]
+        public async Task<AlphaDto> GetAlpha(int id)
         {
-            var states = (await service.GetStates(alphaId)).Select(state => mapper.Map<StateDto>(state));
-            return states;
+            var alpha = await service.GetAlpha(id);
+            return mapper.Map<AlphaDto>(alpha);
         }
 
         [HttpPost]
         public async Task<ActionResult<CourseDto>> CreateAlpha(CreateAlphaDto alphaDto)
         {
             var alpha = await service.CreateAlpha(alphaDto.Name);
-            return CreatedAtAction(nameof(GetAlphas), new { id = alpha.Id }, mapper.Map<AlphaDto>(alpha));
+            return CreatedAtAction(nameof(GetAlpha), new { id = alpha.Id }, mapper.Map<AlphaDto>(alpha));
         }
 
-        [HttpPost("{alphaId}/question")]
+        [HttpPost("{alphaId}/state")]
         public async Task<ActionResult<CourseDto>> AddState(CreateStateDto stateDto, int alphaId)
         {
             var state = await service.AddState(stateDto.Name, alphaId);
-            return CreatedAtAction(nameof(GetStates), new { id = state.Id }, mapper.Map<StateDto>(state));
+            return CreatedAtAction(nameof(GetAlpha), new { id = state.Id }, mapper.Map<StateDto>(state));
         }
 
-        [HttpPost("{stateId}/state")]
+        [HttpPost("{stateId}/question")]
         public async Task<ActionResult<CourseDto>> AddQuestion(CreateQuestionDto questionDto, int stateId)
         {
-            var alpha = await service.AddQuestion(questionDto.Content, stateId);
-            return CreatedAtAction(nameof(GetAlphas), new { id = alpha.Id }, mapper.Map<StateDto>(alpha));
+            var question = await service.AddQuestion(questionDto.Content, stateId);
+            return CreatedAtAction(nameof(GetAlpha), new { id = question.Id }, mapper.Map<QuestionDto>(question));
         }
     }
 }

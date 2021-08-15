@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Server.Api.Entities
@@ -12,6 +13,7 @@ namespace Server.Api.Entities
 
         [Required]
         public DateTimeOffset CreatedDate { get; init; }
+        public virtual ICollection<State> States { get; set; }
 
     }
 }

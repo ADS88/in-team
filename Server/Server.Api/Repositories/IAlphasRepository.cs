@@ -7,7 +7,7 @@ namespace Server.Api.Repositories
     public interface IAlphasRepository
     {
         Task<IEnumerable<Alpha>> GetAlphas();
-        Task<IEnumerable<State>> GetStates(int alphaId);
+        Task<Alpha> GetAlpha(int id);
         Task<IEnumerable<Question>> GetQuestions(int stateId);
         Task AddAlpha(Alpha alpha);
         Task AddState(State state);

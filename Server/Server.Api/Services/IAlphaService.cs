@@ -7,7 +7,7 @@ namespace Server.Api.Services
     public interface IAlphaService
     {
         Task<IEnumerable<Alpha>> GetAlphas();
-        Task<IEnumerable<State>> GetStates(int alphaId);
+        Task<Alpha> GetAlpha(int id);
         Task<IEnumerable<Question>> GetQuestions(int stateId);
         Task<Alpha> CreateAlpha(string name);
         Task<State> AddState(string name, int alphaId);

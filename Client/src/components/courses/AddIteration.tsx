@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form"
 import axios from "../../axios-config"
 
 interface AddIterationFormValues {
-  name: String
+  name: string
   startDate: Date
   endDate: Date
 }
@@ -36,13 +36,13 @@ const AddIteration = ({ courseId }: AddIterationProps) => {
     <form onSubmit={handleSubmit(addIteration)}>
       <Stack spacing={4}>
         <FormControl id="name" isInvalid={errors.name !== undefined}>
-          <FormLabel>Namec</FormLabel>
+          <FormLabel>Iteration name</FormLabel>
           <Input
             {...register("name", {
               required: "You must enter a name",
             })}
           />
-          {/* <FormErrorMessage>{errors.name?.message}</FormErrorMessage> */}
+          <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
         </FormControl>
 
         <Button
