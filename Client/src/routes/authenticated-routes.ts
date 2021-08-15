@@ -5,6 +5,7 @@ import Dashboard from "../components/dashboard/Dashboard"
 import AlphasPage from "../components/alphas/AlphasPage"
 import AlphaPage from "../components/alphas/AlphaPage"
 import IRoute from "./IRoute"
+import StatePage from "../components/alphas/StatePage"
 
 const authenticatedRoutes: IRoute[] = [
   {
@@ -42,6 +43,12 @@ const authenticatedRoutes: IRoute[] = [
     name: "Team page",
     exact: true,
     component: AlphaPage,
+  },
+  {
+    path: "/state/:id",
+    name: "State page",
+    exact: true,
+    component: StatePage,
   },
 ]
 

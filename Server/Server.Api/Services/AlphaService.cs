@@ -61,10 +61,10 @@ namespace Server.Api.Services
             return alpha;
         }
 
-        public async Task<IEnumerable<Question>> GetQuestions(int stateId){
-            var questions = await repository.GetQuestions(stateId);
-            if(questions is null) throw new NullReferenceException();
-            return questions;
+        public async Task<State> GetState(int id){
+            var state = await repository.GetState(id);
+            if(state is null) throw new NullReferenceException();
+            return state;
         }
     }
 }

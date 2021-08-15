@@ -1,4 +1,3 @@
-import axios from "../../axios-config"
 import {
   FormControl,
   FormErrorMessage,
@@ -7,16 +6,14 @@ import {
   Input,
   Flex,
 } from "@chakra-ui/react"
-
 import { useForm } from "react-hook-form"
-import Course from "../../models/course"
 
 interface SingleRowFormValues {
-  name: string
+  input: string
 }
 
 interface SingleRowFormProps {
-  addToList: (content: any) => void
+  addToList: (input: string) => void
   content: string
 }
 
@@ -34,16 +31,16 @@ export default function SingleRowForm({
   } = useForm<SingleRowFormValues>()
 
   return (
-    <form onSubmit={handleSubmit(addToList)}>
+    <form onSubmit={handleSubmit(form => addToList(form.input))}>
       <Flex direction="row" align="flex-end">
-        <FormControl id="field" isInvalid={errors.name !== undefined}>
+        <FormControl id="field" isInvalid={errors.input !== undefined}>
           <FormLabel>{capitalize(content)} name</FormLabel>
           <Input
-            {...register("name", {
+            {...register("input", {
               required: `You must enter an ${content} name`,
             })}
           />
-          <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
+          <FormErrorMessage>{errors.input?.message}</FormErrorMessage>
         </FormControl>
         <Button
           bg={"blue.400"}

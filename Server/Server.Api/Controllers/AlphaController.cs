@@ -39,6 +39,13 @@ namespace Server.Api.Controllers
             return mapper.Map<AlphaDto>(alpha);
         }
 
+        [HttpGet("state/{id}")]
+        public async Task<StateDto> GetState(int id)
+        {
+            var state = await service.GetState(id);
+            return mapper.Map<StateDto>(state);
+        }
+
         [HttpPost]
         public async Task<ActionResult<CourseDto>> CreateAlpha(CreateAlphaDto alphaDto)
         {
@@ -53,7 +60,7 @@ namespace Server.Api.Controllers
             return CreatedAtAction(nameof(GetAlpha), new { id = state.Id }, mapper.Map<StateDto>(state));
         }
 
-        [HttpPost("{stateId}/question")]
+        [HttpPost("state/{stateId}/question")]
         public async Task<ActionResult<CourseDto>> AddQuestion(CreateQuestionDto questionDto, int stateId)
         {
             var question = await service.AddQuestion(questionDto.Content, stateId);

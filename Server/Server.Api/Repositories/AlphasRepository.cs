@@ -25,9 +25,9 @@ namespace Server.Api.Repositories
             return await context.Alphas.Include(alpha => alpha.States).FirstOrDefaultAsync(alpha => alpha.Id == id);
         }
 
-        public async Task<IEnumerable<Question>> GetQuestions(int stateId)
+        public async Task<State> GetState(int id)
         {
-            return await context.Questions.Where(question => question.StateId == stateId).ToListAsync();
+            return await context.States.Include(state => state.Questions).FirstOrDefaultAsync(state => state.Id == id);
         }
 
         public async Task AddAlpha(Alpha alpha)

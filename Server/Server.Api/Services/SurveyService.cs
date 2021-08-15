@@ -20,8 +20,8 @@ namespace Server.Api.Services
         public async Task<Survey> Create(string name, ICollection<int> stateIds, DateTimeOffset start, DateTimeOffset end){
             var questions = new List<Question>();
             foreach(var stateId in stateIds){
-                var questionsInState = await alphasRepository.GetQuestions(stateId);
-                questions.AddRange(questionsInState);
+                var state = await alphasRepository.GetState(stateId);
+                questions.AddRange(state.Questions);
             }
             Survey survey = new()
             {

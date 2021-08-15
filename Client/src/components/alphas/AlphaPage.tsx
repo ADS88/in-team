@@ -11,6 +11,7 @@ const AlphaPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const [alphaName, setAlphaName] = useState("")
 
   const alphaId = props.match.params.id
+  const history = useHistory()
 
   useEffect(() => {
     const getAlpha = () => {
@@ -23,17 +24,24 @@ const AlphaPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
     })
   }, [alphaId])
 
-  const addState = async (state: State) => {
+  const addState = async (name: string) => {
     try {
-      const response = await axios.post(`alpha/${alphaId}/state`, state)
-      setStates(prevStates => [
-        ...prevStates,
-        { name: state.name, id: response.data.id },
-      ])
+      const response = await axios.post(`alpha/${alphaId}/state`, { name })
+      setStates(prevStates => [...prevStates, { name, id: response.data.id }])
     } catch (error) {
       console.log(error)
     }
   }
+
+  const allStates = states.map(({ name, id }) => (
+    <div
+      onClick={() => history.push(`/state/${id}`)}
+      style={{ cursor: "pointer" }}
+      key={id}
+    >
+      <Card title={name} key={id} />
+    </div>
+  ))
 
   return (
     <Flex
@@ -45,9 +53,7 @@ const AlphaPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
       <Text fontSize="6xl">{alphaName}</Text>
       <Text fontSize="2xl">States</Text>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-        {states.map(state => (
-          <Card title={state.name} key={state.id} />
-        ))}
+        {allStates}
 
         <SingleRowForm addToList={addState} content="state" />
       </Stack>

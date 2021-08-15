@@ -32,13 +32,10 @@ const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
     })
   }, [courseId])
 
-  const addTeam = async (team: Team) => {
+  const addTeam = async (name: string) => {
     try {
-      const response = await axios.post(`team`, { ...team, courseId })
-      setTeams(prevTeams => [
-        ...prevTeams,
-        { name: team.name, id: response.data.id },
-      ])
+      const response = await axios.post(`team`, { name, courseId })
+      setTeams(prevTeams => [...prevTeams, { name, id: response.data.id }])
     } catch (error) {
       console.log(error)
     }

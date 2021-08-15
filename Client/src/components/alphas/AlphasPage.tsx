@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from "../../axios-config"
-import { RouteComponentProps } from "react-router"
+import { RouteComponentProps, useHistory } from "react-router"
 import { Flex, Stack, Text } from "@chakra-ui/react"
 import Card from "../ui/Card"
 import Alpha from "../../models/alpha"
@@ -8,11 +8,12 @@ import SingleRowForm from "../ui/SingleRowForm"
 
 const AlphasPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const [alphas, setAlphas] = useState<Alpha[]>([])
+  const history = useHistory()
 
-  const addAlpha = async (alpha: Alpha) => {
+  const addAlpha = async (name: string) => {
     try {
-      await axios.post("alpha", alpha)
-      setAlphas(prevAlphas => [...prevAlphas, alpha])
+      const response = await axios.post("alpha", { name })
+      setAlphas(prevAlphas => [...prevAlphas, { name, id: response.data.id }])
     } catch (error) {
       console.log(error)
     }
@@ -28,6 +29,16 @@ const AlphasPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
     })
   }, [])
 
+  const allAlphas = alphas.map(({ name, id }) => (
+    <div
+      onClick={() => history.push(`alpha/${id}`)}
+      style={{ cursor: "pointer" }}
+      key={id}
+    >
+      <Card title={name} key={id} />
+    </div>
+  ))
+
   return (
     <Flex
       minH={"90vh"}
@@ -37,10 +48,7 @@ const AlphasPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
     >
       <Text fontSize="6xl">Alphas</Text>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-        {alphas.map(alpha => (
-          <Card title={alpha.name} key={alpha.id} />
-        ))}
-
+        {allAlphas}
         <SingleRowForm content="alpha" addToList={addAlpha} />
       </Stack>
     </Flex>

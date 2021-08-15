@@ -15,10 +15,13 @@ const CoursesPage = () => {
     return axios.get<Course[]>("/course")
   }
 
-  const addCourse = async (course: Course) => {
+  const addCourse = async (name: string) => {
     try {
-      const response = await axios.post("course", course)
-      setCourses(prevCourses => [...prevCourses, course])
+      const response = await axios.post("course", { name })
+      setCourses(prevCourses => [
+        ...prevCourses,
+        { name, id: response.data.id },
+      ])
     } catch (error) {
       console.log(error)
     }

@@ -8,7 +8,7 @@ namespace Server.Api.Repositories
     {
         Task<IEnumerable<Alpha>> GetAlphas();
         Task<Alpha> GetAlpha(int id);
-        Task<IEnumerable<Question>> GetQuestions(int stateId);
+        Task<State> GetState(int stateId);
         Task AddAlpha(Alpha alpha);
         Task AddState(State state);
         Task AddQuestion(Question question);
