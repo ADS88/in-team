@@ -7,5 +7,7 @@ namespace Server.Api.Repositories
     public interface IUserRepository
     {
         Task<IEnumerable<AppUser>> GetAll();
+
+        Task<IEnumerable<AppUser>> GetAllWithTeams();
     }
 }

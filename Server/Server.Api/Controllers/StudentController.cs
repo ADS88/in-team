@@ -12,7 +12,7 @@ namespace Server.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class StudentController : ControllerBase
     {
 
@@ -30,6 +30,13 @@ namespace Server.Api.Controllers
         public async Task<IEnumerable<UserDto>> GetAllStudents()
         {
             var students = (await service.GetAll()).Select(student => mapper.Map<UserDto>(student));
+            return students;
+        }
+
+        [HttpGet("course/{courseId}")]
+        public async Task<IEnumerable<UserDto>> GetStudentsEligibleForCourse(int courseId, [FromQuery]string searchString)
+        {
+            var students = (await service.GetEligibleForCourse(courseId, searchString)).Select(student => mapper.Map<UserDto>(student));
             return students;
         }
 

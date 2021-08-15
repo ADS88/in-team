@@ -20,5 +20,10 @@ namespace Server.Api.Repositories
             return await context.AppUsers.ToListAsync();
         }
 
+        public async Task<IEnumerable<AppUser>> GetAllWithTeams()
+        {
+            return await context.AppUsers.Include(user => user.Teams).ToListAsync();
+        }
+
     }
 }
