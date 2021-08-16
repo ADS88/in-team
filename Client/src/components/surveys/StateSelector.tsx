@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react"
 import axios from "../../axios-config"
-import { Button, Flex, Stack, Text } from "@chakra-ui/react"
+import { Flex, Text } from "@chakra-ui/react"
 import State from "../../models/state"
-import Question from "../../models/question"
 import Select from "react-select"
 
-interface SurveyStateProps {
+interface StateSelectorProps {
   alphaId: number
 }
 
-const SurveyState = ({ alphaId }: SurveyStateProps) => {
+const StateSelector = ({ alphaId }: StateSelectorProps) => {
   const [alphaName, setAlphaName] = useState("")
   const [states, setStates] = useState<State[]>([])
 
@@ -24,18 +23,16 @@ const SurveyState = ({ alphaId }: SurveyStateProps) => {
     })
   }, [])
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ]
+  const options = states.map(state => {
+    return { value: state.id, label: state.name }
+  })
 
   return (
-    <>
-      <h1>Alpha: {alphaName}</h1>
-      <Select options={options} />
-    </>
+    <Flex direction="row" alignItems="center">
+      <Text px="4">{alphaName}</Text>
+      <Select isMulti options={options} className="basic-multi-select" />
+    </Flex>
   )
 }
 
-export default SurveyState
+export default StateSelector

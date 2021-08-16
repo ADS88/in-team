@@ -11,8 +11,9 @@ import {
   FormLabel,
   FormErrorMessage,
 } from "@chakra-ui/react"
-import SurveyState from "./SurveyState"
+import SateSelector from "./StateSelector"
 import { useForm } from "react-hook-form"
+import StateSelector from "./StateSelector"
 
 interface AddAlphaFormValues {
   alphaId: string
@@ -49,9 +50,10 @@ const CreateSurveyPage = () => {
       justify={"center"}
       direction={"column"}
     >
+      <Text fontSize="6xl">Alphas</Text>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         {selectedAlphaIds.map(alphaId => (
-          <SurveyState alphaId={alphaId} />
+          <StateSelector alphaId={alphaId} />
         ))}
 
         <form onSubmit={handleSubmit(addAlpha)}>
