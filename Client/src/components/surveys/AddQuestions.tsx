@@ -29,7 +29,7 @@ const AddQuestions = () => {
   }, [])
 
   const addAlpha = () => {
-    if (newAlphaId !== null)
+    if (newAlphaId !== null && !selectedAlphaIds.includes(newAlphaId))
       setSelectedAlphaIds(prevIds => [...prevIds, newAlphaId])
   }
 
@@ -63,7 +63,6 @@ const AddQuestions = () => {
           _hover={{
             bg: "blue.500",
           }}
-          type="submit"
           onClick={() => addAlpha()}
         >
           +
