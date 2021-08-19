@@ -12,6 +12,7 @@ import {
 import DatePicker from "../ui/DatePicker"
 
 import { useForm, Controller } from "react-hook-form"
+import { useReducer } from "react"
 
 interface CreateSurveyFormValues {
   openingDate: Date
@@ -19,7 +20,46 @@ interface CreateSurveyFormValues {
   name: string
 }
 
+export interface AlphaStateSelection {
+  alphaId: number
+  stateIds: number[]
+}
+
+export type Action =
+  | { type: "addAlpha"; payload: { newAlphaId: number } }
+  | {
+      type: "updateAlpha"
+      payload: { alphaIdToUpdate: number; newStateIds: number[] }
+    }
+  | { type: "removeAlpha"; payload: { alphaIdToRemove: number } }
+
+const initialState: AlphaStateSelection[] = []
+
+function reducer(state: AlphaStateSelection[], action: Action) {
+  switch (action.type) {
+    case "addAlpha":
+      return [...state, { alphaId: action.payload.newAlphaId, stateIds: [] }]
+    case "updateAlpha":
+      state = state.filter(
+        alpha => alpha.alphaId != action.payload.alphaIdToUpdate
+      )
+      state.push({
+        alphaId: action.payload.alphaIdToUpdate,
+        stateIds: action.payload.newStateIds,
+      })
+      return state
+    case "removeAlpha":
+      return state.filter(
+        alpha => alpha.alphaId != action.payload.alphaIdToRemove
+      )
+    default:
+      throw new Error()
+  }
+}
+
 const CreateSurveyPage = () => {
+  const [state, dispatch] = useReducer(reducer, initialState)
+
   const {
     register,
     handleSubmit,
@@ -58,7 +98,7 @@ const CreateSurveyPage = () => {
             />
             <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
           </FormControl>
-          <AddQuestions />
+          <AddQuestions dispatch={dispatch} state={state} />
           <FormControl
             id="openingDate"
             isInvalid={errors.openingDate !== undefined}

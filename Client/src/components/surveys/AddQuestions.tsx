@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react"
 import Alpha from "../../models/alpha"
 import axios from "../../axios-config"
-import {
-  Button,
-  Flex,
-  Select,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-} from "@chakra-ui/react"
-import { useForm } from "react-hook-form"
-import StateSelector from "./StateSelector"
-import { NewLineKind } from "typescript"
+import { Button, Flex, Select, FormControl, FormLabel } from "@chakra-ui/react"
 
-const AddQuestions = () => {
+import StateSelector from "./StateSelector"
+import { Action, AlphaStateSelection } from "./CreateSurveyPage"
+
+interface AddQuestionsProps {
+  dispatch: (action: Action) => void
+  state: AlphaStateSelection[]
+}
+
+const AddQuestions = (props: AddQuestionsProps) => {
   const [allAlphas, setAllAlphas] = useState<Alpha[]>([])
-  const [selectedAlphaIds, setSelectedAlphaIds] = useState<number[]>([])
   const [newAlphaId, setNewAlphaId] = useState<number | null>(null)
 
   useEffect(() => {
@@ -29,14 +26,9 @@ const AddQuestions = () => {
   }, [])
 
   const addAlpha = () => {
-    if (newAlphaId !== null && !selectedAlphaIds.includes(newAlphaId))
-      setSelectedAlphaIds(prevIds => [...prevIds, newAlphaId])
-  }
-
-  const removeAlpha = (alphaIdToRemove: number) => {
-    setSelectedAlphaIds(prevIds =>
-      prevIds.filter(alphaId => alphaId !== alphaIdToRemove)
-    )
+    if (newAlphaId !== null) {
+      props.dispatch({ type: "addAlpha", payload: { newAlphaId } })
+    }
   }
 
   return (
@@ -49,7 +41,9 @@ const AddQuestions = () => {
             onChange={e => setNewAlphaId(parseInt(e.target.value))}
           >
             {allAlphas
-              .filter(alpha => !selectedAlphaIds.includes(alpha.id))
+              .filter(
+                alpha => !props.state.map(a => a.alphaId).includes(alpha.id)
+              )
               .map(alpha => (
                 <option value={alpha.id} key={alpha.id}>
                   {alpha.name}
@@ -69,11 +63,8 @@ const AddQuestions = () => {
         </Button>
       </Flex>
 
-      {selectedAlphaIds.map(alphaId => (
-        <StateSelector
-          alphaId={alphaId}
-          removeAlpha={() => removeAlpha(alphaId)}
-        />
+      {props.state.map(alpha => (
+        <StateSelector alphaId={alpha.alphaId} dispatch={props.dispatch} />
       ))}
     </>
   )
