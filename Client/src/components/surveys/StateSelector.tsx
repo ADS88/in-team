@@ -32,7 +32,7 @@ const StateSelector = ({ alphaId, removeAlpha }: StateSelectorProps) => {
     <Flex direction="column">
       <Text>{alphaName}</Text>
 
-      <Flex direction="row" w="100%" alignContent="center">
+      <Flex direction="row" w="100%" align="center">
         <div style={{ width: "100%" }}>
           <Select isMulti options={options} style={{ width: 500 }} />
         </div>
