@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "../../axios-config"
 import { RouteComponentProps, useHistory } from "react-router"
-import { Flex, Stack, Text } from "@chakra-ui/react"
+import { Flex, Text } from "@chakra-ui/react"
 import State from "../../models/state"
 import SingleRowForm from "../ui/SingleRowForm"
 import Card from "../ui/Card"
@@ -52,11 +52,10 @@ const AlphaPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
     >
       <Text fontSize="6xl">{alphaName}</Text>
       <Text fontSize="2xl">States</Text>
-      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-        {allStates}
 
-        <SingleRowForm addToList={addState} content="state" />
-      </Stack>
+      {allStates}
+
+      <SingleRowForm addToList={addState} content="state" />
     </Flex>
   )
 }
