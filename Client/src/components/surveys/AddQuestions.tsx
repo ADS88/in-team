@@ -4,11 +4,11 @@ import axios from "../../axios-config"
 import { Button, Flex, Select, FormControl, FormLabel } from "@chakra-ui/react"
 
 import StateSelector from "./StateSelector"
-import { Action, AlphaStateSelection } from "./CreateSurveyPage"
+import { Action, QuestionSelection } from "./CreateSurveyPage"
 
 interface AddQuestionsProps {
   dispatch: (action: Action) => void
-  state: AlphaStateSelection[]
+  state: QuestionSelection[]
 }
 
 const AddQuestions = (props: AddQuestionsProps) => {
@@ -63,8 +63,12 @@ const AddQuestions = (props: AddQuestionsProps) => {
         </Button>
       </Flex>
 
-      {props.state.map(alpha => (
-        <StateSelector alphaId={alpha.alphaId} dispatch={props.dispatch} />
+      {props.state.map(questionSelection => (
+        <StateSelector
+          alphaId={questionSelection.alphaId}
+          dispatch={props.dispatch}
+          key={questionSelection.alphaId}
+        />
       ))}
     </>
   )

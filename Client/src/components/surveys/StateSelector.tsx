@@ -3,7 +3,7 @@ import axios from "../../axios-config"
 import { Button, Flex, Text } from "@chakra-ui/react"
 import State from "../../models/state"
 import Select from "react-select"
-import { Action, AlphaStateSelection } from "./CreateSurveyPage"
+import { Action } from "./CreateSurveyPage"
 import { OptionsType } from "react-select"
 
 interface StateSelectorProps {

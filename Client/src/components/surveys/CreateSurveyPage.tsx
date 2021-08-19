@@ -20,7 +20,7 @@ interface CreateSurveyFormValues {
   name: string
 }
 
-export interface AlphaStateSelection {
+export interface QuestionSelection {
   alphaId: number
   stateIds: number[]
 }
@@ -33,15 +33,23 @@ export type Action =
     }
   | { type: "removeAlpha"; payload: { alphaIdToRemove: number } }
 
-const initialState: AlphaStateSelection[] = []
+const initialState: QuestionSelection[] = []
 
-function reducer(state: AlphaStateSelection[], action: Action) {
+function reducer(state: QuestionSelection[], action: Action) {
   switch (action.type) {
     case "addAlpha":
+      if (
+        state.some(
+          questionSelection =>
+            questionSelection.alphaId === action.payload.newAlphaId
+        )
+      ) {
+        return state
+      }
       return [...state, { alphaId: action.payload.newAlphaId, stateIds: [] }]
     case "updateAlpha":
       state = state.filter(
-        alpha => alpha.alphaId != action.payload.alphaIdToUpdate
+        alpha => alpha.alphaId !== action.payload.alphaIdToUpdate
       )
       state.push({
         alphaId: action.payload.alphaIdToUpdate,
@@ -50,7 +58,7 @@ function reducer(state: AlphaStateSelection[], action: Action) {
       return state
     case "removeAlpha":
       return state.filter(
-        alpha => alpha.alphaId != action.payload.alphaIdToRemove
+        alpha => alpha.alphaId !== action.payload.alphaIdToRemove
       )
     default:
       throw new Error()
@@ -63,7 +71,6 @@ const CreateSurveyPage = () => {
   const {
     register,
     handleSubmit,
-    setError,
     control,
     formState: { errors },
   } = useForm<CreateSurveyFormValues>()
