@@ -20,6 +20,8 @@ namespace Server.Api.Entities
         public int CourseId { get; init; }
 
         public virtual ICollection<AppUser> Members { get; set; }
+        
+        public virtual ICollection<Survey> Surveys { get; set; }
 
     }
 }

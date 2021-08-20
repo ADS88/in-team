@@ -20,6 +20,11 @@ namespace Server.Api.Entities
 
         [Required]
         public DateTimeOffset CreatedDate { get; init; }
+
+        [Required]
         public ICollection<Question> Questions { get; init; }
+
+        [Required]
+        public ICollection<Team> Teams { get; init; }
     }
 }
