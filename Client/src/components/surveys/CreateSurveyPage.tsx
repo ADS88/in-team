@@ -20,11 +20,6 @@ interface CreateSurveyFormValues {
   name: string
 }
 
-export interface QuestionSelection {
-  alphaId: number
-  stateIds: number[]
-}
-
 export type Action =
   | { type: "addAlpha"; payload: { newAlphaId: number } }
   | {
@@ -33,33 +28,24 @@ export type Action =
     }
   | { type: "removeAlpha"; payload: { alphaIdToRemove: number } }
 
-const initialState: QuestionSelection[] = []
+const initialState = new Map<number, number[]>()
 
-function reducer(state: QuestionSelection[], action: Action) {
+function reducer(
+  state: Map<number, number[]>,
+  action: Action
+): Map<number, number[]> {
   switch (action.type) {
     case "addAlpha":
-      if (
-        state.some(
-          questionSelection =>
-            questionSelection.alphaId === action.payload.newAlphaId
-        )
-      ) {
-        return state
+      if (!state.has(action.payload.newAlphaId)) {
+        state = state.set(action.payload.newAlphaId, [])
       }
-      return [...state, { alphaId: action.payload.newAlphaId, stateIds: [] }]
+      return new Map(state)
     case "updateAlpha":
-      state = state.filter(
-        alpha => alpha.alphaId !== action.payload.alphaIdToUpdate
-      )
-      state.push({
-        alphaId: action.payload.alphaIdToUpdate,
-        stateIds: action.payload.newStateIds,
-      })
-      return state
+      state.set(action.payload.alphaIdToUpdate, action.payload.newStateIds)
+      return new Map(state)
     case "removeAlpha":
-      return state.filter(
-        alpha => alpha.alphaId !== action.payload.alphaIdToRemove
-      )
+      state.delete(action.payload.alphaIdToRemove)
+      return new Map(state)
     default:
       throw new Error()
   }

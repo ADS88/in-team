@@ -4,11 +4,11 @@ import axios from "../../axios-config"
 import { Button, Flex, Select, FormControl, FormLabel } from "@chakra-ui/react"
 
 import StateSelector from "./StateSelector"
-import { Action, QuestionSelection } from "./CreateSurveyPage"
+import { Action } from "./CreateSurveyPage"
 
 interface AddQuestionsProps {
   dispatch: (action: Action) => void
-  state: QuestionSelection[]
+  state: Map<number, number[]>
 }
 
 const AddQuestions = (props: AddQuestionsProps) => {
@@ -41,9 +41,7 @@ const AddQuestions = (props: AddQuestionsProps) => {
             onChange={e => setNewAlphaId(parseInt(e.target.value))}
           >
             {allAlphas
-              .filter(
-                alpha => !props.state.map(a => a.alphaId).includes(alpha.id)
-              )
+              .filter(alpha => !props.state.has(alpha.id))
               .map(alpha => (
                 <option value={alpha.id} key={alpha.id}>
                   {alpha.name}
@@ -63,11 +61,11 @@ const AddQuestions = (props: AddQuestionsProps) => {
         </Button>
       </Flex>
 
-      {props.state.map(questionSelection => (
+      {Array.from(props.state).map(([alphaId, _]) => (
         <StateSelector
-          alphaId={questionSelection.alphaId}
+          alphaId={alphaId}
           dispatch={props.dispatch}
-          key={questionSelection.alphaId}
+          key={alphaId}
         />
       ))}
     </>
