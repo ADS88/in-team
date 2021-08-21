@@ -3,12 +3,20 @@ import axios from "../../axios-config"
 import { Button } from "@chakra-ui/react"
 import { Link as RouterLink } from "react-router-dom"
 import { Stack, Flex, Text } from "@chakra-ui/react"
+import SurveyOverview from "./SurveyOverview"
+import Survey from "../../models/survey"
 
 const SurveyPage = () => {
-  const [surveys, setSurveys] = useState<any[]>([])
+  const [surveys, setSurveys] = useState<Survey[]>([])
 
   useEffect(() => {
-    axios.get("survey").then(response => setSurveys(response.data))
+    axios.get("survey").then(response => {
+      response.data.forEach((survey: any) => {
+        survey.openingDate = new Date(survey.openingDate)
+        survey.closingDate = new Date(survey.closingDate)
+      })
+      setSurveys(response.data)
+    })
   }, [])
 
   return (
@@ -19,9 +27,9 @@ const SurveyPage = () => {
       direction={"column"}
     >
       <Text fontSize="6xl">Surveys</Text>
-      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+      <Stack spacing={8} mx={"auto"} maxW={"2xl"} py={12} px={6}>
         {surveys.map(survey => (
-          <h1>{survey.name}</h1>
+          <SurveyOverview survey={survey} />
         ))}
 
         <Button

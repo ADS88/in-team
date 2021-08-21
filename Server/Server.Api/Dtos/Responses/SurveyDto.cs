@@ -12,10 +12,10 @@ namespace Server.Api.Dtos
         public string Name { get; init; }
 
         [Required]
-        public DateTimeOffset StartDate { get; init; }
+        public DateTimeOffset OpeningDate { get; init; }
 
         [Required]
-        public DateTimeOffset EndDate { get; init; }
+        public DateTimeOffset ClosingDate { get; init; }
 
         [Required]
         public ICollection<State> States { get; init; }
