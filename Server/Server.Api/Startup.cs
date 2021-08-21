@@ -108,6 +108,7 @@ namespace Server.Api
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAlphaService, AlphaService>();
+            services.AddScoped<ISurveyService, SurveyService>();
         }
 
         private void AddRepositories(IServiceCollection services){
@@ -115,6 +116,7 @@ namespace Server.Api
             services.AddScoped<ITeamsRepository, TeamsRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAlphasRepository, AlphasRepository>();
+            services.AddScoped<ISurveysRepository, SurveysRepository>();
         }
 
         private void CreateRoles(RoleManager<IdentityRole> roleManager){

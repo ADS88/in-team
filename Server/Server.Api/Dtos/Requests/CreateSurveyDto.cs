@@ -1,13 +1,11 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System;
 
-namespace Server.Api.Entities
+namespace Server.Api.Dtos
 {
-    public record Survey
-    
+    public record CreateSurveyDto
     {
-        public int Id { get; init; }
 
         [Required]
         public string Name { get; init; }
@@ -19,12 +17,10 @@ namespace Server.Api.Entities
         public DateTimeOffset ClosingDate { get; init; }
 
         [Required]
-        public DateTimeOffset CreatedDate { get; init; }
+        public ICollection<int> StateIds { get; init; }
 
         [Required]
-        public ICollection<Question> Questions { get; init; }
+        public ICollection<int> TeamIds { get; init; }
 
-        [Required]
-        public ICollection<Team> Teams { get; init; }
     }
 }

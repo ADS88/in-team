@@ -1,4 +1,6 @@
 import AddQuestions from "./AddQuestions"
+import AddTeams from "./AddTeams"
+import axios from "../../axios-config"
 import {
   Button,
   Flex,
@@ -10,9 +12,8 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react"
 import DatePicker from "../ui/DatePicker"
-
 import { useForm, Controller } from "react-hook-form"
-import { useReducer } from "react"
+import { useReducer, useState } from "react"
 
 interface CreateSurveyFormValues {
   openingDate: Date
@@ -53,6 +54,7 @@ function reducer(
 
 const CreateSurveyPage = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const [teamIds, setTeamIds] = useState<number[]>([])
 
   const {
     register,
@@ -62,7 +64,13 @@ const CreateSurveyPage = () => {
   } = useForm<CreateSurveyFormValues>()
 
   const createSurvey = (data: CreateSurveyFormValues) => {
-    console.log(data)
+    const stateIds = Array.from(state.values()).flat()
+    const request = { ...data, stateIds, teamIds }
+    axios.post("survey", request)
+  }
+
+  const updateTeams = (newTeamIds: number[]) => {
+    setTeamIds(newTeamIds)
   }
 
   return (
@@ -92,6 +100,7 @@ const CreateSurveyPage = () => {
             <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
           </FormControl>
           <AddQuestions dispatch={dispatch} state={state} />
+          <AddTeams updateTeams={updateTeams}></AddTeams>
           <FormControl
             id="openingDate"
             isInvalid={errors.openingDate !== undefined}

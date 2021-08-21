@@ -14,6 +14,7 @@ namespace Server.Api.Helpers
             CreateMap<Course, CourseDto>().ReverseMap();
             CreateMap<AppUser, UserDto>().ReverseMap();
             CreateMap<Iteration, IterationDto>().ReverseMap();
+            CreateMap<Survey, SurveyDto>().ReverseMap();
         }
     }
 }

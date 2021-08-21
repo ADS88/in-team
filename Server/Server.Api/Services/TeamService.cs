@@ -3,6 +3,7 @@ using Server.Api.Repositories;
 using System.Threading.Tasks;
 using System;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace Server.Api.Services
 {
@@ -15,6 +16,10 @@ namespace Server.Api.Services
         {
             this.repository = repository;
             this.userManager = userManager;
+        }
+
+        public async Task<IEnumerable<Team>> Get(){
+            return await repository.GetAll();
         }
         public async Task<Team> GetById(int id){
             return await repository.Get(id);

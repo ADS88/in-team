@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -5,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Server.Api.Services;
 using AutoMapper;
 using Server.Api.Dtos;
-using System;
+using System.Linq;
 
 namespace Server.Api.Controllers
 {
@@ -22,6 +23,13 @@ namespace Server.Api.Controllers
         {
             this.service = service;
             this.mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<TeamDto>> GetTeams()
+        {
+            var teams = (await service.Get()).Select(team => mapper.Map<TeamDto>(team));
+            return teams;
         }
 
         [HttpGet("{id}")]

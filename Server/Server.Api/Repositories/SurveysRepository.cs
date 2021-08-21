@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Server.Api.Repositories
 {
-    public class SurveysRepository
+    public class SurveysRepository: ISurveysRepository
     {
         private readonly IDataContext context;
 

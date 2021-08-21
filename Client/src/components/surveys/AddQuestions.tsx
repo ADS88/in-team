@@ -35,7 +35,7 @@ const AddQuestions = (props: AddQuestionsProps) => {
     <>
       <Flex direction="row" align="flex-end">
         <FormControl id="alphaId">
-          <FormLabel>Select Alpha</FormLabel>
+          <FormLabel>Add Alphas</FormLabel>
           <Select
             placeholder="Select alpha"
             onChange={e => setNewAlphaId(parseInt(e.target.value))}
