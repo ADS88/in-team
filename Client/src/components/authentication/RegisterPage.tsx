@@ -12,7 +12,7 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react"
 import { useForm } from "react-hook-form"
-import { useState, useContext } from "react"
+import { useContext } from "react"
 import { useHistory } from "react-router"
 import axios from "../../axios-config"
 import { AuthContext } from "../../store/auth-context"
@@ -27,13 +27,13 @@ interface RegisterFormValues {
 }
 
 const RegisterPage = () => {
-  const [error, setError] = useState("")
   const history = useHistory()
   const authContext = useContext(AuthContext)
 
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<RegisterFormValues>()
 
@@ -43,7 +43,10 @@ const RegisterPage = () => {
       authContext.login(response.data.token)
       history.push("/")
     } catch (error) {
-      setError(error.response.data.errors[0])
+      setError("email", {
+        type: "validation",
+        message: "A user with that Email already exists!",
+      })
     }
   }
 
@@ -148,11 +151,6 @@ const RegisterPage = () => {
                   Create Account
                 </Button>
               </Stack>
-              {error !== "" && (
-                <Text color={"red.500"}>
-                  Email already in use, please use another!
-                </Text>
-              )}
             </Stack>
           </form>
         </Box>
