@@ -3,7 +3,7 @@ import Team from "../../models/team"
 import Select from "react-select"
 import axios from "../../axios-config"
 
-import { FormLabel } from "@chakra-ui/react"
+import { FormLabel, FormControl } from "@chakra-ui/react"
 
 interface AddTeamsProps {
   updateTeams: (newTeamIds: number[]) => void
@@ -25,15 +25,15 @@ const AddTeams = (props: AddTeamsProps) => {
   })
 
   return (
-    <>
-      <FormLabel>Select Teams</FormLabel>
+    <FormControl>
+      <FormLabel>Select Recipients</FormLabel>
       <Select
         isMulti
         options={options}
         style={{ width: 500 }}
         onChange={selection => props.updateTeams(selection.map(s => s.value))}
       />
-    </>
+    </FormControl>
   )
 }
 

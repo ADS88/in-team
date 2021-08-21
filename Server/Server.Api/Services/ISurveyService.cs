@@ -10,5 +10,6 @@ namespace Server.Api.Services
     {
         Task<Survey> Create(string name, ICollection<int> stateIds, ICollection<int> teamIds, DateTimeOffset start, DateTimeOffset end);
         Task<Survey> Get(int id);
+        Task<IEnumerable<Survey>> GetAll();
     }
 }

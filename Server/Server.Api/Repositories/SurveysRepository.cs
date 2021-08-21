@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Server.Api.Data;
 using Server.Api.Entities;
@@ -23,6 +24,11 @@ namespace Server.Api.Repositories
         public async Task<Survey> Get(int id)
         {
             return await context.Surveys.FirstOrDefaultAsync(survey => survey.Id == id);
+        }
+
+        public async Task<IEnumerable<Survey>> GetAll()
+        {
+            return await context.Surveys.ToListAsync();
         }
 
     }

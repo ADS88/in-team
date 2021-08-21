@@ -3,6 +3,8 @@ using Server.Api.Services;
 using AutoMapper;
 using Server.Api.Dtos;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Server.Api.Controllers
 {
@@ -22,15 +24,16 @@ namespace Server.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<SurveyDto>> GetSurvey(){
-            return Ok();
+        public async Task<IEnumerable<SurveyDto>> GetSurveys(){
+            var surveys = (await service.GetAll()).Select(survey => mapper.Map<SurveyDto>(survey));
+            return surveys;
         } 
 
         [HttpPost]
         public async Task<ActionResult<SurveyDto>> CreateSurvey(CreateSurveyDto dto)
         {
             var survey = await service.Create(dto.Name, dto.StateIds, dto.TeamIds, dto.OpeningDate, dto.ClosingDate);
-            return CreatedAtAction(nameof(GetSurvey), new { id = survey.Id }, mapper.Map<SurveyDto>(survey));
+            return CreatedAtAction(nameof(GetSurveys), new { id = survey.Id }, mapper.Map<SurveyDto>(survey));
         }
     }
 }

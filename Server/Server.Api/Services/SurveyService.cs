@@ -49,5 +49,9 @@ namespace Server.Api.Services
             return await surveysRepository.Get(id);
         }
 
+        public async Task<IEnumerable<Survey>> GetAll(){
+            return await surveysRepository.GetAll();
+        }
+
     }
 }
