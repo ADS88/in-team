@@ -9,10 +9,7 @@ namespace Server.Api.Entities
         public int Id { get; init; }
 
         [Required]
-        public int UserId { get; init; }
-
-        [Required]
-        public AppUser User { get; init; }
+        public AppUser AppUser { get; init; }
 
         [Required]
         public int SurveyId { get; init; }
