@@ -28,8 +28,8 @@ const AddIteration = ({ courseId }: AddIterationProps) => {
     formState: { errors },
   } = useForm<AddIterationFormValues>()
 
-  const addIteration = async () => {
-    await axios.post(`/course/${courseId}/iteration`)
+  const addIteration = async (data: AddIterationFormValues) => {
+    await axios.post(`/course/${courseId}/iteration`, data)
   }
 
   return (

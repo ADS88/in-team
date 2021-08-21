@@ -52,7 +52,7 @@ export default function SurveyOverview({ survey }: SurveyOverviewProps) {
             fontSize={"sm"}
             letterSpacing={1.1}
           >
-            Team:
+            Assigned to:
           </Text>
           <Text fontSize="sm" color={"gray.500"}>
             Team100, Team200, Team300

@@ -2,9 +2,17 @@ import axios from "../../axios-config"
 import { useEffect, useState } from "react"
 import { RouteComponentProps } from "react-router"
 import Student from "../../models/student"
-import { Flex, Stack, Text, Button } from "@chakra-ui/react"
+import {
+  Flex,
+  Stack,
+  Text,
+  Button,
+  Heading,
+  useColorModeValue,
+} from "@chakra-ui/react"
 import { useHistory } from "react-router-dom"
 import AutoComplete from "../ui/AutoComplete"
+import Card from "../ui/Card"
 
 const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const id = props.match.params.id
@@ -36,12 +44,18 @@ const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   }, [id])
 
   return (
-    <Flex minH={"90vh"} align={"center"} justify={"center"}>
+    <Flex
+      minH={"90vh"}
+      align={"center"}
+      justify={"center"}
+      bg={useColorModeValue("gray.50", "gray.800")}
+      direction="column"
+    >
+      <Heading fontSize="4xl">{teamName}</Heading>
+      <Text fontSize="2xl">Members</Text>
       <Stack minW={"30vw"} spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-        <Text fontSize="6xl">{teamName}</Text>
-        <Text fontSize="3xl">Team members</Text>
         {studentsInCourse.map(student => (
-          <h4>{`${student.firstName} ${student.lastName}`}</h4>
+          <Card title={`${student.firstName} ${student.lastName}`} />
         ))}
         <AutoComplete courseId={id} addToTeam={addStudentToTeam} />
         <Button

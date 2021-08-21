@@ -4,7 +4,7 @@ import Course from "../../models/course"
 import CourseOverview from "./CourseOverview"
 import { useHistory } from "react-router-dom"
 
-import { Text, Stack, Flex } from "@chakra-ui/react"
+import { Heading, Stack, Flex, useColorModeValue } from "@chakra-ui/react"
 import SingleRowForm from "../ui/SingleRowForm"
 
 const CoursesPage = () => {
@@ -50,8 +50,9 @@ const CoursesPage = () => {
       align={"center"}
       justify={"center"}
       direction={"column"}
+      bg={useColorModeValue("gray.50", "gray.800")}
     >
-      <Text fontSize="6xl">Courses</Text>
+      <Heading fontSize="4xl">Courses</Heading>
       <Stack spacing="8" p="4">
         {allCourses}
         <SingleRowForm addToList={addCourse} content="course" />

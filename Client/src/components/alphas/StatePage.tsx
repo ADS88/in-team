@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "../../axios-config"
 import { RouteComponentProps } from "react-router"
-import { Flex, Stack, Text } from "@chakra-ui/react"
+import { Flex, Stack, Text, Heading, useColorModeValue } from "@chakra-ui/react"
 import Question from "../../models/question"
 import SingleRowForm from "../ui/SingleRowForm"
 import Card from "../ui/Card"
@@ -43,9 +43,10 @@ const StatePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
       align={"center"}
       justify={"center"}
       direction={"column"}
+      bg={useColorModeValue("gray.50", "gray.800")}
     >
-      <Text fontSize="6xl">{stateName}</Text>
-      <Text fontSize="2xl">Questions</Text>
+      <Heading fontSize="4xl">{stateName}</Heading>
+
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         {questions.map(question => (
           <Card title={question.content} key={question.id} />

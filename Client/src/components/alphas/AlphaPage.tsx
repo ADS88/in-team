@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "../../axios-config"
 import { RouteComponentProps, useHistory } from "react-router"
-import { Flex, Text } from "@chakra-ui/react"
+import { Flex, Text, Heading, useColorModeValue, Stack } from "@chakra-ui/react"
 import State from "../../models/state"
 import SingleRowForm from "../ui/SingleRowForm"
 import Card from "../ui/Card"
@@ -49,11 +49,13 @@ const AlphaPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
       align={"center"}
       justify={"center"}
       direction={"column"}
+      bg={useColorModeValue("gray.50", "gray.800")}
     >
-      <Text fontSize="6xl">{alphaName}</Text>
+      <Heading fontSize={"4xl"}>{alphaName}</Heading>
       <Text fontSize="2xl">States</Text>
-
-      {allStates}
+      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={6} px={6}>
+        {allStates}
+      </Stack>
 
       <SingleRowForm addToList={addState} content="state" />
     </Flex>

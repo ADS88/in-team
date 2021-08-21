@@ -2,7 +2,14 @@ import Team from "../../models/team"
 import { useEffect, useState } from "react"
 import axios from "../../axios-config"
 import { RouteComponentProps, useHistory } from "react-router"
-import { Button, Flex, Stack, Text } from "@chakra-ui/react"
+import {
+  Button,
+  Flex,
+  Stack,
+  Text,
+  Heading,
+  useColorModeValue,
+} from "@chakra-ui/react"
 import TeamOverview from "./TeamOverview"
 import Iteration from "../../models/iteration"
 import AddIteration from "./AddIteration"
@@ -47,17 +54,21 @@ const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
       align={"center"}
       justify={"center"}
       direction={"column"}
+      bg={useColorModeValue("gray.50", "gray.800")}
+      py="8"
     >
-      <Text fontSize="6xl">{courseName}</Text>
+      <Heading fontSize="4xl">{courseName}</Heading>
       <Text fontSize="2xl">Teams</Text>
-      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={6} px={6}>
         {teams.map(team => (
           <TeamOverview name={team.name} id={team.id} />
         ))}
 
         <SingleRowForm addToList={addTeam} content="team" />
 
-        <Text fontSize="2xl">Iterations</Text>
+        <Text fontSize="2xl" align="center">
+          Iterations
+        </Text>
 
         {iterations.map(iteration => (
           <TeamOverview name={iteration.name} id={iteration.id} />

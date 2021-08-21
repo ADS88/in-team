@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import axios from "../../axios-config"
 import { Button } from "@chakra-ui/react"
 import { Link as RouterLink } from "react-router-dom"
-import { Stack, Flex, Text } from "@chakra-ui/react"
+import { Stack, Flex, Heading } from "@chakra-ui/react"
 import SurveyOverview from "./SurveyOverview"
 import Survey from "../../models/survey"
 
@@ -26,7 +26,7 @@ const SurveyPage = () => {
       justify={"center"}
       direction={"column"}
     >
-      <Text fontSize="6xl">Surveys</Text>
+      <Heading fontSize={"4xl"}>Surveys</Heading>
       <Stack spacing={8} mx={"auto"} maxW={"2xl"} py={12} px={6}>
         {surveys.map(survey => (
           <SurveyOverview survey={survey} />
@@ -41,7 +41,7 @@ const SurveyPage = () => {
           as={RouterLink}
           to="createsurvey"
         >
-          Add Survey
+          Create Survey
         </Button>
       </Stack>
     </Flex>
