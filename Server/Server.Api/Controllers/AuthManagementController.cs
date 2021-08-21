@@ -88,9 +88,8 @@ namespace Server.Api.Controllers
             var newUser = new AppUser() {UserName = user.Email, Email = user.Email, FirstName=user.FirstName, LastName=user.LastName};
             var isCreated = await userManager.CreateAsync(newUser, user.Password);
 
-            var addRole = await userManager.AddToRoleAsync(newUser, Roles.STUDENT);
-
             if(isCreated.Succeeded){
+                await userManager.AddToRoleAsync(newUser, Roles.STUDENT);
                 var jwtToken = GenerateJwtToken(newUser);
                 return Ok(new UserRegistrationResponseDto(){
                     Success = true,

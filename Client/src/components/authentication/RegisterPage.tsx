@@ -27,7 +27,7 @@ interface RegisterFormValues {
 }
 
 const RegisterPage = () => {
-  const [error, setError] = useState(false)
+  const [error, setError] = useState("")
   const history = useHistory()
   const authContext = useContext(AuthContext)
 
@@ -43,7 +43,7 @@ const RegisterPage = () => {
       authContext.login(response.data.token)
       history.push("/")
     } catch (error) {
-      setError(true)
+      setError(error.response.data.errors[0])
     }
   }
 
@@ -132,7 +132,6 @@ const RegisterPage = () => {
                       message: "Password must be at least 6 characters!",
                     },
                   })}
-                  minLength={6}
                   type="password"
                 />
                 <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
@@ -149,7 +148,7 @@ const RegisterPage = () => {
                   Create Account
                 </Button>
               </Stack>
-              {error && (
+              {error !== "" && (
                 <Text color={"red.500"}>
                   Email already in use, please use another!
                 </Text>
