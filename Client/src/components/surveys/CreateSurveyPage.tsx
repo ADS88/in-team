@@ -77,7 +77,6 @@ const CreateSurveyPage = () => {
 
   return (
     <Flex
-      xp
       minH={"90vh"}
       align={"center"}
       justify={"center"}

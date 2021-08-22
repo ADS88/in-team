@@ -8,6 +8,7 @@ import IRoute from "./IRoute"
 import StatePage from "../components/alphas/StatePage"
 import SurveyPage from "../components/surveys/SurveyPage"
 import CreateSurveyPage from "../components/surveys/CreateSurveyPage"
+import AnswerSurveyPage from "../components/surveys/AnswerSurveyPage"
 
 const authenticatedRoutes: IRoute[] = [
   {
@@ -63,6 +64,12 @@ const authenticatedRoutes: IRoute[] = [
     name: "Create Survey page",
     exact: true,
     component: CreateSurveyPage,
+  },
+  {
+    path: "/answersurvey/:id",
+    name: "Answer Survey page",
+    exact: true,
+    component: AnswerSurveyPage,
   },
 ]
 
