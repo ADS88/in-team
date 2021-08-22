@@ -5,12 +5,15 @@ using Server.Api.Dtos;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace Server.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class SurveyController : ControllerBase
     {
         private readonly ISurveyService service;
@@ -43,9 +46,13 @@ namespace Server.Api.Controllers
         }
 
         [HttpPost("{id}/answer")]
-        public async Task<ActionResult<SurveyDto>> AnswerSurvey(AnswerSurveyDto dto)
+        public async Task<ActionResult<SurveyDto>> AnswerSurvey(AnswerSurveyDto dto, int id)
         {
+            var userId = User.Claims.Where(x => x.Type == "id").FirstOrDefault()?.Value;
+            Console.WriteLine($"userId is {userId}");
+            // var surveyAttempt = await service.AnswerSurvey(dto, id, User);
             return Ok();
+            //return CreatedAtAction(nameof(GetSurveys), new { id = survey.Id }, mapper.Map<SurveyDto>(survey));
         }
     }
 }

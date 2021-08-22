@@ -4,6 +4,8 @@ using Server.Api.Repositories;
 using Server.Api.Entities;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Server.Api.Dtos;
+using System.Linq;
 
 namespace Server.Api.Services
 {
@@ -43,6 +45,27 @@ namespace Server.Api.Services
 
             await surveysRepository.Create(survey);
             return survey;
+        }
+
+        public async Task<SurveyAttempt> AnswerSurvey(AnswerSurveyDto dto, int surveyId, AppUser user){
+
+            SurveyAttempt surveyAttempt = new (){
+                SurveyId = surveyId,
+                AppUser = user,
+                CompletedDate = DateTimeOffset.UtcNow,
+            };
+            await surveysRepository.CreateSurveyAttempt(surveyAttempt);
+
+
+            var answers = dto.Answers.Select(answer => new Answer(){
+                LikertRating = answer.LikertRating,
+                QuestionId = answer.QuestionId,
+                Attempt = surveyAttempt,
+            });
+
+            await surveysRepository.AddAnswers(answers);
+
+            return surveyAttempt;
         }
 
         public async Task<Survey> Get(int id){

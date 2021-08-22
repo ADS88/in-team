@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Server.Api.Data;
@@ -29,6 +30,16 @@ namespace Server.Api.Repositories
         public async Task<IEnumerable<Survey>> GetAll()
         {
             return await context.Surveys.ToListAsync();
+        }
+
+        public async Task CreateSurveyAttempt(SurveyAttempt attempt){
+            context.SurveyAttempts.Add(attempt);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task AddAnswers(IEnumerable<Answer> answers){
+            context.Answers.AddRange(answers);
+            await context.SaveChangesAsync();
         }
 
     }

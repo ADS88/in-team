@@ -19,6 +19,8 @@ namespace Server.Api.Entities
 
         public DateTimeOffset CompletedDate { get; init; }
 
+        public ICollection<Answer> Answers { get; init; }
+
         public Boolean IsCompleted
         {
             get

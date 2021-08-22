@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Server.Api.Entities;
+using Server.Api.Dtos;
 
 namespace Server.Api.Services
 {
@@ -11,5 +12,7 @@ namespace Server.Api.Services
         Task<Survey> Create(string name, ICollection<int> stateIds, ICollection<int> teamIds, DateTimeOffset start, DateTimeOffset end);
         Task<Survey> Get(int id);
         Task<IEnumerable<Survey>> GetAll();
+
+        Task<SurveyAttempt> AnswerSurvey(AnswerSurveyDto dto, int surveyId, AppUser user);
     }
 }
