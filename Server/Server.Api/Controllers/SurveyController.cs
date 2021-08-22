@@ -35,5 +35,11 @@ namespace Server.Api.Controllers
             var survey = await service.Create(dto.Name, dto.StateIds, dto.TeamIds, dto.OpeningDate, dto.ClosingDate);
             return CreatedAtAction(nameof(GetSurveys), new { id = survey.Id }, mapper.Map<SurveyDto>(survey));
         }
+
+        [HttpGet("{id}")]
+        public async Task<SurveyQuestionsDto> GetQuestions(int id){
+            var survey = await service.Get(id);
+            return mapper.Map<SurveyQuestionsDto>(survey);
+        }
     }
 }

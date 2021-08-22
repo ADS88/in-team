@@ -5,11 +5,12 @@ using Server.Api.Entities;
 
 namespace Server.Api.Dtos
 {
-    public record SurveyDto
+    public record SurveyQuestionsDto
     {
+
         [Required]
         public int Id { get; init; }
-        
+
         [Required]
         public string Name { get; init; }
 
@@ -20,10 +21,6 @@ namespace Server.Api.Dtos
         public DateTimeOffset ClosingDate { get; init; }
 
         [Required]
-        public ICollection<State> States { get; init; }
-
-        [Required]
-        public ICollection<Team> Teams { get; init; }
-
+        public ICollection<QuestionDto> Questions { get; init; }
     }
 }

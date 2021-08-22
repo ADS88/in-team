@@ -45,13 +45,11 @@ namespace Server.Api.Repositories
         {
             var team = await context.Teams.Include(t => t.Members).FirstOrDefaultAsync(t => t.Id == teamId);
             if(team is null){
-                Console.WriteLine("team is null");
                 throw new NullReferenceException();
             }
             var user = await userManager.FindByIdAsync(memberId);
             
             if(user is null){
-                Console.WriteLine("User is null");
                 throw new NullReferenceException();
             }
             team.Members.Add(user);

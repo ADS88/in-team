@@ -18,12 +18,12 @@ namespace Server.Api.Repositories
         public async Task Create(Survey survey)
         {
             context.Surveys.Add(survey);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(); 
         }
 
         public async Task<Survey> Get(int id)
         {
-            return await context.Surveys.FirstOrDefaultAsync(survey => survey.Id == id);
+            return await context.Surveys.Include(s => s.Questions).FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task<IEnumerable<Survey>> GetAll()

@@ -29,7 +29,7 @@ const SurveyPage = () => {
       <Heading fontSize={"4xl"}>Surveys</Heading>
       <Stack spacing={8} mx={"auto"} maxW={"2xl"} py={12} px={6}>
         {surveys.map(survey => (
-          <SurveyOverview survey={survey} />
+          <SurveyOverview survey={survey} key={survey.id} />
         ))}
 
         <Button
