@@ -1,11 +1,4 @@
-import {
-  Box,
-  Center,
-  Heading,
-  Text,
-  Stack,
-  useColorModeValue,
-} from "@chakra-ui/react"
+import { Box, Heading, Text, Stack, useColorModeValue } from "@chakra-ui/react"
 import Survey from "../../models/survey"
 
 interface SurveyOverviewProps {

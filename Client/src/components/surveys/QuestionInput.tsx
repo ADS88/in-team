@@ -10,13 +10,14 @@ import {
 } from "@chakra-ui/react"
 import { useState } from "react"
 
+import { LikertRating } from "../../models/likertrating"
+
 export interface QuestionInputProps {
   question: Question
+  updateAnswer: (questionId: number, answer: LikertRating) => void
 }
 
-type LikertAnswer = 1 | 2 | 3 | 4 | 5
-
-const QuestionInput = ({ question }: QuestionInputProps) => {
+const QuestionInput = ({ question, updateAnswer }: QuestionInputProps) => {
   const states = {
     1: "Strongly disagree",
     2: "Disagree",
@@ -36,7 +37,10 @@ const QuestionInput = ({ question }: QuestionInputProps) => {
         min={1}
         max={5}
         step={1}
-        onChange={(value: LikertAnswer) => setDescription(states[value])}
+        onChange={(value: LikertRating) => {
+          setDescription(states[value])
+          updateAnswer(question.id, value)
+        }}
       >
         <SliderTrack bg="pink.100">
           <Box position="relative" right={10} />

@@ -41,5 +41,11 @@ namespace Server.Api.Controllers
             var survey = await service.Get(id);
             return mapper.Map<SurveyQuestionsDto>(survey);
         }
+
+        [HttpPost("{id}/answer")]
+        public async Task<ActionResult<SurveyDto>> AnswerSurvey(AnswerSurveyDto dto)
+        {
+            return Ok();
+        }
     }
 }

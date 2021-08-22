@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "../../axios-config"
 import { RouteComponentProps } from "react-router"
-import { Flex, Stack, Text, Heading, useColorModeValue } from "@chakra-ui/react"
+import { Flex, Stack, Heading, useColorModeValue } from "@chakra-ui/react"
 import Question from "../../models/question"
 import SingleRowForm from "../ui/SingleRowForm"
 import Card from "../ui/Card"

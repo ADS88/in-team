@@ -30,7 +30,6 @@ const CoursesPage = () => {
   useEffect(() => {
     getAllCourses().then(courses => {
       setCourses(courses.data)
-      console.log(courses)
     })
   }, [])
 

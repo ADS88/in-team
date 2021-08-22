@@ -31,7 +31,6 @@ const AutoComplete = (props: AutoCompleteProps) => {
   }
 
   const onSuggestionClickedHandler = (student: Student) => {
-    console.log("run")
     setSelectedStudent(student)
     setSearch(`${student.firstName} ${student.lastName}`)
   }
