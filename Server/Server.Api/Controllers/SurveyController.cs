@@ -48,11 +48,9 @@ namespace Server.Api.Controllers
         [HttpPost("{id}/answer")]
         public async Task<ActionResult<SurveyDto>> AnswerSurvey(AnswerSurveyDto dto, int id)
         {
-            var userId = User.Claims.Where(x => x.Type == "id").FirstOrDefault()?.Value;
-            Console.WriteLine($"userId is {userId}");
-            // var surveyAttempt = await service.AnswerSurvey(dto, id, User);
-            return Ok();
-            //return CreatedAtAction(nameof(GetSurveys), new { id = survey.Id }, mapper.Map<SurveyDto>(survey));
+            var userId = User.Claims.Where(x => x.Type == "Id").FirstOrDefault()?.Value;
+            var surveyAttempt = await service.AnswerSurvey(dto, id, userId);
+            return CreatedAtAction(nameof(GetSurveys), new { id = surveyAttempt.Id }, mapper.Map<SurveyAttemptDto>(surveyAttempt));
         }
     }
 }

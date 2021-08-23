@@ -13,6 +13,6 @@ namespace Server.Api.Services
         Task<Survey> Get(int id);
         Task<IEnumerable<Survey>> GetAll();
 
-        Task<SurveyAttempt> AnswerSurvey(AnswerSurveyDto dto, int surveyId, AppUser user);
+        Task<SurveyAttempt> AnswerSurvey(AnswerSurveyDto dto, int surveyId, string userId);
     }
 }
