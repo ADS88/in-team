@@ -25,6 +25,9 @@ namespace Server.Api.Dtos
         [Required]
         public ICollection<SimplifiedTeamDto> Teams { get; init; }
 
+        [Required]
+        public ICollection<Question> Questions { get; init; }
+
     }
 
     public record SimplifiedTeamDto {

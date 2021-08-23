@@ -25,34 +25,15 @@ export default function SurveyOverview({ survey }: SurveyOverviewProps) {
         >
           {survey.name}
         </Heading>
-        <Stack direction="row">
-          <Text
-            color={"pink.300"}
-            textTransform={"uppercase"}
-            fontWeight={800}
-            fontSize={"sm"}
-            letterSpacing={1.1}
-          >
-            Team:
-          </Text>
-          <Text fontSize="sm" color={"gray.500"}>
-            Managed, Adjourning
-          </Text>
-        </Stack>
-        <Stack direction="row">
-          <Text
-            color={"blue.300"}
-            textTransform={"uppercase"}
-            fontWeight={800}
-            fontSize={"sm"}
-            letterSpacing={1.1}
-          >
-            Assigned to:
-          </Text>
-          <Text fontSize="sm" color={"gray.500"}>
-            {teamNames}
-          </Text>
-        </Stack>
+        <Text
+          color={"blue.300"}
+          textTransform={"uppercase"}
+          fontWeight={800}
+          fontSize={"sm"}
+          letterSpacing={1.1}
+        >
+          {teamNames}
+        </Text>
       </Stack>
       <Stack
         mt={6}

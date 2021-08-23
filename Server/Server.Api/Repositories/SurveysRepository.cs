@@ -29,7 +29,9 @@ namespace Server.Api.Repositories
 
         public async Task<IEnumerable<Survey>> GetAll()
         {
-            return await context.Surveys.Include(s => s.Teams).ToListAsync();
+            return await context.Surveys
+                .Include(s => s.Teams)
+                .ToListAsync();
         }
 
         public async Task CreateSurveyAttempt(SurveyAttempt attempt){
