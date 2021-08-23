@@ -25,6 +25,7 @@ const SurveyPage = () => {
       align={"center"}
       justify={"center"}
       direction={"column"}
+      p="8"
     >
       <Heading fontSize={"4xl"}>Surveys</Heading>
       <Stack spacing={8} mx={"auto"} maxW={"2xl"} py={12} px={6}>

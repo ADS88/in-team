@@ -6,6 +6,8 @@ interface SurveyOverviewProps {
 }
 
 export default function SurveyOverview({ survey }: SurveyOverviewProps) {
+  const teamNames = survey.teams?.map(team => team.name).join(", ")
+
   return (
     <Box
       w={"lg"}
@@ -48,7 +50,7 @@ export default function SurveyOverview({ survey }: SurveyOverviewProps) {
             Assigned to:
           </Text>
           <Text fontSize="sm" color={"gray.500"}>
-            Team100, Team200, Team300
+            {teamNames}
           </Text>
         </Stack>
       </Stack>

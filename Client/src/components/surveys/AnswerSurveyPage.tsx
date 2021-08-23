@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "../../axios-config"
 import {
@@ -18,6 +18,7 @@ const AnswerSurveyPage = () => {
   const { id } = useParams<{ id: string }>()
   const [survey, setSurvey] = useState<Survey | null>()
   const [answers, setAnswers] = useState(new Map<number, LikertRating>())
+  const history = useHistory()
 
   useEffect(() => {
     axios.get(`survey/${id}`).then(response => {
@@ -43,7 +44,9 @@ const AnswerSurveyPage = () => {
         return { questionId, likertRating }
       }
     )
-    axios.post(`survey/${id}/answer`, { answers: requestData })
+    axios
+      .post(`survey/${id}/answer`, { answers: requestData })
+      .then(() => history.push("/dashboard"))
   }
 
   return (

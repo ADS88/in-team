@@ -23,7 +23,15 @@ namespace Server.Api.Dtos
         public ICollection<State> States { get; init; }
 
         [Required]
-        public ICollection<Team> Teams { get; init; }
+        public ICollection<SimplifiedTeamDto> Teams { get; init; }
 
+    }
+
+    public record SimplifiedTeamDto {
+        [Required]
+        public int id;
+
+        [Required]
+        public string name;
     }
 }

@@ -16,6 +16,7 @@ import {
 import DatePicker from "../ui/DatePicker"
 import { useForm, Controller } from "react-hook-form"
 import { useReducer, useState } from "react"
+import { useHistory } from "react-router"
 
 interface CreateSurveyFormValues {
   openingDate: Date
@@ -57,6 +58,7 @@ function reducer(
 const CreateSurveyPage = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const [teamIds, setTeamIds] = useState<number[]>([])
+  const history = useHistory()
 
   const {
     register,
@@ -68,7 +70,7 @@ const CreateSurveyPage = () => {
   const createSurvey = (data: CreateSurveyFormValues) => {
     const stateIds = Array.from(state.values()).flat()
     const request = { ...data, stateIds, teamIds }
-    axios.post("survey", request)
+    axios.post("survey", request).then(() => history.push("/surveys"))
   }
 
   const updateTeams = (newTeamIds: number[]) => {

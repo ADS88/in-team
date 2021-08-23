@@ -12,6 +12,7 @@ namespace Server.Api.Helpers
             CreateMap<State, StateDto>().PreserveReferences();
             CreateMap<Question, QuestionDto>().ReverseMap();
             CreateMap<SurveyAttempt, SurveyAttemptDto>().ReverseMap();
+            CreateMap<Team, SimplifiedTeamDto>();
             CreateMap<Course, CourseDto>().ReverseMap();
             CreateMap<AppUser, UserDto>().ReverseMap();
             CreateMap<Iteration, IterationDto>().ReverseMap();

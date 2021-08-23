@@ -1,4 +1,5 @@
 import Question from "./question"
+import Team from "./team"
 
 export default interface Survey {
   id: number
@@ -6,4 +7,5 @@ export default interface Survey {
   openingDate: Date
   closingDate: Date
   questions?: Question[]
+  teams?: Team[]
 }
