@@ -88,7 +88,10 @@ namespace Server.Api.Services
         }
         public async Task<IEnumerable<Survey>> GetSurveysStudentNeedsToComplete(string userId){
             var user = await userRepository.GetUserWithTeams(userId);
-            return await surveysRepository.GetSurveysAssignedToStudent(user);
+            var surveysAssignedToStudent = await surveysRepository.GetSurveysAssignedToStudent(user);
+            var surveyAttemptsFromStudent = await surveysRepository.GetAttemptsFromUser(userId);
+            var attemptedSurveyIds = new HashSet<int>(surveyAttemptsFromStudent.Select(s => s.Id));
+            return surveysAssignedToStudent.Where(s => !attemptedSurveyIds.Contains(s.Id));
         }
     }
 }

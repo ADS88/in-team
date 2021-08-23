@@ -46,7 +46,7 @@ const AnswerSurveyPage = () => {
     )
     axios
       .post(`survey/${id}/answer`, { answers: requestData })
-      .then(() => history.push("/dashboard"))
+      .then(() => history.push("/"))
   }
 
   return (

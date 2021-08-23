@@ -54,7 +54,26 @@ namespace Server.Api.Repositories
             var surveys = await context.Surveys.
                 Include(s => s.Teams)
                 .ToListAsync();
-            return surveys.Where(s => s.Teams.Intersect(user.Teams).Count() > 0);
+
+            ICollection<Survey> usersSurveys = new List<Survey>();
+            foreach(var survey in surveys){
+                foreach(var team in user.Teams){
+                    if(survey.Teams.Contains(team)){
+                        usersSurveys.Add(survey);
+                        break;
+                    }
+                }
+            }
+            return usersSurveys;
+        }
+
+        public async Task<IEnumerable<SurveyAttempt>> GetAttemptsFromUser(string userId){
+            var attempts = await context.SurveyAttempts
+                .Include(s => s.AppUser)
+                .ToListAsync();
+            return attempts.Where(s => s.AppUser.Id == userId);
+
+            
         }
     }
 }
