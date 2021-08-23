@@ -8,7 +8,7 @@ const MySurveysPage = () => {
   const [surveys, setSurveys] = useState<Survey[]>([])
 
   useEffect(() => {
-    axios.get("survey").then(response => {
+    axios.get("survey/pending").then(response => {
       response.data.forEach((survey: any) => {
         survey.openingDate = new Date(survey.openingDate)
         survey.closingDate = new Date(survey.closingDate)

@@ -1,9 +1,10 @@
-using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Server.Api.Data;
 using Server.Api.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Server.Api.Repositories
 {
@@ -49,5 +50,11 @@ namespace Server.Api.Repositories
             return attempt;
         }
 
+        public async Task<IEnumerable<Survey>> GetSurveysAssignedToStudent(AppUser user){
+            var surveys = await context.Surveys.
+                Include(s => s.Teams)
+                .ToListAsync();
+            return surveys.Where(s => s.Teams.Intersect(user.Teams).Count() > 0);
+        }
     }
 }

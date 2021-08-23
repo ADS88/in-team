@@ -45,6 +45,13 @@ namespace Server.Api.Controllers
             return mapper.Map<SurveyQuestionsDto>(survey);
         }
 
+        [HttpGet("pending")]
+        public async Task<IEnumerable<SurveyDto>> GetSurveysStudentNeedsToComplete(){
+            var userId = User.Claims.Where(x => x.Type == "Id").FirstOrDefault()?.Value;
+            var surveys = await service.GetSurveysStudentNeedsToComplete(userId);
+            return surveys.Select(survey => mapper.Map<SurveyDto>(survey));
+        }
+
         [HttpPost("{id}/answer")]
         public async Task<ActionResult<SurveyDto>> AnswerSurvey(AnswerSurveyDto dto, int id)
         {

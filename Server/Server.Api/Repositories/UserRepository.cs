@@ -25,5 +25,12 @@ namespace Server.Api.Repositories
             return await context.AppUsers.Include(user => user.Teams).ToListAsync();
         }
 
+        public async Task<AppUser> GetUserWithTeams(string userId)
+        {
+            return await context.AppUsers
+                .Include(user => user.Teams)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+        }
+
     }
 }

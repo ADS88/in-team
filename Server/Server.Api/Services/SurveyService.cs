@@ -15,12 +15,14 @@ namespace Server.Api.Services
         private readonly ISurveysRepository surveysRepository;
         private readonly IAlphasRepository alphasRepository;
         private readonly ITeamsRepository teamsRepository;
+        private readonly IUserRepository userRepository;
         private readonly UserManager<AppUser> userManager;
-        public SurveyService(ISurveysRepository surveysRepository, IAlphasRepository alphasRepository, ITeamsRepository teamsRepository, UserManager<AppUser> userManager)
+        public SurveyService(ISurveysRepository surveysRepository, IAlphasRepository alphasRepository, ITeamsRepository teamsRepository, IUserRepository userRepository, UserManager<AppUser> userManager)
         {
             this.surveysRepository = surveysRepository;
             this.alphasRepository = alphasRepository;
             this.teamsRepository = teamsRepository;
+            this.userRepository = userRepository;
             this.userManager = userManager;
         }
 
@@ -84,6 +86,9 @@ namespace Server.Api.Services
         public async Task<IEnumerable<Survey>> GetAll(){
             return await surveysRepository.GetAll();
         }
-
+        public async Task<IEnumerable<Survey>> GetSurveysStudentNeedsToComplete(string userId){
+            var user = await userRepository.GetUserWithTeams(userId);
+            return await surveysRepository.GetSurveysAssignedToStudent(user);
+        }
     }
 }
