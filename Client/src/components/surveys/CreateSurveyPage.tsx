@@ -83,6 +83,7 @@ const CreateSurveyPage = () => {
       align={"center"}
       justify={"center"}
       direction={"column"}
+      bg={useColorModeValue("gray.50", "gray.800")}
     >
       <Box
         rounded={"lg"}

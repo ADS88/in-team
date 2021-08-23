@@ -1,5 +1,7 @@
+import MySurveysPage from "../surveys/MySurveysPage"
+
 const Dashboard = () => {
-  return <h1>Dashboard</h1>
+  return <MySurveysPage />
 }
 
 export default Dashboard
