@@ -11,8 +11,15 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  useColorMode,
 } from "@chakra-ui/react"
-import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons"
+import {
+  HamburgerIcon,
+  CloseIcon,
+  ChevronDownIcon,
+  SunIcon,
+  MoonIcon,
+} from "@chakra-ui/icons"
 
 import { Link as RouterLink } from "react-router-dom"
 
@@ -21,6 +28,7 @@ import { AuthContext } from "../../store/auth-context"
 import { useContext } from "react"
 
 export default function WithSubnavigation() {
+  const { colorMode, toggleColorMode } = useColorMode()
   const { isOpen, onToggle } = useDisclosure()
   const history = useHistory()
   const authContext = useContext(AuthContext)
@@ -36,6 +44,17 @@ export default function WithSubnavigation() {
     >
       Sign In
     </Button>
+  )
+
+  const toggeColorModeButton = (
+    <IconButton
+      aria-label="Color mode toggle button"
+      icon={colorMode === "light" ? <SunIcon /> : <MoonIcon />}
+      isRound={true}
+      size="sm"
+      alignSelf="flex-end"
+      onClick={toggleColorMode}
+    />
   )
 
   const signUpButton = (
@@ -138,17 +157,20 @@ export default function WithSubnavigation() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Text
-            onClick={() => history.push("/")}
-            _hover={{
-              cursor: "pointer",
-            }}
-            textAlign={useBreakpointValue({ base: "center", md: "left" })}
-            fontFamily={"heading"}
-            color={useColorModeValue("gray.800", "white")}
-          >
-            <b>InTeam</b>
-          </Text>
+          <Flex align="center" gridGap="2">
+            <Text
+              onClick={() => history.push("/")}
+              _hover={{
+                cursor: "pointer",
+              }}
+              textAlign={useBreakpointValue({ base: "center", md: "left" })}
+              fontFamily={"heading"}
+              color={useColorModeValue("gray.800", "white")}
+            >
+              <b>InTeam</b>
+            </Text>
+            {toggeColorModeButton}
+          </Flex>
         </Flex>
 
         <Stack
