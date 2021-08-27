@@ -58,9 +58,11 @@ namespace Server.Api.Controllers
                 });
             }
             var jwtToken = GenerateJwtToken(existingUser);
+            var roles = await userManager.GetRolesAsync(existingUser);
             return Ok(new UserRegistrationResponseDto(){
                     Success = true,
-                    Token = jwtToken
+                    Token = jwtToken,
+                    Role = roles[0]
                 });
         }
 
@@ -93,7 +95,8 @@ namespace Server.Api.Controllers
                 var jwtToken = GenerateJwtToken(newUser);
                 return Ok(new UserRegistrationResponseDto(){
                     Success = true,
-                    Token = jwtToken
+                    Token = jwtToken,
+                    Role = Roles.STUDENT
                 });
             } else {
                 return BadRequest(new UserRegistrationResponseDto(){

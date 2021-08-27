@@ -32,7 +32,9 @@ export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure()
   const history = useHistory()
   const authContext = useContext(AuthContext)
-  let isLoggedIn = authContext.isLoggedIn
+
+  const isLoggedIn = authContext.isLoggedIn
+  const isLecturer = authContext.role === "Lecturer"
 
   const loginButton = (
     <Button
@@ -179,14 +181,15 @@ export default function WithSubnavigation() {
           direction={"row"}
           spacing={6}
         >
-          {isLoggedIn ? (
+          {isLecturer && (
             <>
               {surveysButton}
               {alphasButton}
               {coursesButton}
-              {logoutButton}
             </>
-          ) : (
+          )}
+          {isLoggedIn && logoutButton}
+          {!isLoggedIn && (
             <>
               {loginButton}
               {signUpButton}
@@ -205,7 +208,7 @@ export default function WithSubnavigation() {
 const MobileNav = () => {
   const authContext = useContext(AuthContext)
   const NAV_ITEMS: Array<NavItem> = []
-  if (authContext.isLoggedIn) {
+  if (authContext.role === "Lecturer") {
     NAV_ITEMS.push({
       label: "Courses",
       href: "courses",
@@ -218,7 +221,8 @@ const MobileNav = () => {
       label: "Surveys",
       href: "surveys",
     })
-  } else {
+  }
+  if (!authContext.isLoggedIn) {
     NAV_ITEMS.push({
       label: "Register",
       href: "register",
