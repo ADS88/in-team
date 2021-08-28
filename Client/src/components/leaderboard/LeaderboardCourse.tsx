@@ -11,7 +11,7 @@ const LeaderboardCourse = ({ course }: LeaderboardCourseProps) => {
     <Box alignItems="left">
       <Heading py="4">SENG302 Leaderboard</Heading>
       {course.teams
-        ?.sort(team => team.points)
+        ?.sort((a, b) => b.points - a.points)
         .map((team, index) => (
           <LeaderboardTeam team={team} position={index + 1} />
         ))}
