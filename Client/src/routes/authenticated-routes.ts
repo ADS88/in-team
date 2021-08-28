@@ -10,6 +10,7 @@ import SurveyPage from "../components/surveys/SurveyPage"
 import CreateSurveyPage from "../components/surveys/CreateSurveyPage"
 import AnswerSurveyPage from "../components/surveys/AnswerSurveyPage"
 import ProfilePage from "../components/profile/ProfilePage"
+import LeaderboardPage from "../components/leaderboard/LeaderboardPage"
 
 const authenticatedRoutes: IRoute[] = [
   {
@@ -77,6 +78,12 @@ const authenticatedRoutes: IRoute[] = [
     name: "User Profile Page",
     exact: true,
     component: ProfilePage,
+  },
+  {
+    path: "/leaderboard",
+    name: "Leaderboard Page",
+    exact: true,
+    component: LeaderboardPage,
   },
 ]
 

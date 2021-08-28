@@ -16,7 +16,7 @@ namespace Server.Api.Repositories
 
         public async Task<IEnumerable<Course>> GetAll()
         {
-            return await context.Courses.ToListAsync();
+            return await context.Courses.Include(course => course.Teams).ToListAsync();
         }
 
         public async Task<Course> Get(int id)

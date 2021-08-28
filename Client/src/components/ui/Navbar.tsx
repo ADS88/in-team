@@ -119,6 +119,19 @@ export default function WithSubnavigation() {
     </Button>
   )
 
+  const leaderboardButton = (
+    <Button
+      display={{ base: "none", md: "inline-flex" }}
+      as={RouterLink}
+      fontSize={"sm"}
+      fontWeight={400}
+      variant={"link"}
+      to={"/leaderboard"}
+    >
+      Leaderboard
+    </Button>
+  )
+
   const alphasButton = (
     <Button
       display={{ base: "none", md: "inline-flex" }}
@@ -195,7 +208,12 @@ export default function WithSubnavigation() {
           direction={"row"}
           spacing={6}
         >
-          {isStudent && profileButton}
+          {isStudent && (
+            <>
+              {leaderboardButton}
+              {profileButton}
+            </>
+          )}
           {isLecturer && (
             <>
               {surveysButton}
@@ -235,6 +253,16 @@ const MobileNav = () => {
     NAV_ITEMS.push({
       label: "Surveys",
       href: "surveys",
+    })
+  }
+  if (authContext.role === "Student") {
+    NAV_ITEMS.push({
+      label: "Leaderboard",
+      href: "leaderboard",
+    })
+    NAV_ITEMS.push({
+      label: "Profile",
+      href: "profile",
     })
   }
   if (!authContext.isLoggedIn) {
