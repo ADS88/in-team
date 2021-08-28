@@ -19,7 +19,7 @@ const ProfileTeamOverview = ({ team }: ProfileTeamOverviewProps) => {
         direction={{ sm: "column", md: "row" }}
       >
         <Heading>{team.name}</Heading>
-        <Heading color="pink.500">{team.points} Points(3rd)</Heading>
+        <Heading color="pink.500">{team.points} Points</Heading>
       </Flex>
       <Text fontSize="2xl" color="gray.400">
         Managed state
