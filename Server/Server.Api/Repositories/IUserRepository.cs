@@ -9,5 +9,6 @@ namespace Server.Api.Repositories
         Task<IEnumerable<AppUser>> GetAll();
         Task<IEnumerable<AppUser>> GetAllWithTeams();
         Task<AppUser> GetUserWithTeams(string userId);
+        Task UpdateProfileIcon(string userId, string newIcon);
     }
 }

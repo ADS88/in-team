@@ -8,8 +8,12 @@ namespace Server.Api.Entities
     {
         [Required]
         public string FirstName {get; set;}
+
         [Required]
         public string LastName {get; set;}
+
+        [Required]
+        public string ProfileIcon { get; set; }
 
         public ICollection<Team> Teams { get; set; }
     }

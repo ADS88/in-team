@@ -15,8 +15,9 @@ import {
 import { IconName } from "../../models/icon-name"
 import ProfileIcon from "../ui/ProfileIcon"
 import { allNames } from "../../models/icon-name"
+import axios from "../../axios-config"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export interface ProfilePageProps {}
 
@@ -25,9 +26,19 @@ const ProfilePage = () => {
   const [icon, setIcon] = useState<IconName>("angler")
 
   const updateProfileIcon = (newIcon: IconName) => {
-    setIcon(newIcon)
-    onClose()
+    axios
+      .patch("student/current/profile-icon", { profileIcon: newIcon })
+      .then(() => {
+        setIcon(newIcon)
+        onClose()
+      })
   }
+
+  useEffect(() => {
+    axios.get("student/current").then(response => {
+      setIcon(response.data.profileIcon)
+    })
+  }, [])
 
   return (
     <Flex

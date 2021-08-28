@@ -25,6 +25,9 @@ namespace Server.Api.Services
             .Where(user => EligibleForCourse(user, courseId))
             .Where(user => IsStudent(user));
         }
+        public async Task UpdateProfileIcon(string userId, string newIcon){
+            await repository.UpdateProfileIcon(userId, newIcon);
+        }
 
         private Boolean EligibleForCourse(AppUser user, int courseId){
             return !user.Teams.Any(team => team.CourseId == courseId);

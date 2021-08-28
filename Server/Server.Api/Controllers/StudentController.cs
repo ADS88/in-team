@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Server.Api.Services;
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Server.Api.Entities;
+using System;
 
 namespace Server.Api.Controllers
 {
@@ -17,13 +20,14 @@ namespace Server.Api.Controllers
     {
 
         private readonly IUserService service;
-
+        private readonly UserManager<AppUser> userManager;
         private readonly IMapper mapper;
 
-        public StudentController(IUserService service, IMapper mapper)
+        public StudentController(IUserService service, IMapper mapper, UserManager<AppUser> userManager)
         {
             this.service = service;
             this.mapper = mapper;
+            this.userManager = userManager;
         }
 
         [HttpGet]
@@ -31,6 +35,35 @@ namespace Server.Api.Controllers
         {
             var students = (await service.GetAll()).Select(student => mapper.Map<UserDto>(student));
             return students;
+        }
+
+        [HttpGet("current")]
+        public async Task<ActionResult<FullUserDto>> GetCurrentStudent()
+        {
+            var userId = User.Claims.Where(x => x.Type == "Id").FirstOrDefault()?.Value;
+            var student = await userManager.FindByIdAsync(userId);
+            if(student == null){
+                return NotFound();
+            }
+            return mapper.Map<FullUserDto>(student);
+        }
+
+        [HttpPatch("current/profile-icon")]
+        public async Task<ActionResult> UpdateProfileIcon(UpdateProfileIconDto dto)
+        {
+            var possibleProfileIcons =  new string[]{"angler", "hamburger", "dog","lion", "octopus", "samurai", "sunbeams", "walrus","muscles", "sushi", "kiwi",
+            "mantaray", "bird", "squid", "inspiration", "dinosaur", "winner", "backstab", "buffalo", "snowman", "spectre", "spacesuit", "spider", "totem", "monkey","fisherman", "pumpkin", "robot"};
+            
+            if(!possibleProfileIcons.Contains(dto.ProfileIcon)){
+                return BadRequest();
+            }
+            var userId = User.Claims.Where(x => x.Type == "Id").FirstOrDefault()?.Value;
+            var student = await userManager.FindByIdAsync(userId);
+            if(student == null){
+                return NotFound();
+            }
+            await service.UpdateProfileIcon(userId, dto.ProfileIcon);
+            return Ok();
         }
 
         [HttpGet("course/{courseId}")]

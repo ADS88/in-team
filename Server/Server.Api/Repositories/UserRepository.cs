@@ -32,5 +32,11 @@ namespace Server.Api.Repositories
                 .FirstOrDefaultAsync(u => u.Id == userId);
         }
 
+        public async Task UpdateProfileIcon(string userId, string profileIcon){
+             var user = await context.AppUsers.FirstOrDefaultAsync(u => u.Id == userId);
+             user.ProfileIcon = profileIcon;
+             await context.SaveChangesAsync();
+        }
+
     }
 }

@@ -87,7 +87,13 @@ namespace Server.Api.Controllers
                 });
             }
 
-            var newUser = new AppUser() {UserName = user.Email, Email = user.Email, FirstName=user.FirstName, LastName=user.LastName};
+            var newUser = new AppUser() {
+                UserName = user.Email, 
+                Email = user.Email,
+                FirstName = user.FirstName, 
+                LastName = user.LastName,
+                ProfileIcon = "angler" 
+                };
             var isCreated = await userManager.CreateAsync(newUser, user.Password);
 
             if(isCreated.Succeeded){

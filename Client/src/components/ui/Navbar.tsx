@@ -35,6 +35,7 @@ export default function WithSubnavigation() {
 
   const isLoggedIn = authContext.isLoggedIn
   const isLecturer = authContext.role === "Lecturer"
+  const isStudent = authContext.role === "Student"
 
   const loginButton = (
     <Button
@@ -102,6 +103,19 @@ export default function WithSubnavigation() {
       to={"/courses"}
     >
       Courses
+    </Button>
+  )
+
+  const profileButton = (
+    <Button
+      display={{ base: "none", md: "inline-flex" }}
+      as={RouterLink}
+      fontSize={"sm"}
+      fontWeight={400}
+      variant={"link"}
+      to={"/profile"}
+    >
+      Profile
     </Button>
   )
 
@@ -181,6 +195,7 @@ export default function WithSubnavigation() {
           direction={"row"}
           spacing={6}
         >
+          {isStudent && profileButton}
           {isLecturer && (
             <>
               {surveysButton}
