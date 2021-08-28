@@ -32,6 +32,14 @@ namespace Server.Api.Repositories
                 .FirstOrDefaultAsync(u => u.Id == userId);
         }
 
+        public async Task<AppUser> GetUserWithTeamsAndMembers(string userId)
+        {
+            return await context.AppUsers
+                .Include(user => user.Teams)
+                .ThenInclude(team => team.Members)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+        }
+
         public async Task UpdateProfileIcon(string userId, string profileIcon){
              var user = await context.AppUsers.FirstOrDefaultAsync(u => u.Id == userId);
              user.ProfileIcon = profileIcon;

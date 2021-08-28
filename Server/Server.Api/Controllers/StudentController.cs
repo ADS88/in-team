@@ -41,7 +41,7 @@ namespace Server.Api.Controllers
         public async Task<ActionResult<FullUserDto>> GetCurrentStudent()
         {
             var userId = User.Claims.Where(x => x.Type == "Id").FirstOrDefault()?.Value;
-            var student = await userManager.FindByIdAsync(userId);
+            var student = await service.GetFullDetails(userId);
             if(student == null){
                 return NotFound();
             }

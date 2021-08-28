@@ -4,7 +4,6 @@ import {
   Heading,
   VStack,
   SkeletonCircle,
-  Text,
 } from "@chakra-ui/react"
 import { IconName } from "../../models/icon-name"
 import axios from "../../axios-config"
@@ -12,11 +11,14 @@ import Badges from "./Badges"
 import { useEffect, useState } from "react"
 import Student from "../../models/student"
 import UpdateProfileIcon from "./UpdateProfileIcon"
+import Team from "../../models/team"
+import ProfileTeamOverview from "./ProfileTeamOverview"
 
 export interface ProfilePageProps {}
 
 const ProfilePage = () => {
   const [student, setStudent] = useState<Student | null>(null)
+  const [teams, setTeams] = useState<Team[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   const updateProfileIconInUI = (newIcon: IconName) => {
@@ -31,6 +33,7 @@ const ProfilePage = () => {
   useEffect(() => {
     axios.get("student/current").then(response => {
       setStudent(response.data)
+      setTeams(response.data.teams)
       setIsLoading(false)
     })
   }, [])
@@ -59,21 +62,9 @@ const ProfilePage = () => {
         </Heading>
         <Badges />
 
-        <Flex
-          p="50"
-          width="xl"
-          justifyContent="space-between"
-          alignItems="center"
-          direction={{ sm: "column", md: "row" }}
-        >
-          <Heading>Team100 </Heading>
-          <Heading color="pink.500">50 Points(3rd)</Heading>
-        </Flex>
-        <Text fontSize="2xl" color="gray.400">
-          Managed state
-        </Text>
-
-        {/* <TeamMemberOverview student={student} /> */}
+        {teams.map(team => (
+          <ProfileTeamOverview team={team} />
+        ))}
       </VStack>
     </Flex>
   )

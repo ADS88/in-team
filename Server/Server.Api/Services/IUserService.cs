@@ -9,5 +9,7 @@ namespace Server.Api.Services
         Task<IEnumerable<AppUser>> GetAll();
         Task<IEnumerable<AppUser>> GetEligibleForCourse(int courseId, string search);
         Task UpdateProfileIcon (string userId, string newIcon);
+
+        Task<AppUser> GetFullDetails(string userId);
     }
 }

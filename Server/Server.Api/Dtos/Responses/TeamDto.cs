@@ -9,6 +9,6 @@ namespace Server.Api.Dtos
         public int Id { get; init; }
         public String Name { get; init; }
         public DateTimeOffset CreatedDate { get; init; }
-        public ICollection<AppUser> Members { get; init; }
+        public ICollection<UserDto> Members { get; init; }
     }
 }

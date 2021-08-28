@@ -29,6 +29,10 @@ namespace Server.Api.Services
             await repository.UpdateProfileIcon(userId, newIcon);
         }
 
+        public async Task<AppUser> GetFullDetails(string userId){
+            return await repository.GetUserWithTeamsAndMembers(userId);
+        }
+
         private Boolean EligibleForCourse(AppUser user, int courseId){
             return !user.Teams.Any(team => team.CourseId == courseId);
         }
