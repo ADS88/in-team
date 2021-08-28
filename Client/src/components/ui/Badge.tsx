@@ -21,7 +21,7 @@ const badges = {
   improving: GiTeamIdea,
 }
 
-const ProfileIcon = (props: BadgeProps) => {
+const Badge = (props: BadgeProps) => {
   const badge = badges[props.name]
 
   const capitalize = (string: string) =>
@@ -48,4 +48,4 @@ const ProfileIcon = (props: BadgeProps) => {
   )
 }
 
-export default ProfileIcon
+export default Badge

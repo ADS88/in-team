@@ -4,6 +4,7 @@ import {
   Heading,
   VStack,
   SkeletonCircle,
+  Text,
 } from "@chakra-ui/react"
 import { IconName } from "../../models/icon-name"
 import axios from "../../axios-config"
@@ -43,7 +44,7 @@ const ProfilePage = () => {
       p="8"
       bg={useColorModeValue("gray.50", "gray.800")}
     >
-      <VStack p="8">
+      <VStack p="8" align="center">
         <SkeletonCircle size="80" isLoaded={isLoading === false}>
           {student?.profileIcon && (
             <UpdateProfileIcon
@@ -57,6 +58,22 @@ const ProfilePage = () => {
           {student?.firstName} {student?.lastName}
         </Heading>
         <Badges />
+
+        <Flex
+          p="50"
+          width="xl"
+          justifyContent="space-between"
+          alignItems="center"
+          direction={{ sm: "column", md: "row" }}
+        >
+          <Heading>Team100 </Heading>
+          <Heading color="pink.500">50 Points(3rd)</Heading>
+        </Flex>
+        <Text fontSize="2xl" color="gray.400">
+          Managed state
+        </Text>
+
+        {/* <TeamMemberOverview student={student} /> */}
       </VStack>
     </Flex>
   )

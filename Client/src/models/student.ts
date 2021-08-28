@@ -4,7 +4,7 @@ interface Student {
   firstName: string
   lastName: string
   id: number
-  profileIcon?: IconName
+  profileIcon: IconName
 }
 
 export default Student
