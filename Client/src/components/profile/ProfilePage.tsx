@@ -11,6 +11,7 @@ import {
   ModalHeader,
   ModalCloseButton,
   SimpleGrid,
+  SkeletonCircle,
 } from "@chakra-ui/react"
 import { IconName } from "../../models/icon-name"
 import ProfileIcon from "../ui/ProfileIcon"
@@ -24,6 +25,7 @@ export interface ProfilePageProps {}
 const ProfilePage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [icon, setIcon] = useState<IconName>("angler")
+  const [isLoading, setIsLoading] = useState(true)
 
   const updateProfileIcon = (newIcon: IconName) => {
     axios
@@ -37,6 +39,7 @@ const ProfilePage = () => {
   useEffect(() => {
     axios.get("student/current").then(response => {
       setIcon(response.data.profileIcon)
+      setIsLoading(false)
     })
   }, [])
 
@@ -49,9 +52,11 @@ const ProfilePage = () => {
       p="8"
       bg={useColorModeValue("gray.50", "gray.800")}
     >
-      <div onClick={onOpen}>
-        <ProfileIcon iconName={icon} isFull={true} />
-      </div>
+      <SkeletonCircle size="80" isLoaded={isLoading === false}>
+        <div onClick={onOpen}>
+          <ProfileIcon iconName={icon} isFull={true} />
+        </div>
+      </SkeletonCircle>
       <Heading>Andrew Sturman</Heading>
       <Text fontSize="3xl" color="blue.500">
         Badges
