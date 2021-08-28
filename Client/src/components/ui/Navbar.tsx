@@ -174,6 +174,7 @@ export default function WithSubnavigation() {
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
           <Flex align="center" gridGap="2">
+            {toggeColorModeButton}
             <Text
               onClick={() => history.push("/")}
               _hover={{
@@ -185,7 +186,6 @@ export default function WithSubnavigation() {
             >
               <b>InTeam</b>
             </Text>
-            {toggeColorModeButton}
           </Flex>
         </Flex>
 

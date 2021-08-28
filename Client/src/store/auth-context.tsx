@@ -21,7 +21,7 @@ export const AuthContext = React.createContext(context)
 
 const AuthContextProvider = (props: React.PropsWithChildren<{}>) => {
   const initialToken = localStorage.getItem("token")
-  const initialRole: Role | null = localStorage.getItem("token") as Role
+  const initialRole: Role | null = localStorage.getItem("role") as Role
   const [token, setToken] = useState(initialToken)
   const [role, setRole] = useState<Role | null>(initialRole)
 
