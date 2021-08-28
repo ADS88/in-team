@@ -39,7 +39,8 @@ namespace Server.Api.Services
             {
                 Name = name,
                 CreatedDate = DateTimeOffset.UtcNow,
-                CourseId = courseId
+                CourseId = courseId,
+                Points = 0
             };
 
             await repository.Add(team);

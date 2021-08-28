@@ -18,8 +18,8 @@ const ProfileTeamOverview = ({ team }: ProfileTeamOverviewProps) => {
         alignItems="center"
         direction={{ sm: "column", md: "row" }}
       >
-        <Heading>Team100 </Heading>
-        <Heading color="pink.500">50 Points(3rd)</Heading>
+        <Heading>{team.name}</Heading>
+        <Heading color="pink.500">{team.points} Points(3rd)</Heading>
       </Flex>
       <Text fontSize="2xl" color="gray.400">
         Managed state

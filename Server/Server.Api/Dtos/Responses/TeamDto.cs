@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Server.Api.Entities;
 
 namespace Server.Api.Dtos
 {
@@ -10,5 +9,6 @@ namespace Server.Api.Dtos
         public String Name { get; init; }
         public DateTimeOffset CreatedDate { get; init; }
         public ICollection<UserDto> Members { get; init; }
+        public int Points { get; init; }
     }
 }

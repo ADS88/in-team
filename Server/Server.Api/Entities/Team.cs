@@ -16,8 +16,12 @@ namespace Server.Api.Entities
 
         [Required]
         public Course Course { get; init; }
+
         [Required]
         public int CourseId { get; init; }
+
+        [Required]
+        public int Points { get; init; }
 
         public virtual ICollection<AppUser> Members { get; set; }
         
