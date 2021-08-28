@@ -9,6 +9,7 @@ import StatePage from "../components/alphas/StatePage"
 import SurveyPage from "../components/surveys/SurveyPage"
 import CreateSurveyPage from "../components/surveys/CreateSurveyPage"
 import AnswerSurveyPage from "../components/surveys/AnswerSurveyPage"
+import ProfilePage from "../components/profile/ProfilePage"
 
 const authenticatedRoutes: IRoute[] = [
   {
@@ -70,6 +71,12 @@ const authenticatedRoutes: IRoute[] = [
     name: "Answer Survey page",
     exact: true,
     component: AnswerSurveyPage,
+  },
+  {
+    path: "/profile",
+    name: "User Profile Page",
+    exact: true,
+    component: ProfilePage,
   },
 ]
 
