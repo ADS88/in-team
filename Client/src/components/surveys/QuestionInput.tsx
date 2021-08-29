@@ -7,6 +7,7 @@ import {
   SliderThumb,
   Text,
   Stack,
+  useColorModeValue,
 } from "@chakra-ui/react"
 import { useState } from "react"
 
@@ -31,7 +32,9 @@ const QuestionInput = ({ question, updateAnswer }: QuestionInputProps) => {
   return (
     <Stack align="center">
       <Text fontSize="xl">{question.content}</Text>
-      <Text color={"gray.600"}>{description}</Text>
+      <Text color={useColorModeValue("gray.600", "gray.300")}>
+        {description}
+      </Text>
       <Slider
         defaultValue={3}
         min={1}

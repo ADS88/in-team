@@ -59,7 +59,9 @@ const ProfileIconDisplay = (props: ProfileIconDisplayProps) => {
             <SimpleGrid columns={4} gap="8">
               {allNames.map(name => (
                 <div onClick={() => updateProfileIcon(name)}>
-                  <ProfileIcon iconName={name} isFull={false} key={name} />
+                  <div style={{ cursor: "pointer" }}>
+                    <ProfileIcon iconName={name} isFull={false} key={name} />
+                  </div>
                 </div>
               ))}
             </SimpleGrid>
