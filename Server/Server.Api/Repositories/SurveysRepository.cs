@@ -49,6 +49,11 @@ namespace Server.Api.Repositories
             await context.SaveChangesAsync();
         }
 
+        public async Task AddBadgeGifts(IEnumerable<BadgeGift> badgeGifts){
+            context.BadgeGifts.AddRange(badgeGifts);
+            await context.SaveChangesAsync();
+        }
+
         public async Task<SurveyAttempt> GetAttempt(int surveyId, string userId){
             var attempt = await context.SurveyAttempts.FirstOrDefaultAsync(attempt => attempt.Id == surveyId && attempt.AppUser.Id == userId);
             return attempt;

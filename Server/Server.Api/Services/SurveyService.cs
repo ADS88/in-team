@@ -76,6 +76,14 @@ namespace Server.Api.Services
 
             await surveysRepository.AddAnswers(answers);
 
+            var badgeGifts = dto.BadgeGifts.Select(badgeGift => new BadgeGift(){
+                BadgeId = badgeGift.BadgeId,
+                SurveyAttempt = surveyAttempt,
+                User = user
+            });
+
+            await surveysRepository.AddBadgeGifts(badgeGifts);
+
             return surveyAttempt;
         }
 

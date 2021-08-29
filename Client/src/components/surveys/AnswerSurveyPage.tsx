@@ -71,8 +71,8 @@ const AnswerSurveyPage = () => {
       return
     }
 
-    const badgesData = Array.from(badgeGifts).map(([badgeId, studentId]) => {
-      return { badgeId, studentId }
+    const badgeGiftsData = Array.from(badgeGifts).map(([badgeId, userId]) => {
+      return { badgeId, userId }
     })
 
     const answersData = Array.from(answers).map(
@@ -81,10 +81,12 @@ const AnswerSurveyPage = () => {
       }
     )
 
-    console.log("OWO")
-    // axios
-    //   .post(`survey/${id}/answer`, { answers: answersData, badges: badgesData })
-    //   .then(() => history.push("/"))
+    axios
+      .post(`survey/${id}/answer`, {
+        answers: answersData,
+        badgeGifts: badgeGiftsData,
+      })
+      .then(() => history.push("/"))
   }
 
   return (

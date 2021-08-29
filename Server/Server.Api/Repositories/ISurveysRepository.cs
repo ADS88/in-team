@@ -12,6 +12,7 @@ namespace Server.Api.Repositories
         Task<IEnumerable<Survey>> GetAll();
         Task CreateSurveyAttempt(SurveyAttempt attempt);
         Task AddAnswers(IEnumerable<Answer> answers);
+        Task AddBadgeGifts(IEnumerable<BadgeGift> badgeGifts);
         Task<SurveyAttempt> GetAttempt(int surveyId, string userId);
         Task<IEnumerable<Survey>> GetSurveysAssignedToStudent(AppUser user);
         Task<IEnumerable<SurveyAttempt>> GetAttemptsFromUser(string userId);
