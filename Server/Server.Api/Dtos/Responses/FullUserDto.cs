@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using Server.Api.Entities;
 namespace Server.Api.Dtos
 {
      public record FullUserDto
@@ -19,6 +20,9 @@ namespace Server.Api.Dtos
 
         [Required]
         public ICollection<TeamDto> Teams { get; init; }
+
+        [Required]
+        public ICollection<BadgeGift> BadgeGifts { get; init; }
 
     }
 }

@@ -90,6 +90,20 @@ namespace Server.Api.Services
         public async Task<IEnumerable<Badge>> GetBadges(){
             return await surveysRepository.GetBadges();
         }
+
+        public async Task<IEnumerable<AppUser>> FindTeamMembersFromSurvey(int surveyId, string userId){
+            var survey = await surveysRepository.GetSurveyWithTeams(surveyId);
+            var members = new List<AppUser>();
+            foreach(var team in survey.Teams){
+                foreach(var member in team.Members){
+                    if(member.Id == userId){
+                        members.AddRange(team.Members);
+                    }
+                }
+            }
+            return members.Where(m => m.Id != userId);
+        }
+
         public async Task<IEnumerable<Survey>> GetSurveysStudentNeedsToComplete(string userId){
             var user = await userRepository.GetUserWithTeams(userId);
             var surveysAssignedToStudent = await surveysRepository.GetSurveysAssignedToStudent(user);

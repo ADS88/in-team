@@ -22,6 +22,7 @@ const AnswerSurveyPage = () => {
   const [survey, setSurvey] = useState<Survey | null>()
   const [answers, setAnswers] = useState(new Map<number, LikertRating>())
   const [badges, setBadges] = useState<IBadge[]>([])
+  const [members, setMembers] = useState<Student[]>([])
   const history = useHistory()
 
   useEffect(() => {
@@ -34,6 +35,9 @@ const AnswerSurveyPage = () => {
       setAnswers(defaultAnswers)
     })
     axios.get("survey/badges").then(response => setBadges(response.data))
+    axios
+      .get(`survey/${id}/members`)
+      .then(response => setMembers(response.data))
   }, [id])
 
   const updateAnswer = (questionId: number, answer: LikertRating) => {
@@ -53,15 +57,6 @@ const AnswerSurveyPage = () => {
       .post(`survey/${id}/answer`, { answers: requestData })
       .then(() => history.push("/"))
   }
-
-  const students: Student[] = [
-    {
-      firstName: "Andrew",
-      id: "hi",
-      lastName: "Sturman",
-      profileIcon: "angler",
-    },
-  ]
 
   return (
     <Flex
@@ -92,7 +87,7 @@ const AnswerSurveyPage = () => {
           ))}
 
           {badges.map(badge => (
-            <BadgeGift badge={badge} students={students} />
+            <BadgeGift badge={badge} members={members} />
           ))}
           <Button
             bg={"blue.400"}

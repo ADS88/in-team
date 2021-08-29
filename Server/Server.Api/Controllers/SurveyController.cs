@@ -42,7 +42,15 @@ namespace Server.Api.Controllers
         [HttpGet("{id}")]
         public async Task<SurveyQuestionsDto> GetQuestions(int id){
             var survey = await service.Get(id);
+            //teams from survey id and filter those teams such that it's just the members
             return mapper.Map<SurveyQuestionsDto>(survey);
+        }
+
+        [HttpGet("{surveyId}/members")]
+        public async Task<IEnumerable<UserDto>> GetMembers(int surveyId){
+            var userId = User.Claims.Where(x => x.Type == "Id").FirstOrDefault()?.Value;
+            var users = await service.FindTeamMembersFromSurvey(surveyId, userId);
+            return users.Select(user => mapper.Map<UserDto>(user));
         }
 
         [HttpGet("badges")]

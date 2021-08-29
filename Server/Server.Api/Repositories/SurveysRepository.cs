@@ -35,6 +35,10 @@ namespace Server.Api.Repositories
                 .ToListAsync();
         }
 
+        public async Task<Survey> GetSurveyWithTeams(int id){
+            return await context.Surveys.Include(s => s.Teams).ThenInclude(t => t.Members).FirstOrDefaultAsync(s => s.Id == id);
+        }
+
         public async Task CreateSurveyAttempt(SurveyAttempt attempt){
             context.SurveyAttempts.Add(attempt);
             await context.SaveChangesAsync();

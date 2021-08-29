@@ -7,7 +7,7 @@ import Student from "../../models/student"
 
 interface BadgeGiftProps {
   badge: IBadge
-  students: Student[]
+  members: Student[]
 }
 
 const BadgeGift = (props: BadgeGiftProps) => {
@@ -77,7 +77,7 @@ const BadgeGift = (props: BadgeGiftProps) => {
       <Box flexGrow={1}>
         {getDescriptionFromBadge(props.badge)}
         <Select placeholder="Select Member">
-          {props.students?.map(student => (
+          {props.members?.map(student => (
             <option key={student.id} value={student.id}>
               {student.firstName} {student.lastName}
             </option>

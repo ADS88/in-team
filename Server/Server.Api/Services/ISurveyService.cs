@@ -15,5 +15,6 @@ namespace Server.Api.Services
         Task<SurveyAttempt> AnswerSurvey(AnswerSurveyDto dto, int surveyId, string userId);
         Task<IEnumerable<Survey>> GetSurveysStudentNeedsToComplete(string userId);
         Task<IEnumerable<Badge>> GetBadges();
+        Task<IEnumerable<AppUser>> FindTeamMembersFromSurvey(int surveyId, string userId);
     }
 }
