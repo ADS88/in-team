@@ -47,6 +47,16 @@ namespace Server.Api.Controllers
             return mapper.Map<FullUserDto>(student);
         }
 
+        [HttpGet("{id}/badges")]
+        public async Task<ActionResult<IEnumerable<UserBadgeDto>>> GetStudentBadges(string id)
+        {
+            var badges = await service.GetBadges(id);
+            if(badges == null){
+                return NotFound();
+            }
+            return Ok(badges);
+        }
+
         [HttpPatch("{id}/profile-icon")]
         public async Task<ActionResult> UpdateProfileIcon(UpdateProfileIconDto dto, string id)
         {

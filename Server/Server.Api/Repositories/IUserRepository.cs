@@ -12,5 +12,7 @@ namespace Server.Api.Repositories
         Task<AppUser> GetUserWithTeamsAndMembers(string userId);
         Task UpdateProfileIcon(string userId, string newIcon);
 
+        Task<IEnumerable<BadgeGift>> GetBadgeGifts(string userId);
+
     }
 }

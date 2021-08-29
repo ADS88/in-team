@@ -1,7 +1,12 @@
 import { SimpleGrid } from "@chakra-ui/react"
+import { Badge } from "../../models/badge"
 import ProfileBadge from "./ProfileBadge"
 
-const Badges = () => {
+interface BadgesProps {
+  badges: Badge[]
+}
+
+const Badges = (props: BadgesProps) => {
   return (
     <SimpleGrid
       gridGap="8"
@@ -9,11 +14,9 @@ const Badges = () => {
       columns={{ sm: 1, md: 3, xl: 5 }}
       justifyContent="center"
     >
-      <ProfileBadge name="vibes" count={6} />
-      <ProfileBadge name="effort" count={3} />
-      <ProfileBadge name="allrounder" count={2} />
-      <ProfileBadge name="teamwork" count={4} />
-      <ProfileBadge name="improving" count={1} />
+      {props.badges.map(badge => (
+        <ProfileBadge name={badge.name} count={badge.count ?? 0} />
+      ))}
     </SimpleGrid>
   )
 }

@@ -15,6 +15,7 @@ import ProfileTeamOverview from "./ProfileTeamOverview"
 import { useParams } from "react-router"
 import { AuthContext } from "../../store/auth-context"
 import ProfileIconDisplay from "./ProfileIconDisplay"
+import { Badge } from "../../models/badge"
 
 export interface ProfilePageProps {}
 
@@ -28,6 +29,7 @@ const ProfilePage = () => {
   const viewingOwnProfile = id === authContext.userId
 
   const [student, setStudent] = useState<Student | null>(null)
+  const [badges, setBadges] = useState<Badge[]>([])
   const [teams, setTeams] = useState<Team[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
@@ -46,6 +48,7 @@ const ProfilePage = () => {
       setTeams(response.data.teams)
       setIsLoading(false)
     })
+    axios.get(`student/${id}/badges`).then(response => setBadges(response.data))
   }, [id])
 
   return (
@@ -72,7 +75,7 @@ const ProfilePage = () => {
         <Heading>
           {student?.firstName} {student?.lastName}
         </Heading>
-        <Badges />
+        <Badges badges={badges} />
 
         {teams.map(team => (
           <ProfileTeamOverview team={team} />

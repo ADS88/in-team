@@ -25,6 +25,13 @@ namespace Server.Api.Repositories
             return await context.AppUsers.Include(user => user.Teams).ToListAsync();
         }
 
+        public async Task<IEnumerable<BadgeGift>> GetBadgeGifts(string userId)
+        {
+            var badgeGifts = await context.BadgeGifts.Include(bg => bg.User).ToListAsync();
+            return badgeGifts.Where(b => b.User.Id == userId);
+
+        }
+
         public async Task<AppUser> GetUserWithTeams(string userId)
         {
             return await context.AppUsers
