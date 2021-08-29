@@ -19,6 +19,7 @@ namespace Server.Api.Helpers
             CreateMap<Iteration, IterationDto>().ReverseMap();
             CreateMap<Survey, SurveyDto>().ReverseMap();
             CreateMap<Survey, SurveyQuestionsDto>().PreserveReferences();
+            CreateMap<Badge, BadgeDto>().ReverseMap();
         }
     }
 }

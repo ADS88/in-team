@@ -67,6 +67,9 @@ namespace Server.Api.Repositories
             return usersSurveys;
         }
 
+        public async Task<IEnumerable<Badge>> GetBadges(){
+            return await context.Badges.ToListAsync();
+        }
         public async Task<IEnumerable<SurveyAttempt>> GetAttemptsFromUser(string userId){
             var attempts = await context.SurveyAttempts
                 .Include(s => s.AppUser)

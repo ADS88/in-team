@@ -45,6 +45,12 @@ namespace Server.Api.Controllers
             return mapper.Map<SurveyQuestionsDto>(survey);
         }
 
+        [HttpGet("badges")]
+        public async Task<IEnumerable<BadgeDto>> GetBadges(){
+            var badges = await service.GetBadges();
+            return badges.Select(badge => mapper.Map<BadgeDto>(badge));
+        }
+
         [HttpGet("pending")]
         public async Task<IEnumerable<SurveyDto>> GetSurveysStudentNeedsToComplete(){
             var userId = User.Claims.Where(x => x.Type == "Id").FirstOrDefault()?.Value;

@@ -86,6 +86,10 @@ namespace Server.Api.Services
         public async Task<IEnumerable<Survey>> GetAll(){
             return await surveysRepository.GetAll();
         }
+
+        public async Task<IEnumerable<Badge>> GetBadges(){
+            return await surveysRepository.GetBadges();
+        }
         public async Task<IEnumerable<Survey>> GetSurveysStudentNeedsToComplete(string userId){
             var user = await userRepository.GetUserWithTeams(userId);
             var surveysAssignedToStudent = await surveysRepository.GetSurveysAssignedToStudent(user);
