@@ -1,3 +1,4 @@
+using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,16 +18,12 @@ namespace Server.Api.Entities
         [Required]
         public Survey Survey { get; init; }
 
+        [Required]
         public DateTimeOffset CompletedDate { get; init; }
 
         public ICollection<Answer> Answers { get; init; }
 
-        public Boolean IsCompleted
-        {
-            get
-            {
-                return CompletedDate != null ;
-            }
-        }
+        public ICollection<BadgeGift> BadgeGifts { get; init; }
+
     }
 }

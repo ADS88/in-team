@@ -16,5 +16,7 @@ namespace Server.Api.Entities
         public string ProfileIcon { get; set; }
 
         public ICollection<Team> Teams { get; set; }
+        
+        public ICollection<BadgeGift> Badges { get; set; }
     }
 }
