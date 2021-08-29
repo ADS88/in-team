@@ -8,6 +8,7 @@ import Student from "../../models/student"
 interface BadgeGiftProps {
   badge: IBadge
   members: Student[]
+  updateBadgeGift: (badgeId: number, studentId: string) => void
 }
 
 const BadgeGift = (props: BadgeGiftProps) => {
@@ -76,7 +77,10 @@ const BadgeGift = (props: BadgeGiftProps) => {
       <Badge name={props.badge.name} />
       <Box flexGrow={1}>
         {getDescriptionFromBadge(props.badge)}
-        <Select placeholder="Select Member">
+        <Select
+          placeholder="Select Member"
+          onChange={e => props.updateBadgeGift(props.badge.id, e.target.value)}
+        >
           {props.members?.map(student => (
             <option key={student.id} value={student.id}>
               {student.firstName} {student.lastName}

@@ -8,6 +8,7 @@ import {
   Button,
   useColorModeValue,
   Box,
+  Text,
 } from "@chakra-ui/react"
 import Survey from "../../models/survey"
 import QuestionInput from "./QuestionInput"
@@ -21,8 +22,11 @@ const AnswerSurveyPage = () => {
   const { id } = useParams<{ id: string }>()
   const [survey, setSurvey] = useState<Survey | null>()
   const [answers, setAnswers] = useState(new Map<number, LikertRating>())
+  const [badgeGifts, setBadgeGifts] = useState(new Map<number, string>())
   const [badges, setBadges] = useState<IBadge[]>([])
   const [members, setMembers] = useState<Student[]>([])
+  const [errorMessage, setErrorMessage] = useState("")
+  const errorMessageColor = useColorModeValue("red.500", "red.300")
   const history = useHistory()
 
   useEffect(() => {
@@ -34,7 +38,14 @@ const AnswerSurveyPage = () => {
       )
       setAnswers(defaultAnswers)
     })
-    axios.get("survey/badges").then(response => setBadges(response.data))
+    axios.get("survey/badges").then(response => {
+      const defaultBadgeGifts = new Map<number, string>()
+      response.data.forEach((badge: IBadge) =>
+        defaultBadgeGifts.set(badge.id, "")
+      )
+      setBadges(response.data)
+      setBadgeGifts(defaultBadgeGifts)
+    })
     axios
       .get(`survey/${id}/members`)
       .then(response => setMembers(response.data))
@@ -47,15 +58,33 @@ const AnswerSurveyPage = () => {
     })
   }
 
+  const updateBadgeGift = (badgeId: number, studentId: string) => {
+    setBadgeGifts(prevBadgeGifts => {
+      prevBadgeGifts.set(badgeId, studentId)
+      return new Map(prevBadgeGifts)
+    })
+  }
+
   const submitAnswers = () => {
-    const requestData = Array.from(answers).map(
+    if (Array.from(badgeGifts.values()).includes("")) {
+      setErrorMessage("You must choose a member for each badge")
+      return
+    }
+
+    const badgesData = Array.from(badgeGifts).map(([badgeId, studentId]) => {
+      return { badgeId, studentId }
+    })
+
+    const answersData = Array.from(answers).map(
       ([questionId, likertRating]) => {
         return { questionId, likertRating }
       }
     )
-    axios
-      .post(`survey/${id}/answer`, { answers: requestData })
-      .then(() => history.push("/"))
+
+    console.log("OWO")
+    // axios
+    //   .post(`survey/${id}/answer`, { answers: answersData, badges: badgesData })
+    //   .then(() => history.push("/"))
   }
 
   return (
@@ -70,7 +99,6 @@ const AnswerSurveyPage = () => {
       <Box
         rounded={"lg"}
         w={{ sm: "md", lg: "2xl", xl: "4xl" }}
-        // bg={useColorModeValue("white", "gray.700")}
         boxShadow={"lg"}
         p={8}
       >
@@ -87,8 +115,14 @@ const AnswerSurveyPage = () => {
           ))}
 
           {badges.map(badge => (
-            <BadgeGift badge={badge} members={members} />
+            <BadgeGift
+              badge={badge}
+              members={members}
+              key={badge.id}
+              updateBadgeGift={updateBadgeGift}
+            />
           ))}
+
           <Button
             bg={"blue.400"}
             color={"white"}
@@ -99,6 +133,11 @@ const AnswerSurveyPage = () => {
           >
             Submit Answers
           </Button>
+          {errorMessage !== "" && (
+            <Text alignSelf="center" color={errorMessageColor}>
+              {errorMessage}
+            </Text>
+          )}
         </Stack>
       </Box>
     </Flex>

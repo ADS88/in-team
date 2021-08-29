@@ -1,4 +1,4 @@
-import { Flex, LinkBox, Text } from "@chakra-ui/react"
+import { Flex, Text } from "@chakra-ui/react"
 import { useHistory } from "react-router"
 import Student from "../../models/student"
 
