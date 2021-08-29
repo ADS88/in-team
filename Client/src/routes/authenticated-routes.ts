@@ -80,6 +80,12 @@ const authenticatedRoutes: IRoute[] = [
     component: ProfilePage,
   },
   {
+    path: "/profile/:id",
+    name: "User Profile Page",
+    exact: true,
+    component: ProfilePage,
+  },
+  {
     path: "/leaderboard",
     name: "Leaderboard Page",
     exact: true,

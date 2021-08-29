@@ -47,8 +47,8 @@ namespace Server.Api.Controllers
             return mapper.Map<FullUserDto>(student);
         }
 
-        [HttpPatch("current/profile-icon")]
-        public async Task<ActionResult> UpdateProfileIcon(UpdateProfileIconDto dto)
+        [HttpPatch("{id}/profile-icon")]
+        public async Task<ActionResult> UpdateProfileIcon(UpdateProfileIconDto dto, string id)
         {
             var possibleProfileIcons =  new string[]{"angler", "hamburger", "dog","lion", "octopus", "samurai", "sunbeams", "walrus","muscles", "sushi", "kiwi",
             "mantaray", "bird", "squid", "inspiration", "dinosaur", "winner", "backstab", "buffalo", "snowman", "spectre", "spacesuit", "spider", "totem", "monkey","fisherman", "pumpkin", "robot"};
@@ -57,6 +57,10 @@ namespace Server.Api.Controllers
                 return BadRequest();
             }
             var userId = User.Claims.Where(x => x.Type == "Id").FirstOrDefault()?.Value;
+            if(userId != id){
+                return Unauthorized();
+            }
+
             var student = await userManager.FindByIdAsync(userId);
             if(student == null){
                 return NotFound();

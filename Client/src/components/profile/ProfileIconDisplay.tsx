@@ -13,17 +13,21 @@ import ProfileIcon from "../ui/ProfileIcon"
 import { allNames } from "../../models/icon-name"
 import axios from "../../axios-config"
 
-interface UpdateProfileIconProps {
+interface ProfileIconDisplayProps {
   currentIcon: IconName
   updateIconInUI: (newIcon: IconName) => void
+  isViewingOwnProfile: boolean
+  profileId: string
 }
 
-const UpdateProfileIcon = (props: UpdateProfileIconProps) => {
+const ProfileIconDisplay = (props: ProfileIconDisplayProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const updateProfileIcon = (newIcon: IconName) => {
     axios
-      .patch("student/current/profile-icon", { profileIcon: newIcon })
+      .patch(`student/${props.profileId}/profile-icon`, {
+        profileIcon: newIcon,
+      })
       .then(() => {
         props.updateIconInUI(newIcon)
         onClose()
@@ -32,9 +36,15 @@ const UpdateProfileIcon = (props: UpdateProfileIconProps) => {
 
   return (
     <>
-      <div onClick={onOpen}>
+      {props.isViewingOwnProfile && (
+        <div onClick={onOpen} style={{ cursor: "pointer" }}>
+          <ProfileIcon iconName={props.currentIcon} isFull={true} />
+        </div>
+      )}
+      {!props.isViewingOwnProfile && (
         <ProfileIcon iconName={props.currentIcon} isFull={true} />
-      </div>
+      )}
+
       <Modal
         size="2xl"
         blockScrollOnMount={false}
@@ -60,4 +70,4 @@ const UpdateProfileIcon = (props: UpdateProfileIconProps) => {
   )
 }
 
-export default UpdateProfileIcon
+export default ProfileIconDisplay
