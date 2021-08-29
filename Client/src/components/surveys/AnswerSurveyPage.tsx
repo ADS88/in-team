@@ -13,11 +13,15 @@ import Survey from "../../models/survey"
 import QuestionInput from "./QuestionInput"
 import Question from "../../models/question"
 import { LikertRating } from "../../models/likertrating"
+import { Badge as IBadge } from "../../models/badge"
+import BadgeGift from "./BadgeGift"
+import Student from "../../models/student"
 
 const AnswerSurveyPage = () => {
   const { id } = useParams<{ id: string }>()
   const [survey, setSurvey] = useState<Survey | null>()
   const [answers, setAnswers] = useState(new Map<number, LikertRating>())
+  const [badges, setBadges] = useState<IBadge[]>([])
   const history = useHistory()
 
   useEffect(() => {
@@ -29,6 +33,7 @@ const AnswerSurveyPage = () => {
       )
       setAnswers(defaultAnswers)
     })
+    axios.get("survey/badges").then(response => setBadges(response.data))
   }, [id])
 
   const updateAnswer = (questionId: number, answer: LikertRating) => {
@@ -49,20 +54,30 @@ const AnswerSurveyPage = () => {
       .then(() => history.push("/"))
   }
 
+  const students: Student[] = [
+    {
+      firstName: "Andrew",
+      id: "hi",
+      lastName: "Sturman",
+      profileIcon: "angler",
+    },
+  ]
+
   return (
     <Flex
       minH={"90vh"}
       align={"center"}
       justify={"center"}
       direction={"column"}
+      bg={useColorModeValue("white", "gray.700")}
       p={8}
     >
       <Box
         rounded={"lg"}
-        bg={useColorModeValue("white", "gray.700")}
+        w={{ sm: "md", lg: "2xl", xl: "4xl" }}
+        // bg={useColorModeValue("white", "gray.700")}
         boxShadow={"lg"}
         p={8}
-        background={useColorModeValue("white", "gray.700")}
       >
         <Heading align="center" fontSize={"4xl"}>
           {survey?.name}
@@ -74,6 +89,10 @@ const AnswerSurveyPage = () => {
               key={question.id}
               updateAnswer={updateAnswer}
             />
+          ))}
+
+          {badges.map(badge => (
+            <BadgeGift badge={badge} students={students} />
           ))}
           <Button
             bg={"blue.400"}
