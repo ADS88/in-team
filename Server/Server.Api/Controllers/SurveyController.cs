@@ -42,7 +42,6 @@ namespace Server.Api.Controllers
         [HttpGet("{id}")]
         public async Task<SurveyQuestionsDto> GetQuestions(int id){
             var survey = await service.Get(id);
-            //teams from survey id and filter those teams such that it's just the members
             return mapper.Map<SurveyQuestionsDto>(survey);
         }
 

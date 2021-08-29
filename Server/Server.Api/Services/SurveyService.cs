@@ -76,12 +76,15 @@ namespace Server.Api.Services
 
             await surveysRepository.AddAnswers(answers);
 
-            var badgeGifts = dto.BadgeGifts.Select(badgeGift => new BadgeGift(){
+            var badgeGifts = dto.BadgeGifts
+                .Select(async badgeGift => new BadgeGift(){
                 BadgeId = badgeGift.BadgeId,
                 SurveyAttempt = surveyAttempt,
-                User = user
-            });
+                User = await userManager.FindByIdAsync(badgeGift.UserId)
+                }
+                ).Select(t => t.Result);
 
+       
             await surveysRepository.AddBadgeGifts(badgeGifts);
 
             return surveyAttempt;

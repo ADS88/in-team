@@ -55,7 +55,7 @@ const MySurveysPage = () => {
 
         {surveys.length === 0 && (
           <>
-            <Heading fontSize="4xl">All surveys completed!</Heading>
+            <Heading fontSize="4xl">No Surveys Due!</Heading>
             <Icon as={GiIsland} boxSize={"80"} />
           </>
         )}
