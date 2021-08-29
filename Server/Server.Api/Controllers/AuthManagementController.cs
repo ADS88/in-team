@@ -62,7 +62,8 @@ namespace Server.Api.Controllers
             return Ok(new UserRegistrationResponseDto(){
                     Success = true,
                     Token = jwtToken,
-                    Role = roles[0]
+                    Role = roles[0],
+                    Id = existingUser.Id
                 });
         }
 
@@ -102,7 +103,8 @@ namespace Server.Api.Controllers
                 return Ok(new UserRegistrationResponseDto(){
                     Success = true,
                     Token = jwtToken,
-                    Role = Roles.STUDENT
+                    Role = Roles.STUDENT,
+                    Id = newUser.Id
                 });
             } else {
                 return BadRequest(new UserRegistrationResponseDto(){

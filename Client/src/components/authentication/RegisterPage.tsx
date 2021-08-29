@@ -40,7 +40,11 @@ const RegisterPage = () => {
   const registerUser = async (data: RegisterFormValues) => {
     try {
       const response = await axios.post("AuthManagement/Register", data)
-      authContext.login(response.data.token, response.data.role)
+      authContext.login(
+        response.data.token,
+        response.data.role,
+        response.data.id
+      )
       history.push("/")
     } catch (error) {
       setError("email", {

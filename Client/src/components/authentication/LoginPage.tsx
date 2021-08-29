@@ -41,7 +41,11 @@ const LoginPage = () => {
   const login = async (data: LoginFormValues) => {
     try {
       const response = await axios.post("AuthManagement/login", data)
-      authContext.login(response.data.token, response.data.role)
+      authContext.login(
+        response.data.token,
+        response.data.role,
+        response.data.id
+      )
       history.push("/")
     } catch (error) {
       setError(true)

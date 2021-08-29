@@ -37,11 +37,10 @@ namespace Server.Api.Controllers
             return students;
         }
 
-        [HttpGet("current")]
-        public async Task<ActionResult<FullUserDto>> GetCurrentStudent()
+        [HttpGet("{id}")]
+        public async Task<ActionResult<FullUserDto>> GetCurrentStudent(string id)
         {
-            var userId = User.Claims.Where(x => x.Type == "Id").FirstOrDefault()?.Value;
-            var student = await service.GetFullDetails(userId);
+            var student = await service.GetFullDetails(id);
             if(student == null){
                 return NotFound();
             }
