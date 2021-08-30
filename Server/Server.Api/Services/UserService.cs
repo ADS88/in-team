@@ -15,19 +15,22 @@ namespace Server.Api.Services
         
         private readonly ISurveysRepository surveysRepository;
 
-        public UserService(IUserRepository repository, ISurveysRepository surveysRepository)
+        private readonly ITeamsRepository teamsRepository;
+
+        public UserService(IUserRepository repository, ISurveysRepository surveysRepository, ITeamsRepository teamsRepository)
         {
             this.repository = repository;
             this.surveysRepository = surveysRepository;
+            this.teamsRepository = teamsRepository;
         }
         public async Task<IEnumerable<AppUser>> GetAll(){
             return await repository.GetAll();
         }
-        public async Task<IEnumerable<AppUser>> GetEligibleForCourse(int courseId, string search){
+        public async Task<IEnumerable<AppUser>> GetEligibleForCourse(int teamId, string search){
             var allUsers = await repository.GetAllWithTeams();
+            var courseId = (await teamsRepository.Get(teamId)).CourseId;
             return allUsers.Where(user => FilterByName(user, search))
-            .Where(user => EligibleForCourse(user, courseId))
-            .Where(user => IsStudent(user));
+            .Where(user => EligibleForCourse(user, courseId));
         }
         public async Task UpdateProfileIcon(string userId, string newIcon){
             await repository.UpdateProfileIcon(userId, newIcon);
@@ -62,8 +65,5 @@ namespace Server.Api.Services
             return user.LastName.Contains(search, StringComparison.CurrentCultureIgnoreCase) || user.FirstName.Contains(search, StringComparison.CurrentCultureIgnoreCase);
         }
 
-        private Boolean IsStudent(AppUser user){
-            return true;
-        }
     }
 }

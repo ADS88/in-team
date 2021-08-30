@@ -16,7 +16,7 @@ export default function AddStudent({ courseId }: AddStudentProps) {
   const [studentIdToAdd, setStudentIdToAdd] = useState<string>()
 
   const getAllStudents = () => {
-    return axios.get(`student`)
+    return axios.get(`student/course/${courseId}`)
   }
 
   const addStudentToCourse = () => {

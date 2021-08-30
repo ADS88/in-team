@@ -15,18 +15,18 @@ import AutoComplete from "../ui/AutoComplete"
 import Card from "../ui/Card"
 
 const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
-  const id = props.match.params.id
+  const teamId = props.match.params.id
   const [studentsInCourse, setStudentsInCourse] = useState<Student[]>([])
   const [teamName, setTeamName] = useState("")
   const history = useHistory()
 
   const deleteTeam = () => {
-    axios.delete(`team/${id}`).then(() => history.goBack())
+    axios.delete(`team/${teamId}`).then(() => history.goBack())
   }
 
   const addStudentToTeam = (student: Student) => {
     axios
-      .post(`team/${id}/addstudent/${student.id}`)
+      .post(`team/${teamId}/addstudent/${student.id}`)
       .then(() =>
         setStudentsInCourse(prevStudents => [...prevStudents, student])
       )
@@ -34,14 +34,14 @@ const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
 
   useEffect(() => {
     const getTeam = () => {
-      return axios.get(`team/${id}`)
+      return axios.get(`team/${teamId}`)
     }
 
     getTeam().then(response => {
       setStudentsInCourse(response.data.members)
       setTeamName(response.data.name)
     })
-  }, [id])
+  }, [teamId])
 
   return (
     <Flex
@@ -57,7 +57,7 @@ const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
         {studentsInCourse.map(student => (
           <Card title={`${student.firstName} ${student.lastName}`} />
         ))}
-        <AutoComplete courseId={id} addToTeam={addStudentToTeam} />
+        <AutoComplete teamId={teamId} addToTeam={addStudentToTeam} />
         <Button
           bg={"red.400"}
           color={"white"}

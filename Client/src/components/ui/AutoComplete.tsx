@@ -4,7 +4,7 @@ import Student from "../../models/student"
 import { Input, Button } from "@chakra-ui/react"
 
 interface AutoCompleteProps {
-  courseId: Number
+  teamId: Number
   addToTeam: (student: Student) => void
 }
 
@@ -37,7 +37,7 @@ const AutoComplete = (props: AutoCompleteProps) => {
 
   const updateSuggestedUsers = () => {
     axios
-      .get(`student/course/${props.courseId}`, { params: { search } })
+      .get(`student/course/${props.teamId}`, { params: { search } })
       .then(response => setSuggestions(response.data))
   }
 
