@@ -13,7 +13,7 @@ namespace Server.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Lecturer")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CourseController : ControllerBase
     {
         private readonly ICourseService service;
@@ -37,6 +37,7 @@ namespace Server.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult> DeleteCourse(int id)
         {
             var deleted = await service.DeleteCourse(id);
@@ -55,6 +56,7 @@ namespace Server.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult<CourseDto>> CreateCourse(CreateCourseDto courseDto)
         {
             var course = await service.Create(courseDto.Name);
@@ -62,6 +64,7 @@ namespace Server.Api.Controllers
         }
 
         [HttpPost("{id}/iteration")]
+        [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult<IterationDto>> AddIteration(CreateIterationDto iterationDto, int id)
         {
             Console.WriteLine(iterationDto.StartDate);
