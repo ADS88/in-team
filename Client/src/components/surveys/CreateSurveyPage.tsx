@@ -20,7 +20,7 @@ import { useHistory } from "react-router"
 
 interface CreateSurveyFormValues {
   openingDate: Date
-  dueDate: Date
+  closingDate: Date
   name: string
 }
 
@@ -136,14 +136,17 @@ const CreateSurveyPage = () => {
               />
               <FormErrorMessage>{errors.openingDate?.message}</FormErrorMessage>
             </FormControl>
-            <FormControl id="dueDate" isInvalid={errors.dueDate !== undefined}>
+            <FormControl
+              id="closingDate"
+              isInvalid={errors.closingDate !== undefined}
+            >
               <FormLabel>Due date</FormLabel>
               <Controller
-                {...register("dueDate", {
+                {...register("closingDate", {
                   required: "You must enter a due date",
                 })}
                 control={control}
-                name="dueDate"
+                name="closingDate"
                 render={({ field }) => (
                   <DatePicker
                     placeholderText="e.g 04/02/2016"
@@ -153,7 +156,7 @@ const CreateSurveyPage = () => {
                   />
                 )}
               />
-              <FormErrorMessage>{errors.dueDate?.message}</FormErrorMessage>
+              <FormErrorMessage>{errors.closingDate?.message}</FormErrorMessage>
             </FormControl>
             <Button
               bg={"blue.400"}
