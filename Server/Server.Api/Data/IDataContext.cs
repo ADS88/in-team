@@ -19,6 +19,7 @@ namespace Server.Api.Data
         DbSet<SurveyAttempt> SurveyAttempts { get; init; }
         DbSet<Badge> Badges { get; init; }
         DbSet<BadgeGift> BadgeGifts { get; init; }
+        DbSet<AchievedState> AchievedStates { get; init; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

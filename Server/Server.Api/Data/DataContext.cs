@@ -23,5 +23,6 @@ namespace Server.Api.Data
         public DbSet<SurveyAttempt> SurveyAttempts { get; init; }
         public DbSet<Badge> Badges { get; init; }
         public DbSet<BadgeGift> BadgeGifts { get; init; }
+        public DbSet<AchievedState> AchievedStates { get; init; }
     }
 }
