@@ -33,7 +33,7 @@ const AddQuestions = (props: AddQuestionsProps) => {
 
   return (
     <>
-      <Flex direction="row" align="flex-end">
+      <Flex direction="row" align="flex-end" gridGap="2">
         <FormControl id="alphaId">
           <FormLabel>Add Alphas</FormLabel>
           <Select

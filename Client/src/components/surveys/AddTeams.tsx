@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import Team from "../../models/team"
-import Select from "react-select"
+import Select from "../ui/Select"
 import axios from "../../axios-config"
+import { OptionsType } from "react-select"
 
 import { FormLabel, FormControl } from "@chakra-ui/react"
 
@@ -24,15 +25,19 @@ const AddTeams = (props: AddTeamsProps) => {
     return { value: team.id, label: team.name }
   })
 
+  const onSelectionChangeHandler = (
+    selection: OptionsType<{
+      value: number
+      label: string
+    }>
+  ) => {
+    props.updateTeams(selection.map(s => s.value))
+  }
+
   return (
     <FormControl>
       <FormLabel>Select Recipients</FormLabel>
-      <Select
-        isMulti
-        options={options}
-        style={{ width: 500 }}
-        onChange={selection => props.updateTeams(selection.map(s => s.value))}
-      />
+      <Select options={options} onChange={onSelectionChangeHandler} />
     </FormControl>
   )
 }

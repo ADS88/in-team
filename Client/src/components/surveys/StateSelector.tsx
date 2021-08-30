@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import axios from "../../axios-config"
 import { Button, Flex, Text } from "@chakra-ui/react"
 import State from "../../models/state"
-import Select from "react-select"
+import Select from "../ui/Select"
 import { Action } from "./CreateSurveyPage"
 import { OptionsType } from "react-select"
 
@@ -49,14 +49,9 @@ const StateSelector = (props: StateSelectorProps) => {
     <Flex direction="column">
       <Text>{alphaName}</Text>
 
-      <Flex direction="row" w="100%" align="center">
+      <Flex direction="row" w="100%" align="center" gridGap="2">
         <div style={{ width: "100%" }}>
-          <Select
-            isMulti
-            options={options}
-            style={{ width: 500 }}
-            onChange={onStatesChangeHandler}
-          />
+          <Select options={options} onChange={onStatesChangeHandler} />
         </div>
         <Button
           bg={"red.400"}
