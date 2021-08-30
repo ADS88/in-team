@@ -13,7 +13,7 @@ namespace Server.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Lecturer")]
     public class CourseController : ControllerBase
     {
         private readonly ICourseService service;

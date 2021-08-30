@@ -33,6 +33,7 @@ namespace Server.Api.Controllers
         } 
 
         [HttpPost]
+        [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult<SurveyDto>> CreateSurvey(CreateSurveyDto dto)
         {
             var survey = await service.Create(dto.Name, dto.StateIds, dto.TeamIds, dto.OpeningDate, dto.ClosingDate);

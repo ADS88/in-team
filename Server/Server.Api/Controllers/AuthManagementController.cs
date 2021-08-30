@@ -57,8 +57,8 @@ namespace Server.Api.Controllers
                     Success = false
                 });
             }
-            var jwtToken = GenerateJwtToken(existingUser);
             var roles = await userManager.GetRolesAsync(existingUser);
+            var jwtToken = GenerateJwtToken(existingUser, roles[0]);
             return Ok(new UserRegistrationResponseDto(){
                     Success = true,
                     Token = jwtToken,
@@ -99,7 +99,7 @@ namespace Server.Api.Controllers
 
             if(isCreated.Succeeded){
                 await userManager.AddToRoleAsync(newUser, Roles.STUDENT);
-                var jwtToken = GenerateJwtToken(newUser);
+                var jwtToken = GenerateJwtToken(newUser, Roles.STUDENT);
                 return Ok(new UserRegistrationResponseDto(){
                     Success = true,
                     Token = jwtToken,
@@ -114,7 +114,7 @@ namespace Server.Api.Controllers
             }
 
         }
-        private string GenerateJwtToken(IdentityUser user){
+        private string GenerateJwtToken(IdentityUser user, string role){
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(jwtConfig.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor{
@@ -122,7 +122,8 @@ namespace Server.Api.Controllers
                     new Claim("Id", user.Id),
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(ClaimTypes.Role, role)
                 }),
                 Expires = DateTime.UtcNow.AddHours(6),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

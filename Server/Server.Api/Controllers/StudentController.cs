@@ -31,6 +31,7 @@ namespace Server.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Lecturer")]
         public async Task<IEnumerable<UserDto>> GetAllStudents()
         {
             var students = (await service.GetAll()).Select(student => mapper.Map<UserDto>(student));
@@ -79,10 +80,10 @@ namespace Server.Api.Controllers
             return Ok();
         }
 
-        [HttpGet("course/{courseId}")]
-        public async Task<IEnumerable<UserDto>> GetStudentsEligibleForCourse(int courseId, [FromQuery]string search)
+        [HttpGet("course/{teamId}")]
+        public async Task<IEnumerable<UserDto>> GetStudentsEligibleForCourse(int teamId, [FromQuery]string search)
         {
-            var students = (await service.GetEligibleForCourse(courseId, search)).Select(student => mapper.Map<UserDto>(student));
+            var students = (await service.GetEligibleForCourse(teamId, search)).Select(student => mapper.Map<UserDto>(student));
             return students;
         }
 
