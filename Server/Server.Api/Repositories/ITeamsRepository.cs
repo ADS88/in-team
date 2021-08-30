@@ -10,6 +10,7 @@ namespace Server.Api.Repositories
         Task<IEnumerable<Team>> GetAll();
         Task Add(Team team);
         Task Delete(int id);
-        Task AddMember(int teamI, string memberId);
+        Task AddMember(int teamId, string memberId);
+        Task AddPoints(int teamId, int points);
     }
 }

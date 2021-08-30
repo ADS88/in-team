@@ -95,7 +95,7 @@ const AnswerSurveyPage = () => {
       align={"center"}
       justify={"center"}
       direction={"column"}
-      bg={useColorModeValue("white", "gray.700")}
+      bg={useColorModeValue("gray.50", "gray.800")}
       p={8}
     >
       <Box

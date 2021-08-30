@@ -55,8 +55,7 @@ namespace Server.Api.Services
 
             var user = await userManager.FindByIdAsync(userId);
 
-            if( await surveysRepository.GetAttempt(surveyId, userId) != null){
-                Console.WriteLine("attempted already!!!");
+            if(user == null || await surveysRepository.GetAttempt(surveyId, userId) != null){
                 return null;
             }
 
@@ -65,6 +64,7 @@ namespace Server.Api.Services
                 AppUser = user,
                 CompletedDate = DateTimeOffset.UtcNow,
             };
+
             await surveysRepository.CreateSurveyAttempt(surveyAttempt);
 
 
@@ -86,6 +86,9 @@ namespace Server.Api.Services
 
        
             await surveysRepository.AddBadgeGifts(badgeGifts);
+
+            var team = await FindTeamFromSurveyAndUser(surveyId, userId);
+            await teamsRepository.AddPoints(team.Id, 10);
 
             return surveyAttempt;
         }
@@ -113,6 +116,19 @@ namespace Server.Api.Services
                 }
             }
             return members.Where(m => m.Id != userId);
+            
+        }
+
+        private async Task<Team> FindTeamFromSurveyAndUser(int surveyId, string userId){
+            var survey = await surveysRepository.GetSurveyWithTeams(surveyId);
+             foreach(var team in survey.Teams){
+                foreach(var member in team.Members){
+                    if(member.Id == userId){
+                        return team;
+                    }
+                }
+             }
+            return null;
         }
 
         public async Task<IEnumerable<Survey>> GetSurveysStudentNeedsToComplete(string userId){

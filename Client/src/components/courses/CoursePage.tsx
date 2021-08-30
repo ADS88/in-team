@@ -14,6 +14,7 @@ import TeamOverview from "./TeamOverview"
 import Iteration from "../../models/iteration"
 import AddIteration from "./AddIteration"
 import SingleRowForm from "../ui/SingleRowForm"
+import Card from "../ui/Card"
 
 const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const [teams, setTeams] = useState<Team[]>([])
@@ -74,7 +75,7 @@ const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
         </Text>
 
         {iterations.map(iteration => (
-          <TeamOverview name={iteration.name} id={iteration.id} />
+          <Card title={iteration.name} key={iteration.id} />
         ))}
 
         <AddIteration courseId={courseId} />

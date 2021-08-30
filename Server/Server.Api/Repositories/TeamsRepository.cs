@@ -56,5 +56,10 @@ namespace Server.Api.Repositories
             await context.SaveChangesAsync();
         }
 
+        public async Task AddPoints(int teamId, int points){
+            var team = await context.Teams.FirstOrDefaultAsync(t => t.Id == teamId);
+            team.Points += points;
+            await context.SaveChangesAsync();
+        }
     }
 }
