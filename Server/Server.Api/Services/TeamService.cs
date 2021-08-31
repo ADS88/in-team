@@ -1,9 +1,11 @@
+using System.Linq;
 using Server.Api.Entities;
 using Server.Api.Repositories;
 using System.Threading.Tasks;
 using System;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using Server.Api.Dtos;
 
 namespace Server.Api.Services
 {
@@ -49,6 +51,18 @@ namespace Server.Api.Services
 
         public async Task AddMember(int teamId, string memberId){
             await repository.AddMember(teamId, memberId);
+        }
+
+        public async Task AchieveStates(AchievedStateDto dto, int teamId, int iterationid){
+            var achievedStates = dto.AchievedStates.Select(achievedState => new AchievedState()
+                {
+                    TeamId = teamId,
+                    IterationId = iterationid,
+                    AlphaId = achievedState.AlphaId,
+                    StateId = achievedState.StateId,
+                    AchievedDate = DateTimeOffset.UtcNow
+                });
+            await repository.AchieveStates(achievedStates);
         }
     }
 }

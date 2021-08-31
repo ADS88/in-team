@@ -1,3 +1,4 @@
+using System.Collections;
 using System;
 using System.Collections.Generic;
 using Server.Api.Entities;
@@ -59,6 +60,10 @@ namespace Server.Api.Repositories
         public async Task AddPoints(int teamId, int points){
             var team = await context.Teams.FirstOrDefaultAsync(t => t.Id == teamId);
             team.Points += points;
+            await context.SaveChangesAsync();
+        }
+        public async Task AchieveStates(IEnumerable<AchievedState> achievedStates){
+            context.AchievedStates.AddRange(achievedStates);
             await context.SaveChangesAsync();
         }
     }

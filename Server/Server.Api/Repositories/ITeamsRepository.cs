@@ -12,5 +12,6 @@ namespace Server.Api.Repositories
         Task Delete(int id);
         Task AddMember(int teamId, string memberId);
         Task AddPoints(int teamId, int points);
+        Task AchieveStates(IEnumerable<AchievedState> achievedStates);
     }
 }

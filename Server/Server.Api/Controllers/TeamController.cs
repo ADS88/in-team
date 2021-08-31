@@ -67,5 +67,12 @@ namespace Server.Api.Controllers
             await service.AddMember(teamId, studentId);
             return Ok();
         }
+
+        [HttpPost("{teamId}/achievestates/{iterationId}")]
+        public async Task<ActionResult<TeamDto>> AchieveStates(AchievedStateDto dto, int teamId, int iterationId)
+        {
+            await service.AchieveStates(dto, teamId, iterationId);
+            return Ok();
+        }
     }
 }
