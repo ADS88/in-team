@@ -12,7 +12,7 @@ namespace Server.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Lecturer")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class TeamController : ControllerBase
     {
         private readonly ITeamService service;
@@ -26,6 +26,7 @@ namespace Server.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Lecturer")]
         public async Task<IEnumerable<TeamDto>> GetTeams()
         {
             var teams = (await service.Get()).Select(team => mapper.Map<TeamDto>(team));
@@ -33,6 +34,7 @@ namespace Server.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult<TeamDto>> GetTeam(int id)
         {
             var team = await service.GetById(id);
@@ -44,6 +46,7 @@ namespace Server.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult> DeleteTeam(int id)
         {
             var deleted = await service.DeleteTeam(id);
@@ -55,6 +58,7 @@ namespace Server.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult<TeamDto>> CreateTeam(CreateTeamDto teamDto)
         {
             var team = await service.Create(teamDto.Name, teamDto.CourseId);
@@ -62,6 +66,7 @@ namespace Server.Api.Controllers
         }
 
         [HttpPost("{teamId}/addstudent/{studentId}")]
+        [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult<TeamDto>> CreateTeam(int teamId, string studentId)
         {
             await service.AddMember(teamId, studentId);
@@ -69,10 +74,18 @@ namespace Server.Api.Controllers
         }
 
         [HttpPost("{teamId}/achievestates/{iterationId}")]
+        [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult<TeamDto>> AchieveStates(AchievedStateDto dto, int teamId, int iterationId)
         {
             await service.AchieveStates(dto, teamId, iterationId);
             return Ok();
+        }
+
+        [HttpGet("{teamId}/currentstates")]
+        public async Task<ActionResult<TeamDto>> GetCurrentStates(int teamId)
+        {
+            var currentStates = await service.GetTeamsCurrentStates(teamId);
+            return Ok(currentStates);
         }
     }
 }

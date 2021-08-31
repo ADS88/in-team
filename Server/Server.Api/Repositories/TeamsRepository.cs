@@ -1,4 +1,3 @@
-using System.Collections;
 using System;
 using System.Collections.Generic;
 using Server.Api.Entities;
@@ -6,6 +5,7 @@ using Server.Api.Data;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using System.Linq;
 
 namespace Server.Api.Repositories
 {
@@ -62,9 +62,18 @@ namespace Server.Api.Repositories
             team.Points += points;
             await context.SaveChangesAsync();
         }
+
         public async Task AchieveStates(IEnumerable<AchievedState> achievedStates){
             context.AchievedStates.AddRange(achievedStates);
             await context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<AchievedState>> GetTeamsAchievedStates(int teamId){
+            var achievedStates = await context.AchievedStates
+                                        .Include(achievedState =>achievedState.Alpha)
+                                        .Include(achievedState => achievedState.Team)
+                                        .ToListAsync();
+            return achievedStates.Where(state => state.TeamId == teamId);
         }
     }
 }

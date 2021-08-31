@@ -13,5 +13,6 @@ namespace Server.Api.Repositories
         Task AddMember(int teamId, string memberId);
         Task AddPoints(int teamId, int points);
         Task AchieveStates(IEnumerable<AchievedState> achievedStates);
+        Task<IEnumerable<AchievedState>> GetTeamsAchievedStates(int teamId);
     }
 }

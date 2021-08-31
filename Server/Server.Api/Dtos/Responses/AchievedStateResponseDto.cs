@@ -14,7 +14,7 @@ namespace Server.Api.Dtos
     {
 
       [Required]
-      public int id { get; init; }
+      public int Id { get; init; }
 
       [Required]
       public string AlphaName { get; init; }

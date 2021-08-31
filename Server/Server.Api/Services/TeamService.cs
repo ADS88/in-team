@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using Server.Api.Entities;
 using Server.Api.Repositories;
@@ -63,6 +64,30 @@ namespace Server.Api.Services
                     AchievedDate = DateTimeOffset.UtcNow
                 });
             await repository.AchieveStates(achievedStates);
+        }
+
+        public async Task<AchievedStateResponseDto> GetTeamsCurrentStates(int teamId){
+            var achievedStates = await repository.GetTeamsAchievedStates(teamId);
+            Dictionary<int, List<AchievedState>> alphaToAchievedStates = new();
+            foreach(var s in achievedStates){
+                if(!alphaToAchievedStates.ContainsKey(s.AlphaId)){
+                    alphaToAchievedStates[s.AlphaId] = new List<AchievedState>();
+                }
+                alphaToAchievedStates[s.AlphaId].Add(s);
+            }
+            List<AchievedStateResponse> result = new();
+            foreach(var item in alphaToAchievedStates){
+                var mostRecentStateAchieved = item.Value.Where(a => a.AchievedDate == item.Value.Max(achievedState => achievedState.AchievedDate))
+                                                .FirstOrDefault();
+                
+                result.Add(new(){
+                    Id = mostRecentStateAchieved.Id,
+                    AlphaName = mostRecentStateAchieved.Alpha.Name,
+                    StateName = mostRecentStateAchieved.State.Name,
+                    AchievedDate = mostRecentStateAchieved.AchievedDate
+                });
+            }
+            return new AchievedStateResponseDto(){AchievedStates = result};
         }
     }
 }

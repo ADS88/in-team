@@ -14,5 +14,6 @@ namespace Server.Api.Services
         Task AddMember(int teamId, string memberId);
         Task<Boolean> DeleteTeam(int id);
         Task AchieveStates(AchievedStateDto dto, int teamId, int iterationid);
+        Task<AchievedStateResponseDto> GetTeamsCurrentStates(int teamId);
     }
 }

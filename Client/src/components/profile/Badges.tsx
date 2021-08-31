@@ -15,7 +15,11 @@ const Badges = (props: BadgesProps) => {
       justifyContent="center"
     >
       {props.badges.map(badge => (
-        <ProfileBadge name={badge.name} count={badge.count ?? 0} />
+        <ProfileBadge
+          name={badge.name}
+          count={badge.count ?? 0}
+          key={badge.id}
+        />
       ))}
     </SimpleGrid>
   )
