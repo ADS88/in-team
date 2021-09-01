@@ -55,6 +55,13 @@ namespace Server.Api.Controllers
             return courses;
         }
 
+        // [HttpGet("{courseId}/pendingiteration/{iterationId}")]
+        // public async Task<IEnumerable<CourseDto>> GetTeamsThatHaventBeenGradedInIteration(int courseId, int iterationId)
+        // {
+        //     var courses = (await service.GetAll()).Select(course => mapper.Map<CourseDto>(course));
+        //     return courses;
+        // }
+
         [HttpPost]
         [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult<CourseDto>> CreateCourse(CreateCourseDto courseDto)
@@ -67,12 +74,22 @@ namespace Server.Api.Controllers
         [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult<IterationDto>> AddIteration(CreateIterationDto iterationDto, int id)
         {
-            Console.WriteLine(iterationDto.StartDate);
             var iteration = await service.AddIteration(iterationDto.Name, iterationDto.StartDate, iterationDto.EndDate, id);
             if(iteration is null){
                 return UnprocessableEntity();
             }
             return CreatedAtAction(nameof(GetCourse), new { id = iteration.Id }, mapper.Map<IterationDto>(iteration));
+        }
+
+        [HttpGet("iteration/{iterationid}")]
+        [Authorize(Roles = "Lecturer")]
+        public async Task<ActionResult<IterationDto>> AddIteration(int courseId, int iterationId)
+        {
+            var iteration = await service.GetIteration(iterationId);
+            if(iteration is null){
+                return NotFound();
+            }
+            return Ok(iteration);
         }
     }
 }

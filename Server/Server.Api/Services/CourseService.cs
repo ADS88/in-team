@@ -61,5 +61,9 @@ namespace Server.Api.Services
             }
            
         }
+
+        public async Task<Iteration> GetIteration(int iterationId){
+            return await repository.GetIteration(iterationId);
+        }
     }
 }

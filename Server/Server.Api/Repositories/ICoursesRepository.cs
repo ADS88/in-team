@@ -12,5 +12,6 @@ namespace Server.Api.Repositories
         Task Add(Course course);
         Task Delete(Course course);
         Task AddIteration(Iteration iteration);
+        Task<Iteration> GetIteration(int iterationId);
     }
 }

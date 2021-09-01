@@ -39,10 +39,15 @@ namespace Server.Api.Repositories
             await context.SaveChangesAsync();
         }
 
-         public async Task AddIteration(Iteration iteration)
+        public async Task AddIteration(Iteration iteration)
         {
             context.Iterations.Add(iteration);
             await context.SaveChangesAsync();
+        }
+
+        public async Task<Iteration> GetIteration(int iterationId)
+        {
+            return await context.Iterations.FirstOrDefaultAsync(i => i.Id == iterationId);
         }
     }
 }
