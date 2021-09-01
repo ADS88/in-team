@@ -10,6 +10,7 @@ import {
   Text,
   useColorModeValue,
   FormErrorMessage,
+  Checkbox,
 } from "@chakra-ui/react"
 import { useForm } from "react-hook-form"
 import { useContext } from "react"
@@ -24,6 +25,8 @@ interface RegisterFormValues {
   password: string
   firstName: string
   lastName: string
+  isLecturer: boolean
+  lecturerPassword: string
 }
 
 const RegisterPage = () => {
@@ -34,8 +37,11 @@ const RegisterPage = () => {
     register,
     handleSubmit,
     setError,
+    watch,
     formState: { errors },
-  } = useForm<RegisterFormValues>()
+  } = useForm<RegisterFormValues>({ defaultValues: { isLecturer: false } })
+
+  const isLecturer = watch("isLecturer")
 
   const registerUser = async (data: RegisterFormValues) => {
     try {
@@ -47,9 +53,19 @@ const RegisterPage = () => {
       )
       history.push("/")
     } catch (error) {
-      setError("email", {
-        type: "validation",
-        message: "A user with that Email already exists!",
+      error.response?.data?.errors?.forEach((error: string) => {
+        if (error.includes("Email")) {
+          setError("email", {
+            type: "validation",
+            message: "A user with that Email already exists!",
+          })
+        }
+        if (error.includes("password")) {
+          setError("lecturerPassword", {
+            type: "validation",
+            message: "Wrong lecturer password",
+          })
+        }
       })
     }
   }
@@ -143,6 +159,26 @@ const RegisterPage = () => {
                 />
                 <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
               </FormControl>
+              <FormControl
+                id="isLecturer"
+                isInvalid={errors.password !== undefined}
+              >
+                <Checkbox {...register("isLecturer")}>I am a lecturer</Checkbox>
+              </FormControl>
+
+              {isLecturer && (
+                <FormControl
+                  id="lecturerPassword"
+                  isInvalid={errors.lecturerPassword !== undefined}
+                >
+                  <FormLabel>Lecturer Password</FormLabel>
+                  <Input {...register("lecturerPassword")} type="password" />
+                  <FormErrorMessage>
+                    {errors.lecturerPassword?.message}
+                  </FormErrorMessage>
+                </FormControl>
+              )}
+
               <Stack spacing={10}>
                 <Button
                   type="submit"

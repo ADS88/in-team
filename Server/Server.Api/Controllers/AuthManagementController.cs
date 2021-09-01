@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using Server.Api.Enums;
 using Server.Api.Entities;
+using Microsoft.Extensions.Configuration;
 
 
 namespace Server.Api.Controllers
@@ -23,9 +24,12 @@ namespace Server.Api.Controllers
         private readonly UserManager<AppUser> userManager;
         private readonly JwtConfig jwtConfig;
 
-        public AuthManagementController(UserManager<AppUser> userManager, IOptionsMonitor<JwtConfig> optionsMonitor){
+        private readonly IConfiguration configuration;
+
+        public AuthManagementController(UserManager<AppUser> userManager, IOptionsMonitor<JwtConfig> optionsMonitor, IConfiguration configuration){
             this.userManager = userManager;
             jwtConfig = optionsMonitor.CurrentValue;
+            this.configuration = configuration;
         }
 
         [HttpPost("Login")]
@@ -88,6 +92,17 @@ namespace Server.Api.Controllers
                 });
             }
 
+            var secretLecturerPassword = configuration["LecturerPassword:Password"];
+            
+            if(user.IsLecturer && user.LecturerPassword != secretLecturerPassword){
+                return BadRequest(new UserRegistrationResponseDto(){
+                    Errors = new List<string>{
+                        "Wrong lecturer password"
+                    },
+                    Success = false
+                });
+            }
+
             var newUser = new AppUser() {
                 UserName = user.Email, 
                 Email = user.Email,
@@ -98,7 +113,8 @@ namespace Server.Api.Controllers
             var isCreated = await userManager.CreateAsync(newUser, user.Password);
 
             if(isCreated.Succeeded){
-                await userManager.AddToRoleAsync(newUser, Roles.STUDENT);
+                var newUserRole = user.IsLecturer ? Roles.LECTURER : Roles.STUDENT;
+                await userManager.AddToRoleAsync(newUser, newUserRole);
                 var jwtToken = GenerateJwtToken(newUser, Roles.STUDENT);
                 return Ok(new UserRegistrationResponseDto(){
                     Success = true,

@@ -41,6 +41,7 @@ namespace Server.Api
             var connectionString = Configuration.GetSection(nameof(PostgresSettings)).Get<PostgresSettings>().ConnectionString;
             services.AddDbContext<DataContext>(options => options.UseNpgsql(connectionString));
             services.AddScoped<IDataContext>(provider => provider.GetService<DataContext>());
+            services.AddSingleton<IConfiguration>(Configuration);
 
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

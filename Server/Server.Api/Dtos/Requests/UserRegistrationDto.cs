@@ -17,5 +17,10 @@ namespace Server.Api.Dtos
     public string LastName{get; set;}
     [Required]
     public string Password{get; set;}
+
+    public string LecturerPassword { get; set; }
+
+    public bool IsLecturer { get; set; }
+
   }
 }
