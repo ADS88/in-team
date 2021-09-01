@@ -208,7 +208,7 @@ export default function WithSubnavigation() {
           direction={"row"}
           spacing={6}
         >
-          {isStudent && { profileButton }}
+          {isStudent && profileButton}
           {isLecturer && (
             <>
               {surveysButton}

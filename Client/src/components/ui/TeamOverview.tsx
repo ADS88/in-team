@@ -32,12 +32,7 @@ const TeamOverview = ({ team }: TeamOverviewProps) => {
       </Flex>
 
       {achievedStates.map(achievedState => (
-        <Flex
-          justifyContent="center"
-          width="xl"
-          direction={{ sm: "column", md: "row" }}
-          gridGap="4"
-        >
+        <Flex justifyContent="center" direction={"row"} gridGap="4">
           <Text fontSize="xl">{achievedState.alphaName}: </Text>
           <Text fontSize="xl" color="pink.500">
             {achievedState.stateName}
