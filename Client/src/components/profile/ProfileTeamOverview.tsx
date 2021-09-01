@@ -33,14 +33,15 @@ const ProfileTeamOverview = ({ team }: ProfileTeamOverviewProps) => {
 
       {achievedStates.map(achievedState => (
         <Flex
-          p="50"
+          justifyContent="center"
           width="xl"
-          justifyContent="space-between"
-          alignItems="center"
           direction={{ sm: "column", md: "row" }}
+          gridGap="4"
         >
-          <Heading>{achievedState.alphaName}</Heading>
-          <Heading color="pink.500">{achievedState.stateName}</Heading>
+          <Text fontSize="xl">{achievedState.alphaName}: </Text>
+          <Text fontSize="xl" color="pink.500">
+            {achievedState.stateName}
+          </Text>
         </Flex>
       ))}
 

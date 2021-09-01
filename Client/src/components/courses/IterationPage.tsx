@@ -51,7 +51,7 @@ function reducer(
 }
 
 interface GradeIterationFormValues {
-  team: string
+  teamId: string
   points: number
 }
 
@@ -85,8 +85,17 @@ const IterationPage = () => {
   } = useForm<GradeIterationFormValues>()
 
   const gradeIteration = (data: GradeIterationFormValues) => {
-    console.log("OWO")
-    console.log(data)
+    if (Array.from(state.keys()).some(stateId => stateId === null)) {
+      return
+    }
+    const achievedStates = Array.from(state).map(([alphaId, stateId]) => {
+      return { alphaId, stateId }
+    })
+
+    axios.post(`team/${data.teamId}/achievestates/${iterationId}`, {
+      points: data.points,
+      achievedStates,
+    })
   }
 
   return (
@@ -105,23 +114,29 @@ const IterationPage = () => {
           </Text>
           <FormControl>
             <FormLabel>Choose Team</FormLabel>
-            <Select
-              {...register(
-                "team"
-                // {
-                //   required: "You must allocate a team",
-                // }
+
+            <Controller
+              {...register("teamId", {
+                required: "You must select a team",
+              })}
+              control={control}
+              name="teamId"
+              render={({ field }) => (
+                <Select
+                  name="teams"
+                  id="teams"
+                  onChange={(event: any) => field.onChange(event.target.value)}
+                >
+                  {teams.map(team => (
+                    <option key={team.id} value={team.id}>
+                      {team.name}
+                    </option>
+                  ))}
+                </Select>
               )}
-              name="teams"
-              id="teams"
-            >
-              {teams.map(team => (
-                <option key={team.id} value={team.name}>
-                  {team.name}
-                </option>
-              ))}
-            </Select>
-            {/* <FormErrorMessage>{errors.team?.message}</FormErrorMessage> */}
+            />
+
+            <FormErrorMessage>{errors.teamId?.message}</FormErrorMessage>
           </FormControl>
           <AssessAlphas dispatch={dispatch} state={state} />
           <FormControl id="points" isInvalid={errors.points !== undefined}>
