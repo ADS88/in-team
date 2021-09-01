@@ -1,6 +1,6 @@
 import { useEffect, useState, useReducer } from "react"
 import { useForm, Controller } from "react-hook-form"
-import { useParams } from "react-router"
+import { useHistory, useParams } from "react-router"
 import Team from "../../models/team"
 import axios from "../../axios-config"
 import {
@@ -59,14 +59,19 @@ const IterationPage = () => {
   const { courseId, iterationId } =
     useParams<{ courseId: string; iterationId: string }>()
 
+  const history = useHistory()
+
+  const errorMessageColor = useColorModeValue("red.500", "red.300")
   const [teams, setTeams] = useState<Team[]>([])
   const [state, dispatch] = useReducer(reducer, initialState)
   const [iteration, setIteration] = useState<Iteration | null>(null)
+  const [achievedStateError, setAchievedStateError] =
+    useState<null | string>(null)
 
   useEffect(() => {
     axios
-      .get(`course/${courseId}`)
-      .then(response => setTeams(response.data.teams))
+      .get(`course/${courseId}/pendingiteration/${iterationId}`)
+      .then(response => setTeams(response.data))
   }, [courseId])
 
   useEffect(() => {
@@ -85,17 +90,26 @@ const IterationPage = () => {
   } = useForm<GradeIterationFormValues>()
 
   const gradeIteration = (data: GradeIterationFormValues) => {
-    if (Array.from(state.keys()).some(stateId => stateId === null)) {
+    if (state.size === 0) {
+      setAchievedStateError("You must add at least one alpha")
+      return
+    }
+    if (Array.from(state.values()).some(stateId => stateId === null)) {
+      setAchievedStateError("All selected alphas must have a state value")
       return
     }
     const achievedStates = Array.from(state).map(([alphaId, stateId]) => {
       return { alphaId, stateId }
     })
 
-    axios.post(`team/${data.teamId}/achievestates/${iterationId}`, {
-      points: data.points,
-      achievedStates,
-    })
+    console.log("post req")
+
+    axios
+      .post(`team/${data.teamId}/achievestates/${iterationId}`, {
+        points: data.points,
+        achievedStates,
+      })
+      .then(() => history.goBack())
   }
 
   return (
@@ -139,6 +153,9 @@ const IterationPage = () => {
             <FormErrorMessage>{errors.teamId?.message}</FormErrorMessage>
           </FormControl>
           <AssessAlphas dispatch={dispatch} state={state} />
+          {achievedStateError && (
+            <Text textColor={errorMessageColor}>{achievedStateError}</Text>
+          )}
           <FormControl id="points" isInvalid={errors.points !== undefined}>
             <FormLabel>Allocate points</FormLabel>
             <Input
@@ -158,7 +175,16 @@ const IterationPage = () => {
             />
             <FormErrorMessage>{errors.points?.message}</FormErrorMessage>
           </FormControl>
-          <Button type="submit">Confirm States Achieved</Button>
+          <Button
+            type="submit"
+            bg={"blue.400"}
+            color={"white"}
+            _hover={{
+              bg: "blue.500",
+            }}
+          >
+            Confirm States Achieved
+          </Button>
         </Stack>
       </form>
     </Flex>

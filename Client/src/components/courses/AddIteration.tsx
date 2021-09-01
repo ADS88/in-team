@@ -39,6 +39,7 @@ const AddIteration = ({ courseId }: AddIterationProps) => {
         <FormControl id="name" isInvalid={errors.name !== undefined}>
           <FormLabel>Iteration name</FormLabel>
           <Input
+            placeholder="e.g Sprint 1"
             {...register("name", {
               required: "You must enter a name",
             })}
@@ -68,7 +69,7 @@ const AddIteration = ({ courseId }: AddIterationProps) => {
           <FormLabel>End Date</FormLabel>
           <Controller
             {...register("endDate", {
-              required: "You must enter a due date",
+              required: "You must enter an end date",
             })}
             control={control}
             name="endDate"
