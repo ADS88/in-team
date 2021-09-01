@@ -72,6 +72,7 @@ namespace Server.Api.Repositories
             var achievedStates = await context.AchievedStates
                                         .Include(achievedState =>achievedState.Alpha)
                                         .Include(achievedState => achievedState.Team)
+                                        .Include(achievedState => achievedState.State)
                                         .ToListAsync();
             return achievedStates.Where(state => state.TeamId == teamId);
         }
