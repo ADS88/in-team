@@ -7,6 +7,7 @@ import IRoute from "./IRoute"
 import StatePage from "../components/alphas/StatePage"
 import SurveyPage from "../components/surveys/SurveyPage"
 import CreateSurveyPage from "../components/surveys/CreateSurveyPage"
+import IterationPage from "../components/courses/IterationPage"
 
 const lecturerRoutes: IRoute[] = [
   {
@@ -62,6 +63,12 @@ const lecturerRoutes: IRoute[] = [
     name: "Survey page",
     exact: true,
     component: SurveyPage,
+  },
+  {
+    path: "/course/:courseId/iteration/:iterationId",
+    name: "Iteration page",
+    exact: true,
+    component: IterationPage,
   },
 ]
 

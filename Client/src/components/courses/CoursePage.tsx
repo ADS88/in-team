@@ -75,7 +75,15 @@ const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
         </Text>
 
         {iterations.map(iteration => (
-          <Card title={iteration.name} key={iteration.id} />
+          <div
+            style={{ cursor: "pointer" }}
+            key={iteration.id}
+            onClick={() =>
+              history.push(`/course/${courseId}/iteration/${iteration.id}`)
+            }
+          >
+            <Card title={iteration.name} />
+          </div>
         ))}
 
         <AddIteration courseId={courseId} />
