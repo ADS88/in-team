@@ -14,5 +14,6 @@ namespace Server.Api.Services
         Task<Iteration> AddIteration(string name, DateTimeOffset start, DateTimeOffset end, int courseId);
         Task<Boolean> DeleteCourse(int id);
         Task<Iteration> GetIteration(int id);
+        Task<IEnumerable<Team>> GetTeamsThatHaveNotBeenGradedInIteration(int courseId, int iterationId);
     }
 }

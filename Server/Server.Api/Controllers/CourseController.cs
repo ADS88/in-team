@@ -55,12 +55,12 @@ namespace Server.Api.Controllers
             return courses;
         }
 
-        // [HttpGet("{courseId}/pendingiteration/{iterationId}")]
-        // public async Task<IEnumerable<CourseDto>> GetTeamsThatHaventBeenGradedInIteration(int courseId, int iterationId)
-        // {
-        //     var courses = (await service.GetAll()).Select(course => mapper.Map<CourseDto>(course));
-        //     return courses;
-        // }
+        [HttpGet("{courseId}/pendingiteration/{iterationId}")]
+        public async Task<IEnumerable<TeamDto>> GetTeamsThatHaventBeenGradedInIteration(int courseId, int iterationId)
+        {
+            var teams = await service.GetTeamsThatHaveNotBeenGradedInIteration(courseId, iterationId);
+            return teams.Select(team => mapper.Map<TeamDto>(team));
+        }
 
         [HttpPost]
         [Authorize(Roles = "Lecturer")]

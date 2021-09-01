@@ -1,4 +1,4 @@
-using System;
+using System.Linq;
 using System.Collections.Generic;
 using Server.Api.Entities;
 using Server.Api.Data;
@@ -48,6 +48,11 @@ namespace Server.Api.Repositories
         public async Task<Iteration> GetIteration(int iterationId)
         {
             return await context.Iterations.FirstOrDefaultAsync(i => i.Id == iterationId);
+        }
+
+        public async Task<ICollection<AchievedState>> GetAchievedStatesFromIteration(int iterationId){
+            var achievedStates = await context.AchievedStates.ToListAsync();
+            return achievedStates.Where(state => state.IterationId == iterationId ).ToList();
         }
     }
 }

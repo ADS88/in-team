@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Server.Api.Services
 {
@@ -64,6 +65,13 @@ namespace Server.Api.Services
 
         public async Task<Iteration> GetIteration(int iterationId){
             return await repository.GetIteration(iterationId);
+        }
+
+        public async Task<IEnumerable<Team>> GetTeamsThatHaveNotBeenGradedInIteration(int courseId, int iterationId){
+            var course = await repository.Get(courseId);
+            var reviewsForIteration = await repository.GetAchievedStatesFromIteration(iterationId);
+            var reviewedTeamIds = reviewsForIteration.Select(review => review.TeamId).ToHashSet();
+            return course.Teams.Where(team => !reviewedTeamIds.Contains(team.Id));
         }
     }
 }

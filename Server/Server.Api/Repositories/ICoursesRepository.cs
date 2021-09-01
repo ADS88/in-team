@@ -1,3 +1,4 @@
+using System.Collections;
 using System;
 using System.Collections.Generic;
 using Server.Api.Entities;
@@ -13,5 +14,6 @@ namespace Server.Api.Repositories
         Task Delete(Course course);
         Task AddIteration(Iteration iteration);
         Task<Iteration> GetIteration(int iterationId);
+        Task<ICollection<AchievedState>> GetAchievedStatesFromIteration(int iterationId);
     }
 }
