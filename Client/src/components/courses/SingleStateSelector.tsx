@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import State from "../../models/state"
 import axios from "../../axios-config"
 import { Select, Flex, Text, Button } from "@chakra-ui/react"
-import { Action } from "./IterationPage"
+import { Action } from "./GradeTeamPage"
 
 interface SingleStateSelectorProps {
   alphaId: number

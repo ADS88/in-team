@@ -1,59 +1,17 @@
-import { useEffect, useState, useReducer } from "react"
-import { useForm, Controller } from "react-hook-form"
+import { useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router"
 import Team from "../../models/team"
 import axios from "../../axios-config"
 import {
-  Select,
   Stack,
   Flex,
   useColorModeValue,
   Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
   Heading,
   Text,
+  Select,
 } from "@chakra-ui/react"
-import AssessAlphas from "./AssessAlphas"
 import Iteration from "../../models/iteration"
-
-export type Action =
-  | { type: "addAlpha"; payload: { newAlphaId: number } }
-  | {
-      type: "updateAlpha"
-      payload: { alphaIdToUpdate: number; newStateId: number }
-    }
-  | { type: "removeAlpha"; payload: { alphaIdToRemove: number } }
-
-const initialState = new Map<number, number>()
-
-function reducer(
-  state: Map<number, number | null>,
-  action: Action
-): Map<number, number | null> {
-  switch (action.type) {
-    case "addAlpha":
-      if (!state.has(action.payload.newAlphaId)) {
-        state = state.set(action.payload.newAlphaId, null)
-      }
-      return new Map(state)
-    case "updateAlpha":
-      state.set(action.payload.alphaIdToUpdate, action.payload.newStateId)
-      return new Map(state)
-    case "removeAlpha":
-      state.delete(action.payload.alphaIdToRemove)
-      return new Map(state)
-    default:
-      throw new Error()
-  }
-}
-
-interface GradeIterationFormValues {
-  teamId: string
-  points: number
-}
 
 const IterationPage = () => {
   const { courseId, iterationId } =
@@ -61,18 +19,9 @@ const IterationPage = () => {
 
   const history = useHistory()
 
-  const errorMessageColor = useColorModeValue("red.500", "red.300")
   const [teams, setTeams] = useState<Team[]>([])
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [selectedTeamId, setSelectedTeamId] = useState<number | null>(null)
   const [iteration, setIteration] = useState<Iteration | null>(null)
-  const [achievedStateError, setAchievedStateError] =
-    useState<null | string>(null)
-
-  useEffect(() => {
-    axios
-      .get(`course/${courseId}/pendingiteration/${iterationId}`)
-      .then(response => setTeams(response.data))
-  }, [courseId])
 
   useEffect(() => {
     axios.get(`course/iteration/${iterationId}`).then(response => {
@@ -82,35 +31,11 @@ const IterationPage = () => {
     })
   }, [iterationId])
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<GradeIterationFormValues>()
-
-  const gradeIteration = (data: GradeIterationFormValues) => {
-    if (state.size === 0) {
-      setAchievedStateError("You must add at least one alpha")
-      return
-    }
-    if (Array.from(state.values()).some(stateId => stateId === null)) {
-      setAchievedStateError("All selected alphas must have a state value")
-      return
-    }
-    const achievedStates = Array.from(state).map(([alphaId, stateId]) => {
-      return { alphaId, stateId }
-    })
-
-    console.log("post req")
-
+  useEffect(() => {
     axios
-      .post(`team/${data.teamId}/achievestates/${iterationId}`, {
-        points: data.points,
-        achievedStates,
-      })
-      .then(() => history.goBack())
-  }
+      .get(`course/${courseId}/pendingiteration/${iterationId}`)
+      .then(response => setTeams(response.data))
+  }, [courseId])
 
   return (
     <Flex
@@ -119,74 +44,40 @@ const IterationPage = () => {
       justify={"center"}
       bg={useColorModeValue("gray.50", "gray.800")}
     >
-      <form onSubmit={handleSubmit(gradeIteration)}>
-        <Stack minW={"30vw"} spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-          <Heading>{iteration?.name}</Heading>
-          <Text>
-            {iteration?.startDate.toDateString()} -{" "}
-            {iteration?.endDate.toDateString()}
-          </Text>
-          <FormControl>
-            <FormLabel>Choose Team</FormLabel>
+      <Stack minW={"30vw"} spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+        <Heading>{iteration?.name}</Heading>
+        <Text>
+          {iteration?.startDate.toDateString()} -{" "}
+          {iteration?.endDate.toDateString()}
+        </Text>
 
-            <Controller
-              {...register("teamId", {
-                required: "You must select a team",
-              })}
-              control={control}
-              name="teamId"
-              render={({ field }) => (
-                <Select
-                  name="teams"
-                  id="teams"
-                  onChange={(event: any) => field.onChange(event.target.value)}
-                >
-                  {teams.map(team => (
-                    <option key={team.id} value={team.id}>
-                      {team.name}
-                    </option>
-                  ))}
-                </Select>
-              )}
-            />
-
-            <FormErrorMessage>{errors.teamId?.message}</FormErrorMessage>
-          </FormControl>
-          <AssessAlphas dispatch={dispatch} state={state} />
-          {achievedStateError && (
-            <Text textColor={errorMessageColor}>{achievedStateError}</Text>
-          )}
-          <FormControl id="points" isInvalid={errors.points !== undefined}>
-            <FormLabel>Allocate points</FormLabel>
-            <Input
-              type="number"
-              step="1"
-              {...register("points", {
-                required: "You must allocate points",
-                min: {
-                  value: 0,
-                  message: "You can't allocate negative points",
-                },
-                max: {
-                  value: 50000,
-                  message: "Too many points",
-                },
-              })}
-            />
-            <FormErrorMessage>{errors.points?.message}</FormErrorMessage>
-          </FormControl>
-          <Button
-            type="submit"
-            bg={"blue.400"}
-            color={"white"}
-            _hover={{
-              bg: "blue.500",
-            }}
-          >
-            Confirm States Achieved
-          </Button>
-        </Stack>
-      </form>
+        <Select
+          name="teams"
+          id="teams"
+          placeholder="Select a team to assess"
+          onChange={e => setSelectedTeamId(parseInt(e.target.value))}
+        >
+          {teams.map(team => (
+            <option key={team.id} value={team.id}>
+              {team.name}
+            </option>
+          ))}
+        </Select>
+        <Button
+          type="submit"
+          bg={"blue.400"}
+          color={"white"}
+          _hover={{
+            bg: "blue.500",
+          }}
+          isDisabled={selectedTeamId === null}
+          onClick={() =>
+            history.push(`/team/${selectedTeamId}/gradeteam/${iterationId}`)
+          }
+        >
+          Complete team assessment
+        </Button>
+      </Stack>
     </Flex>
   )
 }

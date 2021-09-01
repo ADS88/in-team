@@ -8,6 +8,7 @@ import StatePage from "../components/alphas/StatePage"
 import SurveyPage from "../components/surveys/SurveyPage"
 import CreateSurveyPage from "../components/surveys/CreateSurveyPage"
 import IterationPage from "../components/courses/IterationPage"
+import GradeTeamPage from "../components/courses/GradeTeamPage"
 
 const lecturerRoutes: IRoute[] = [
   {
@@ -69,6 +70,12 @@ const lecturerRoutes: IRoute[] = [
     name: "Iteration page",
     exact: true,
     component: IterationPage,
+  },
+  {
+    path: "/team/:teamId/gradeteam/:iterationId",
+    name: "Iteration page",
+    exact: true,
+    component: GradeTeamPage,
   },
 ]
 

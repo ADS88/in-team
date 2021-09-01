@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Action } from "./IterationPage"
+import { Action } from "./GradeTeamPage"
 import axios from "../../axios-config"
 import { Select, Flex, Button, FormControl, FormLabel } from "@chakra-ui/react"
 
