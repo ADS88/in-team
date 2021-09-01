@@ -2,22 +2,15 @@ import axios from "../../axios-config"
 import { useEffect, useState } from "react"
 import { RouteComponentProps } from "react-router"
 import Student from "../../models/student"
-import {
-  Flex,
-  Stack,
-  Text,
-  Button,
-  Heading,
-  useColorModeValue,
-} from "@chakra-ui/react"
+import { Flex, Stack, Button, useColorModeValue, Box } from "@chakra-ui/react"
 import { useHistory } from "react-router-dom"
 import AutoComplete from "../ui/AutoComplete"
-import Card from "../ui/Card"
+import Team from "../../models/team"
+import TeamOverview from "../ui/TeamOverview"
 
 const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const teamId = props.match.params.id
-  const [studentsInCourse, setStudentsInCourse] = useState<Student[]>([])
-  const [teamName, setTeamName] = useState("")
+  const [team, setTeam] = useState<Team | null>(null)
   const history = useHistory()
 
   const deleteTeam = () => {
@@ -25,11 +18,15 @@ const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   }
 
   const addStudentToTeam = (student: Student) => {
-    axios
-      .post(`team/${teamId}/addstudent/${student.id}`)
-      .then(() =>
-        setStudentsInCourse(prevStudents => [...prevStudents, student])
-      )
+    axios.post(`team/${teamId}/addstudent/${student.id}`).then(() => {
+      setTeam(prevTeam => {
+        if (prevTeam !== null) {
+          prevTeam?.members?.push(student)
+          return { ...prevTeam }
+        }
+        return prevTeam
+      })
+    })
   }
 
   useEffect(() => {
@@ -38,8 +35,7 @@ const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
     }
 
     getTeam().then(response => {
-      setStudentsInCourse(response.data.members)
-      setTeamName(response.data.name)
+      setTeam(response.data)
     })
   }, [teamId])
 
@@ -50,25 +46,25 @@ const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
       justify={"center"}
       bg={useColorModeValue("gray.50", "gray.800")}
       direction="column"
+      marginBottom="8"
     >
-      <Heading fontSize="4xl">{teamName}</Heading>
-      <Text fontSize="2xl">Members</Text>
-      <Stack minW={"30vw"} spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-        {studentsInCourse.map(student => (
-          <Card title={`${student.firstName} ${student.lastName}`} />
-        ))}
-        <AutoComplete teamId={teamId} addToTeam={addStudentToTeam} />
-        <Button
-          bg={"red.400"}
-          color={"white"}
-          _hover={{
-            bg: "red.500",
-          }}
-          type="submit"
-          onClick={deleteTeam}
-        >
-          Delete team
-        </Button>
+      <Stack w="xl" align="center">
+        {team && <TeamOverview team={team} />}
+
+        <Flex w="xl" direction="column" gridGap="4">
+          <AutoComplete teamId={teamId} addToTeam={addStudentToTeam} />
+          <Button
+            bg={"red.400"}
+            color={"white"}
+            _hover={{
+              bg: "red.500",
+            }}
+            type="submit"
+            onClick={deleteTeam}
+          >
+            Delete team
+          </Button>
+        </Flex>
       </Stack>
     </Flex>
   )

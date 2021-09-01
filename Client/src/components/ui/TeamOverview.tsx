@@ -1,15 +1,15 @@
 import Team from "../../models/team"
 import { Flex, Text, Heading } from "@chakra-ui/react"
-import TeamMemberOverview from "./TeamMemberOverview"
+import TeamMemberOverview from "../profile/TeamMemberOverview"
 import { useEffect, useState } from "react"
 import axios from "../../axios-config"
 import AchievedState from "../../models/achievedstate"
 
-interface ProfileTeamOverviewProps {
+interface TeamOverviewProps {
   team: Team
 }
 
-const ProfileTeamOverview = ({ team }: ProfileTeamOverviewProps) => {
+const TeamOverview = ({ team }: TeamOverviewProps) => {
   useEffect(() => {
     axios
       .get(`team/${team.id}/currentstates`)
@@ -58,4 +58,4 @@ const ProfileTeamOverview = ({ team }: ProfileTeamOverviewProps) => {
   )
 }
 
-export default ProfileTeamOverview
+export default TeamOverview

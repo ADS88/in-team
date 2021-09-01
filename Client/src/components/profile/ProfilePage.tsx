@@ -11,11 +11,11 @@ import Badges from "./Badges"
 import { useContext, useEffect, useState } from "react"
 import Student from "../../models/student"
 import Team from "../../models/team"
-import ProfileTeamOverview from "./ProfileTeamOverview"
 import { useParams } from "react-router"
 import { AuthContext } from "../../store/auth-context"
 import ProfileIconDisplay from "./ProfileIconDisplay"
 import { Badge } from "../../models/badge"
+import TeamOverview from "../ui/TeamOverview"
 
 export interface ProfilePageProps {}
 
@@ -78,7 +78,7 @@ const ProfilePage = () => {
         <Badges badges={badges} />
 
         {teams.map(team => (
-          <ProfileTeamOverview team={team} />
+          <TeamOverview team={team} />
         ))}
       </VStack>
     </Flex>
