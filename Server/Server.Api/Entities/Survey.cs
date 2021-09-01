@@ -1,3 +1,4 @@
+using System.Collections;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
@@ -26,5 +27,14 @@ namespace Server.Api.Entities
 
         [Required]
         public ICollection<Team> Teams { get; init; }
+
+        [Required]
+        public Iteration Iteration { get; init; }
+
+        [Required]
+        public int IterationId { get; init; }
+
+        public ICollection<SurveyAttempt> Attempts { get; init;}
+
     }
 }

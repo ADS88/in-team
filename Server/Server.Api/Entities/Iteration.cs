@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System;
-using Server.Api.Entities;
+using System.Collections.Generic;
 
 namespace Server.Api.Entities
 {
@@ -24,6 +24,8 @@ namespace Server.Api.Entities
 
         [Required]
         public Course Course { get; init; }
+
+        public ICollection<Survey> Surveys { get; init; }
 
     }
 }

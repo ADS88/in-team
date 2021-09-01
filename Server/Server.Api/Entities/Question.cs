@@ -21,5 +21,6 @@ namespace Server.Api.Entities
         public DateTimeOffset CreatedDate { get; init; }
 
         public ICollection<Survey> Surveys { get; init; }
+
     }
 }
