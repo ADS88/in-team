@@ -7,6 +7,8 @@ namespace Server.Api.Dtos
     {
       [Required]
       public ICollection<SingleAchievedState> AchievedStates { get; init; }
+
+      public int Points { get; init; }
     }
 
     public record SingleAchievedState 

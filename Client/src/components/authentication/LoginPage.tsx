@@ -36,6 +36,7 @@ const LoginPage = () => {
   } = useForm<LoginFormValues>()
 
   const [error, setError] = useState(false)
+  const errorMessageColor = useColorModeValue("red.500", "red.300")
 
   const login = async (data: LoginFormValues) => {
     try {
@@ -112,7 +113,9 @@ const LoginPage = () => {
                 Sign in
               </Button>
               {error && (
-                <Text color={"red.500"}>Incorrect username or password!</Text>
+                <Text color={errorMessageColor}>
+                  Incorrect username or password!
+                </Text>
               )}
             </Stack>
           </form>

@@ -208,12 +208,7 @@ export default function WithSubnavigation() {
           direction={"row"}
           spacing={6}
         >
-          {isStudent && (
-            <>
-              {leaderboardButton}
-              {profileButton}
-            </>
-          )}
+          {isStudent && { profileButton }}
           {isLecturer && (
             <>
               {surveysButton}
@@ -221,7 +216,12 @@ export default function WithSubnavigation() {
               {coursesButton}
             </>
           )}
-          {isLoggedIn && logoutButton}
+          {isLoggedIn && (
+            <>
+              {leaderboardButton}
+              {logoutButton}
+            </>
+          )}
           {!isLoggedIn && (
             <>
               {loginButton}

@@ -55,6 +55,7 @@ namespace Server.Api.Services
         }
 
         public async Task AchieveStates(AchievedStateDto dto, int teamId, int iterationid){
+            await repository.AddPoints(teamId, dto.Points);
             var achievedStates = dto.AchievedStates.Select(achievedState => new AchievedState()
                 {
                     TeamId = teamId,

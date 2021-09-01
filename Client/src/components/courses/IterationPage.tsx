@@ -37,20 +37,11 @@ const IterationPage = () => {
       .then(response => setTeams(response.data))
   }, [courseId])
 
-  return (
-    <Flex
-      minH={"90vh"}
-      align={"center"}
-      justify={"center"}
-      bg={useColorModeValue("gray.50", "gray.800")}
-    >
-      <Stack minW={"30vw"} spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-        <Heading>{iteration?.name}</Heading>
-        <Text>
-          {iteration?.startDate.toDateString()} -{" "}
-          {iteration?.endDate.toDateString()}
-        </Text>
-
+  let action =
+    teams.length === 0 ? (
+      <Text color="blue.500">All teams graded for this iteration</Text>
+    ) : (
+      <>
         <Select
           name="teams"
           id="teams"
@@ -77,6 +68,31 @@ const IterationPage = () => {
         >
           Complete team assessment
         </Button>
+      </>
+    )
+
+  return (
+    <Flex
+      minH={"90vh"}
+      align={"center"}
+      justify={"center"}
+      bg={useColorModeValue("gray.50", "gray.800")}
+    >
+      <Stack
+        minW={"30vw"}
+        spacing={8}
+        mx={"auto"}
+        maxW={"lg"}
+        py={12}
+        px={6}
+        align="center"
+      >
+        <Heading>{iteration?.name}</Heading>
+        <Text>
+          {iteration?.startDate.toDateString()} -{" "}
+          {iteration?.endDate.toDateString()}
+        </Text>
+        {action}
       </Stack>
     </Flex>
   )
