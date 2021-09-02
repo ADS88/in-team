@@ -115,11 +115,11 @@ namespace Server.Api.Controllers
             if(isCreated.Succeeded){
                 var newUserRole = user.IsLecturer ? Roles.LECTURER : Roles.STUDENT;
                 await userManager.AddToRoleAsync(newUser, newUserRole);
-                var jwtToken = GenerateJwtToken(newUser, Roles.STUDENT);
+                var jwtToken = GenerateJwtToken(newUser, newUserRole);
                 return Ok(new UserRegistrationResponseDto(){
                     Success = true,
                     Token = jwtToken,
-                    Role = Roles.STUDENT,
+                    Role = newUserRole,
                     Id = newUser.Id
                 });
             } else {
