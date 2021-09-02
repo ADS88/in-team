@@ -46,7 +46,6 @@ const LoginPage = () => {
         response.data.role,
         response.data.id
       )
-      history.push("/")
     } catch (error) {
       setError(true)
     }

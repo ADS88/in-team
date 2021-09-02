@@ -51,7 +51,6 @@ const RegisterPage = () => {
         response.data.role,
         response.data.id
       )
-      history.push("/")
     } catch (error) {
       error.response?.data?.errors?.forEach((error: string) => {
         if (error.includes("Email")) {
