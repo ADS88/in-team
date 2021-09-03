@@ -19,7 +19,7 @@ namespace Server.Api.Dtos
     public int StateId { get; init; }
     public string StateName { get; init; }
     public double Average { get; init; }
-    public ICollection<TeamSurveyQuestionDto> SurveyQuestionDtos { get; init; }
+    public ICollection<TeamSurveyQuestionDto> AnswerSummaries { get; init; }
   }
 
   public record TeamSurveyAlphaDto {

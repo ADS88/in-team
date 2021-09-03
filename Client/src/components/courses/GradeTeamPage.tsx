@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react"
+import { useState, useReducer, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useHistory, useParams } from "react-router"
 import axios from "../../axios-config"
@@ -16,6 +16,7 @@ import {
   Text,
 } from "@chakra-ui/react"
 import AssessAlphas from "./AssessAlphas"
+import SurveyResults from "./SurveyResults"
 
 export type Action =
   | { type: "addAlpha"; payload: { newAlphaId: number } }
@@ -82,8 +83,6 @@ const GradeTeamPage = () => {
       return { alphaId, stateId }
     })
 
-    console.log("post req")
-
     axios
       .post(`team/${teamId}/achievestates/${iterationId}`, {
         points: data.points,
@@ -94,9 +93,12 @@ const GradeTeamPage = () => {
 
   return (
     <Flex
+      p="8"
       minH={"90vh"}
       align={"center"}
-      justify={"center"}
+      justify="center"
+      gridGap={{ sm: "5", lg: "20" }}
+      direction={{ sm: "column-reverse", lg: "row" }}
       bg={useColorModeValue("gray.50", "gray.800")}
     >
       <form onSubmit={handleSubmit(gradeIteration)}>
@@ -138,6 +140,7 @@ const GradeTeamPage = () => {
           </Button>
         </Stack>
       </form>
+      <SurveyResults teamId={teamId} iterationId={iterationId} />
     </Flex>
   )
 }

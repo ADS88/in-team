@@ -125,7 +125,7 @@ namespace Server.Api.Services
                     StateId = state.Id,
                     StateName = state.Name,
                     Average = average,
-                    SurveyQuestionDtos = answerSummaries
+                    AnswerSummaries = answerSummaries
                 });
             }
             return stateSummaries;
