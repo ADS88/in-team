@@ -90,5 +90,71 @@ namespace Server.Api.Services
             }
             return new AchievedStateResponseDto(){AchievedStates = result};
         }
+
+        public async Task<TeamSurveyAnswerSummaryDto> GetTeamsSurveyAnswerSummaries(int teamId, int iterationId){
+            var teamsSurveyAttemptsInIteration = await repository.GetTeamsSurveyAnswerSummaries(teamId, iterationId);
+            var alphaToAnswer = teamsSurveyAttemptsInIteration
+            .SelectMany(attempt => attempt.Answers)
+            .GroupBy(answer => answer.Question.State.Alpha);
+            var alphaSummaries = new List<TeamSurveyAlphaDto>();
+            foreach(var alphaGroup in alphaToAnswer){
+                var alpha = alphaGroup.Key;
+                var answersRelatedToAlpha = alphaGroup.ToList();
+                alphaSummaries.Add(new(){
+                    AlphaId = alpha.Id,
+                    AlphaName = alpha.Name,
+                    States = GetStateSummaries(alpha, answersRelatedToAlpha)
+                });
+            }
+            TeamSurveyAnswerSummaryDto dto = new(){
+                Alphas = alphaSummaries
+            };
+
+            return dto;
+        }
+
+        private List<TeamSurveyStateDto> GetStateSummaries(Alpha alpha, ICollection<Answer> answers){
+            var statesToAnswer = answers.GroupBy(answer => answer.Question.State);
+            var stateSummaries = new List<TeamSurveyStateDto>();
+            foreach(var stateGroup in statesToAnswer){
+                var state = stateGroup.Key;
+                var answersRelatedToState = stateGroup.ToList();
+                var answerSummaries = GetAnswerSummaries(answersRelatedToState);
+                var average = answerSummaries.Select(answer => answer.Average).DefaultIfEmpty(0).Average();
+                stateSummaries.Add(new(){
+                    StateId = state.Id,
+                    StateName = state.Name,
+                    Average = average,
+                    SurveyQuestionDtos = answerSummaries
+                });
+            }
+            return stateSummaries;
+        }
+
+        private List<TeamSurveyQuestionDto> GetAnswerSummaries(ICollection<Answer> answers){
+            var answerSummaries = new List<TeamSurveyQuestionDto>();
+            var questionsToAnswer = answers.GroupBy(answer => answer.Question.Content);
+            foreach(var questionGroup in questionsToAnswer){
+                var questionContent = questionGroup.Key;
+                var answersForQuestion = questionGroup.ToList();
+                answerSummaries.Add(new(){
+                    Content = questionContent,
+                    Average = answersForQuestion.Select(answer => answer.LikertRating).DefaultIfEmpty(0).Average()
+                });
+            }
+            return answerSummaries;
+        }  
     }
+
+    public record QuestionSummary {
+        public string QuestionContent {get; init; }
+        public List<int> Answers {get; init; }
+        public int AlphaId {get; init;}
+    }
+
+    public record QuestionAverageSummary {
+        public string QuestionContent {get; init; }
+        public double AverageAnswer { get; init; }
+    }
+
 }

@@ -14,5 +14,6 @@ namespace Server.Api.Repositories
         Task AddPoints(int teamId, int points);
         Task AchieveStates(IEnumerable<AchievedState> achievedStates);
         Task<IEnumerable<AchievedState>> GetTeamsAchievedStates(int teamId);
+        Task<ICollection<SurveyAttempt>> GetTeamsSurveyAnswerSummaries(int teamId, int iterationId);
     }
 }

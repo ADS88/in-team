@@ -87,5 +87,12 @@ namespace Server.Api.Controllers
             var currentStates = await service.GetTeamsCurrentStates(teamId);
             return Ok(currentStates);
         }
+
+        [HttpGet("{teamId}/surveyresults/{iterationId}")]
+        public async Task<ActionResult<TeamDto>> GetSurveyResults(int teamId, int iterationId)
+        {
+            var surveyAnswerSummaries = await service.GetTeamsSurveyAnswerSummaries(teamId, iterationId);
+            return Ok(surveyAnswerSummaries);
+        }
     }
 }

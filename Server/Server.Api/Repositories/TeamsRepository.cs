@@ -73,8 +73,20 @@ namespace Server.Api.Repositories
                                         .Include(achievedState =>achievedState.Alpha)
                                         .Include(achievedState => achievedState.Team)
                                         .Include(achievedState => achievedState.State)
+                                        .Where(state => state.TeamId == teamId)
                                         .ToListAsync();
-            return achievedStates.Where(state => state.TeamId == teamId);
+            return achievedStates;
+        }
+
+        public async Task<ICollection<SurveyAttempt>> GetTeamsSurveyAnswerSummaries(int teamId, int iterationId){
+            return await context.SurveyAttempts
+                        .Include(attempt => attempt.Survey)
+                        .ThenInclude(survey => survey.Questions)
+                        .ThenInclude(question => question.State)
+                        .ThenInclude(state => state.Alpha)
+                        .Include(attempt => attempt.Answers)
+                        .Where(attempt => attempt.Survey.IterationId == iterationId && attempt.Survey.Teams.Select(t => t.Id).Contains(teamId))
+                        .ToListAsync();
         }
     }
 }

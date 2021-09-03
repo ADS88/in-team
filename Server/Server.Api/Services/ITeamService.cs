@@ -15,5 +15,6 @@ namespace Server.Api.Services
         Task<Boolean> DeleteTeam(int id);
         Task AchieveStates(AchievedStateDto dto, int teamId, int iterationid);
         Task<AchievedStateResponseDto> GetTeamsCurrentStates(int teamId);
+        Task<TeamSurveyAnswerSummaryDto> GetTeamsSurveyAnswerSummaries(int teamId, int iterationId);
     }
 }
