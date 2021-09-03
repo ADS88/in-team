@@ -36,7 +36,8 @@ namespace Server.Api.Controllers
         [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult<SurveyDto>> CreateSurvey(CreateSurveyDto dto)
         {
-            var survey = await service.Create(dto.Name, dto.StateIds, dto.TeamIds, dto.OpeningDate, dto.ClosingDate);
+            var iterationId = 1;
+            var survey = await service.Create(dto.Name, dto.StateIds, dto.TeamIds, dto.OpeningDate, dto.ClosingDate, iterationId);
             return CreatedAtAction(nameof(GetSurveys), new { id = survey.Id }, mapper.Map<SurveyDto>(survey));
         }
 

@@ -26,7 +26,7 @@ namespace Server.Api.Services
             this.userManager = userManager;
         }
 
-        public async Task<Survey> Create(string name, ICollection<int> stateIds, ICollection<int> TeamIds, DateTimeOffset start, DateTimeOffset end){
+        public async Task<Survey> Create(string name, ICollection<int> stateIds, ICollection<int> TeamIds, DateTimeOffset start, DateTimeOffset end, int iterationId){
             var questions = new List<Question>();
             foreach(var stateId in stateIds){
                 var state = await alphasRepository.GetState(stateId);
@@ -44,7 +44,8 @@ namespace Server.Api.Services
                 OpeningDate = start,
                 ClosingDate = end,
                 Questions = questions,
-                Teams = teams
+                Teams = teams,
+                IterationId = iterationId
             };
 
             await surveysRepository.Create(survey);
@@ -134,7 +135,7 @@ namespace Server.Api.Services
         public async Task<IEnumerable<Survey>> GetSurveysStudentNeedsToComplete(string userId){
             var user = await userRepository.GetUserWithTeams(userId);
             var surveysAssignedToStudent = await surveysRepository.GetSurveysAssignedToStudent(user);
-            surveysAssignedToStudent = surveysAssignedToStudent.Where(s => DateTimeOffset.Compare(s.ClosingDate, DateTimeOffset.UtcNow) < 0);
+            surveysAssignedToStudent = surveysAssignedToStudent.Where(s => DateTimeOffset.Compare(s.ClosingDate, DateTimeOffset.UtcNow) > 0).ToList();
             var surveyAttemptsFromStudent = await surveysRepository.GetAttemptsFromUser(userId);
             var attemptedSurveyIds = new HashSet<int>(surveyAttemptsFromStudent.Select(s => s.Id));
             return surveysAssignedToStudent.Where(s => !attemptedSurveyIds.Contains(s.Id));
