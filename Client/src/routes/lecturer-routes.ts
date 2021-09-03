@@ -8,7 +8,7 @@ import StatePage from "../components/alphas/StatePage"
 import SurveyPage from "../components/surveys/SurveyPage"
 import CreateSurveyPage from "../components/surveys/CreateSurveyPage"
 import IterationPage from "../components/courses/IterationPage"
-import GradeTeamPage from "../components/courses/GradeTeamPage"
+import GradeTeamPage from "../components/reviews/GradeTeamPage"
 
 const lecturerRoutes: IRoute[] = [
   {
