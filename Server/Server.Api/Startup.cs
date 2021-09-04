@@ -16,15 +16,20 @@ using System.Threading.Tasks;
 using Server.Api.Enums;
 using Server.Api.Services;
 using Server.Api.Entities;
+using System;
 
 
 namespace Server.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+
+        bool IsDevelopment;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            IsDevelopment = env.IsDevelopment();
         }
 
         public IConfiguration Configuration { get; }
@@ -38,7 +43,16 @@ namespace Server.Api
             services.AddAutoMapper(typeof(Startup));
 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
-            var connectionString = Configuration.GetSection(nameof(PostgresSettings)).Get<PostgresSettings>().ConnectionString;
+
+
+            string connectionString;
+            if(IsDevelopment){
+                connectionString = Configuration.GetSection(nameof(PostgresSettings)).Get<PostgresSettings>().ConnectionString;
+            } else {
+                connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
+            }
+            
+
             services.AddDbContext<DataContext>(options => options.UseNpgsql(connectionString));
             services.AddScoped<IDataContext>(provider => provider.GetService<DataContext>());
             services.AddSingleton<IConfiguration>(Configuration);
