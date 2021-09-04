@@ -52,6 +52,7 @@ namespace Server.Api
             } else {
                 connectionString = GetProductionDatabaseUrl();
             }            
+            throw new ArgumentException(connectionString);
 
             services.AddDbContext<DataContext>(options => options.UseNpgsql(connectionString));
             services.AddScoped<IDataContext>(provider => provider.GetService<DataContext>());
