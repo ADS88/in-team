@@ -47,7 +47,7 @@ namespace Server.Api
             var config = configuration.GetSection("JwtConfig");
             var key = configuration["JwtConfig:Secret"];
 
-            throw new InvalidOperationException($"{config} {key}");
+            throw new InvalidOperationException($"key is {key}");
 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
 
