@@ -63,7 +63,9 @@ namespace Server.Api
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(jwt => {
-                var key = Encoding.ASCII.GetBytes(Configuration["JwtConfig:Secret"]);
+                var key = IsDevelopment ?
+                 Encoding.ASCII.GetBytes(Configuration["JwtConfig:Secret"])
+                 : Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("JWT_KEY"));
                 jwt.SaveToken = true;
                 jwt.TokenValidationParameters = new TokenValidationParameters{
                     ValidateIssuerSigningKey = true,
