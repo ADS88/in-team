@@ -15,7 +15,7 @@ const SurveyResults = ({ teamId, iterationId }: SurveyResultsProps) => {
     axios
       .get(`team/${teamId}/surveyresults/${iterationId}`)
       .then(response => setResults(response.data.alphas))
-  }, [])
+  }, [teamId, iterationId])
 
   return (
     <>

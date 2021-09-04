@@ -1,9 +1,8 @@
-import { useState, useReducer, useEffect } from "react"
+import { useState, useReducer } from "react"
 import { useForm } from "react-hook-form"
 import { useHistory, useParams } from "react-router"
 import axios from "../../axios-config"
 import {
-  Select,
   Stack,
   Flex,
   useColorModeValue,

@@ -4,22 +4,63 @@ services:
   client:
     build:
       context: ./Client/
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.development
     ports:
-      - "80:80"
+      - "3000:3000"
+    networks:
+      - mynetwork
+    restart: always
+    volumes:
+      - "./client:/app"
+      - "/app/node_modules"
 
-server:
-  build:
-    context: ./Server/Server.Api
-    dockerfile: Dockerfile.development
-  ports:
-    - "8080:80"
-  environment:
-    - JWTCONFIG:SECRET=${JWT_KEY}
-    - POSTGRESSETTINGS:PASSWORD=${POSTGRES_PASSWORD}
-    - POSTGRESSETTINGS:HOST=${POSTGRES_HOST}
-  depends_on:
-    - "postgresql_database"
-  networks:
-    - mynetwork
-  restart: always
+  server:
+    build:
+      context: ./Server/Server.Api
+      dockerfile: Dockerfile.development
+    ports:
+      - "5000:80"
+    environment:
+      - JWTCONFIG:SECRET=${JWT_KEY}
+      - POSTGRESSETTINGS:PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRESSETTINGS:HOST=${POSTGRES_HOST}
+    depends_on:
+      - "postgresql_database"
+    networks:
+      - mynetwork
+    restart: always
+
+  postgresql_database:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+    networks:
+      - mynetwork
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "5050:80"
+    restart: always
+    volumes:
+      - pgadmin:/root/.pgadmin
+    networks:
+      - mynetwork
+
+volumes:
+  database-data:
+  pgadmin:
+
+networks:
+  mynetwork:
+    driver: bridge

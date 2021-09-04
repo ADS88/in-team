@@ -14,7 +14,6 @@ import {
 } from "@chakra-ui/react"
 import { useForm } from "react-hook-form"
 import { useContext } from "react"
-import { useHistory } from "react-router"
 import axios from "../../axios-config"
 import { AuthContext } from "../../store/auth-context"
 
@@ -30,7 +29,6 @@ interface RegisterFormValues {
 }
 
 const RegisterPage = () => {
-  const history = useHistory()
   const authContext = useContext(AuthContext)
 
   const {

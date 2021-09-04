@@ -14,7 +14,6 @@ import {
 import { useState, useContext } from "react"
 import { useForm } from "react-hook-form"
 import { emailRegex } from "../../validation/regex"
-import { useHistory } from "react-router"
 import { AuthContext } from "../../store/auth-context"
 
 import axios from "../../axios-config"
@@ -25,8 +24,6 @@ interface LoginFormValues {
 }
 
 const LoginPage = () => {
-  const history = useHistory()
-
   const authContext = useContext(AuthContext)
 
   const {

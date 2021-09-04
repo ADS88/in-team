@@ -35,7 +35,7 @@ const IterationPage = () => {
     axios
       .get(`course/${courseId}/pendingiteration/${iterationId}`)
       .then(response => setTeams(response.data))
-  }, [courseId])
+  }, [courseId, iterationId])
 
   let action =
     teams.length === 0 ? (
