@@ -18,4 +18,4 @@ RUN npm install
 COPY . ./
 
 # build app
-CMD ["npm", "build"]
+RUN npm run build
