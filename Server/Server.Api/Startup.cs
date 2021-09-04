@@ -45,6 +45,7 @@ namespace Server.Api
 
             if(!IsDevelopment){
                 Configuration["JwtConfig:Secret"] = Environment.GetEnvironmentVariable("JWT_KEY");
+                Configuration["LecturerPassword:Password"] = Environment.GetEnvironmentVariable("LECTURER_PASSWORD");
             }
 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
