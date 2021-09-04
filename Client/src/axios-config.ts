@@ -2,7 +2,7 @@ import axios from "axios"
 let apiUrl = process.env.REACT_APP_API_URL
 if (apiUrl === "") apiUrl = "http://in-team-app.herokuapp.com/api/"
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: apiUrl,
 })
 
 instance.interceptors.request.use(
