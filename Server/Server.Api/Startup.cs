@@ -155,7 +155,7 @@ namespace Server.Api
                 Database = databaseUri.LocalPath.TrimStart('/')
             };
 
-            return builder.ToString() +  "SSL Mode=Require;Trust Server Certificate=true";
+            return builder.ToString() +  ";SSL Mode=Require;Trust Server Certificate=true";
         }
 
         private void CreateRoles(RoleManager<IdentityRole> roleManager){
