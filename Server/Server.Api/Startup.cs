@@ -17,6 +17,7 @@ using Server.Api.Enums;
 using Server.Api.Services;
 using Server.Api.Entities;
 using System;
+using Microsoft.Extensions.Logging;
 
 
 namespace Server.Api
@@ -51,6 +52,8 @@ namespace Server.Api
             } else {
                 connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
             }
+
+            throw new ArgumentException($" Connection string is {connectionString}");
             
 
             services.AddDbContext<DataContext>(options => options.UseNpgsql(connectionString));
