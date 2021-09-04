@@ -3,8 +3,9 @@ import { useColorMode } from "@chakra-ui/react"
 
 import "react-datepicker/dist/react-datepicker.css"
 import "../../stylesheets/date-picker.css"
+import { ModifiersArray } from "typescript"
 
-function DatePicker(props: ReactDatePickerProps) {
+function DatePicker(props: ReactDatePickerProps<ModifiersArray>) {
   const { isClearable = false, showPopperArrow = false, ...rest } = props
   const isLight = useColorMode().colorMode === "light"
 
