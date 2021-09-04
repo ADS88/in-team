@@ -43,8 +43,12 @@ namespace Server.Api
 
             services.AddAutoMapper(typeof(Startup));
 
+            var configuration = new ConfigurationBuilder().AddEnvironmentVariables().Build();
+            var config = configuration.GetSection("JwtConfig");
+            var key = configuration["JwtConfig:Secret"];
 
-            Console.WriteLine(Configuration.GetSection("JwtConfig"));
+            throw new InvalidOperationException($"{config} {key}");
+
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
 
 
