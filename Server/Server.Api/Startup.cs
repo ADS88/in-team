@@ -17,7 +17,7 @@ using Server.Api.Enums;
 using Server.Api.Services;
 using Server.Api.Entities;
 using System;
-using Microsoft.Extensions.Logging;
+using Npgsql;
 
 
 namespace Server.Api
@@ -50,11 +50,8 @@ namespace Server.Api
             if(IsDevelopment){
                 connectionString = Configuration.GetSection(nameof(PostgresSettings)).Get<PostgresSettings>().ConnectionString;
             } else {
-                connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
-            }
-
-            throw new ArgumentException($" Connection string is {connectionString}");
-            
+                connectionString = GetProductionDatabaseUrl();
+            }            
 
             services.AddDbContext<DataContext>(options => options.UseNpgsql(connectionString));
             services.AddScoped<IDataContext>(provider => provider.GetService<DataContext>());
@@ -142,6 +139,23 @@ namespace Server.Api
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAlphasRepository, AlphasRepository>();
             services.AddScoped<ISurveysRepository, SurveysRepository>();
+        }
+
+        private string GetProductionDatabaseUrl(){
+            var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            var databaseUri = new Uri(databaseUrl);
+            var userInfo = databaseUri.UserInfo.Split(':');
+
+            var builder = new NpgsqlConnectionStringBuilder
+            {
+                Host = databaseUri.Host,
+                Port = databaseUri.Port,
+                Username = userInfo[0],
+                Password = userInfo[1],
+                Database = databaseUri.LocalPath.TrimStart('/')
+            };
+
+            return builder.ToString();
         }
 
         private void CreateRoles(RoleManager<IdentityRole> roleManager){
