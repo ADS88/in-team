@@ -5,7 +5,7 @@ Students can create custom profiles, change their avatars and give badges to oth
 
 Lecturers can create and distribute customized surveys for teams to complete and measure teams' progress into states using summaries of each questionaire.
 
-Frontend: React, TypeScript, ChakraUI, ReactRouter
+Frontend: React, TypeScript, ChakraUI
 
 Backend: .NET 5, EFCore 
 
