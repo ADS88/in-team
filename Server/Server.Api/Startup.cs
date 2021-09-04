@@ -43,11 +43,9 @@ namespace Server.Api
 
             services.AddAutoMapper(typeof(Startup));
 
-            var configuration = new ConfigurationBuilder().AddEnvironmentVariables().Build();
-            var config = configuration.GetSection("JwtConfig");
-            var key = configuration["JwtConfig:Secret"];
-
-            throw new InvalidOperationException($"key is {key}");
+            if(!IsDevelopment){
+                Configuration["JwtConfig:Secret"] = Environment.GetEnvironmentVariable("JWT_KEY");
+            }
 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
 
@@ -56,7 +54,7 @@ namespace Server.Api
             if(IsDevelopment){
                 connectionString = Configuration.GetSection(nameof(PostgresSettings)).Get<PostgresSettings>().ConnectionString;
             } else {
-                connectionString = GetProductionDatabaseUrl();
+                connectionString = GetProductionDatabaseConnectionString();
             }            
 
             services.AddDbContext<DataContext>(options => options.UseNpgsql(connectionString));
@@ -148,7 +146,7 @@ namespace Server.Api
             services.AddScoped<ISurveysRepository, SurveysRepository>();
         }
 
-        private string GetProductionDatabaseUrl(){
+        private string GetProductionDatabaseConnectionString(){
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             var databaseUri = new Uri(databaseUrl);
             var userInfo = databaseUri.UserInfo.Split(':');
