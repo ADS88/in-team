@@ -52,6 +52,10 @@ const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
     }
   }
 
+  const addIterationToUI = (iteration: Iteration) => {
+    setIterations(prevIterations => [...prevIterations, iteration])
+  }
+
   return (
     <Flex
       minH={"90vh"}
@@ -86,7 +90,7 @@ const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
           </div>
         ))}
 
-        <AddIteration courseId={courseId} />
+        <AddIteration courseId={courseId} addIterationToUI={addIterationToUI} />
 
         <Button
           bg={"red.400"}

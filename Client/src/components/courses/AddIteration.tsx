@@ -10,6 +10,7 @@ import {
 import { useForm, Controller } from "react-hook-form"
 import DatePicker from "../ui/DatePicker"
 import axios from "../../axios-config"
+import Iteration from "../../models/iteration"
 
 interface AddIterationFormValues {
   name: string
@@ -19,9 +20,10 @@ interface AddIterationFormValues {
 
 interface AddIterationProps {
   courseId: Number
+  addIterationToUI: (iteration: Iteration) => void
 }
 
-const AddIteration = ({ courseId }: AddIterationProps) => {
+const AddIteration = ({ courseId, addIterationToUI }: AddIterationProps) => {
   const {
     register,
     handleSubmit,
@@ -30,7 +32,13 @@ const AddIteration = ({ courseId }: AddIterationProps) => {
   } = useForm<AddIterationFormValues>()
 
   const addIteration = async (data: AddIterationFormValues) => {
-    await axios.post(`/course/${courseId}/iteration`, data)
+    const response = await axios.post(`/course/${courseId}/iteration`, data)
+    addIterationToUI({
+      id: response.data.id,
+      name: data.name,
+      startDate: data.startDate,
+      endDate: data.endDate,
+    })
   }
 
   return (
