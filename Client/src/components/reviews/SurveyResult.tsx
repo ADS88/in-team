@@ -8,15 +8,17 @@ export interface SurveyResultProps {
 const SurveyResult = ({ alphaResult }: SurveyResultProps) => {
   return (
     <Stack>
-      <Heading color="pink.500">{alphaResult.alphaName}</Heading>
+      <Heading fontSize="xl" color="pink.500">
+        {alphaResult.alphaName}
+      </Heading>
       <Stack spacing="10">
         {alphaResult.states.map(state => (
           <Stack>
-            <Text fontSize="2xl">
+            <Text fontSize="md">
               {state.stateName}: {state.average} / 5
             </Text>
             {state.answerSummaries.map(answer => (
-              <Text>
+              <Text fontSize="sm">
                 {answer.content}: {answer.average} / 5
               </Text>
             ))}

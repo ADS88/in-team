@@ -11,17 +11,20 @@ import {
   FormLabel,
   FormErrorMessage,
   useColorModeValue,
+  Select,
   Box,
 } from "@chakra-ui/react"
 import DatePicker from "../ui/DatePicker"
 import { useForm, Controller } from "react-hook-form"
-import { useReducer, useState } from "react"
+import { useEffect, useReducer, useState } from "react"
 import { useHistory } from "react-router"
+import Iteration from "../../models/iteration"
 
 interface CreateSurveyFormValues {
   openingDate: Date
   closingDate: Date
   name: string
+  iterationId: string
 }
 
 export type Action =
@@ -57,6 +60,7 @@ function reducer(
 
 const CreateSurveyPage = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const [iterations, setIterations] = useState<Iteration[]>([])
   const [teamIds, setTeamIds] = useState<number[]>([])
   const history = useHistory()
 
@@ -69,13 +73,37 @@ const CreateSurveyPage = () => {
 
   const createSurvey = (data: CreateSurveyFormValues) => {
     const stateIds = Array.from(state.values()).flat()
-    const request = { ...data, stateIds, teamIds }
+    const request = {
+      openingDate: data.openingDate,
+      closingDate: data.closingDate,
+      name: data.name,
+      iterationId: parseInt(data.iterationId),
+      stateIds,
+      teamIds,
+    }
     axios.post("survey", request).then(() => history.push("/surveys"))
   }
 
   const updateTeams = (newTeamIds: number[]) => {
     setTeamIds(newTeamIds)
   }
+
+  useEffect(() => {
+    axios.get("course/iteration").then(response => {
+      response.data.forEach(
+        (item: any) => (item.name = `${item.name} (${item.courseName})`)
+      )
+      setIterations(response.data)
+    })
+  }, [])
+
+  const iterationOptions = iterations.map(iteration => {
+    return (
+      <option key={iteration.id} value={iteration.id}>
+        {iteration.name}
+      </option>
+    )
+  })
 
   return (
     <Flex
@@ -158,6 +186,24 @@ const CreateSurveyPage = () => {
               />
               <FormErrorMessage>{errors.closingDate?.message}</FormErrorMessage>
             </FormControl>
+
+            <FormControl
+              id="closingDate"
+              isInvalid={errors.iterationId !== undefined}
+            >
+              <FormLabel>Iteration</FormLabel>
+              <Select
+                // onChange={onStatesChangeHandler}
+                {...register("iterationId", {
+                  required: "You must enter an iteration id",
+                })}
+                placeholder="Select Iteration"
+              >
+                {iterationOptions}
+              </Select>
+              <FormErrorMessage>{errors.iterationId?.message}</FormErrorMessage>
+            </FormControl>
+
             <Button
               bg={"blue.400"}
               color={"white"}
