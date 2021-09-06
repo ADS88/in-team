@@ -54,5 +54,10 @@ namespace Server.Api.Repositories
             var achievedStates = await context.AchievedStates.ToListAsync();
             return achievedStates.Where(state => state.IterationId == iterationId ).ToList();
         }
+        public async Task<ICollection<Iteration>> GetAllIterations(){
+            return await context.Iterations
+                        .Include(iteration => iteration.Course)
+                        .ToListAsync();
+        }
     }
 }

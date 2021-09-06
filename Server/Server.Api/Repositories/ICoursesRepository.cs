@@ -15,5 +15,6 @@ namespace Server.Api.Repositories
         Task AddIteration(Iteration iteration);
         Task<Iteration> GetIteration(int iterationId);
         Task<ICollection<AchievedState>> GetAchievedStatesFromIteration(int iterationId);
+        Task<ICollection<Iteration>> GetAllIterations();
     }
 }

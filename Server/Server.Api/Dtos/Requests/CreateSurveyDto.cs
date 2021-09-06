@@ -11,6 +11,9 @@ namespace Server.Api.Dtos
         public string Name { get; init; }
 
         [Required]
+        public int IterationId { get; init; }
+
+        [Required]
         public DateTimeOffset OpeningDate { get; init; }
 
         [Required]

@@ -91,5 +91,12 @@ namespace Server.Api.Controllers
             }
             return Ok(iteration);
         }
+
+        [HttpGet("iteration")]
+        [Authorize(Roles = "Lecturer")]
+         public async Task<IEnumerable<IterationDto>> GetAllIterations()
+        {
+            return await service.GetAllIterations();     
+        }
     }
 }

@@ -21,5 +21,7 @@ namespace Server.Api.Dtos
         [Required]
         public int CourseId { get; init; }
 
+        public string CourseName { get; init; }
+
     }
 }

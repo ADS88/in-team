@@ -2,6 +2,7 @@ using System;
 using Server.Api.Entities;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Server.Api.Dtos;
 
 namespace Server.Api.Services
 
@@ -15,5 +16,6 @@ namespace Server.Api.Services
         Task<Boolean> DeleteCourse(int id);
         Task<Iteration> GetIteration(int id);
         Task<IEnumerable<Team>> GetTeamsThatHaveNotBeenGradedInIteration(int courseId, int iterationId);
+        Task<IEnumerable<IterationDto>> GetAllIterations();
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Server.Api.Dtos;
 
 namespace Server.Api.Services
 {
@@ -72,6 +73,19 @@ namespace Server.Api.Services
             var reviewsForIteration = await repository.GetAchievedStatesFromIteration(iterationId);
             var reviewedTeamIds = reviewsForIteration.Select(review => review.TeamId).ToHashSet();
             return course.Teams.Where(team => !reviewedTeamIds.Contains(team.Id));
+        }
+
+        public async Task<IEnumerable<IterationDto>> GetAllIterations(){
+            var iterations = await repository.GetAllIterations();
+            return iterations.Select(iteration => new IterationDto(){
+                Id = iteration.Id,
+                Name = iteration.Name,
+                CreatedDate = iteration.CreatedDate,
+                StartDate = iteration.StartDate,
+                EndDate = iteration.EndDate,
+                CourseId = iteration.CourseId,
+                CourseName = iteration.Course.Name
+            });
         }
     }
 }
