@@ -1,5 +1,4 @@
 import { useState, useReducer } from "react"
-import { useForm } from "react-hook-form"
 import { useHistory, useParams } from "react-router"
 import axios from "../../axios-config"
 import {
@@ -8,9 +7,12 @@ import {
   useColorModeValue,
   Button,
   FormControl,
-  FormErrorMessage,
   FormLabel,
-  Input,
+  Slider,
+  SliderTrack,
+  SliderThumb,
+  Box,
+  SliderFilledTrack,
   Heading,
   Text,
 } from "@chakra-ui/react"
@@ -26,10 +28,6 @@ export type Action =
   | { type: "removeAlpha"; payload: { alphaIdToRemove: number } }
 
 const initialState = new Map<number, number>()
-
-interface GradeIterationFormValues {
-  points: number
-}
 
 function reducer(
   state: Map<number, number | null>,
@@ -60,16 +58,12 @@ const GradeTeamPage = () => {
 
   const errorMessageColor = useColorModeValue("red.500", "red.300")
   const [state, dispatch] = useReducer(reducer, initialState)
+  const [pointsGiven, setPointsGiven] = useState(50)
   const [achievedStateError, setAchievedStateError] =
     useState<null | string>(null)
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<GradeIterationFormValues>()
-
-  const gradeIteration = (data: GradeIterationFormValues) => {
+  const gradeIteration = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     if (state.size === 0) {
       setAchievedStateError("You must add at least one alpha")
       return
@@ -84,7 +78,7 @@ const GradeTeamPage = () => {
 
     axios
       .post(`team/${teamId}/achievestates/${iterationId}`, {
-        points: data.points,
+        points: pointsGiven,
         achievedStates,
       })
       .then(() => history.goBack())
@@ -100,7 +94,7 @@ const GradeTeamPage = () => {
       direction={{ sm: "column-reverse", lg: "row" }}
       bg={useColorModeValue("gray.50", "gray.800")}
     >
-      <form onSubmit={handleSubmit(gradeIteration)}>
+      <form onSubmit={gradeIteration}>
         <Stack minW={"30vw"} spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
           <Heading>Grade iteration</Heading>
 
@@ -108,24 +102,30 @@ const GradeTeamPage = () => {
           {achievedStateError && (
             <Text textColor={errorMessageColor}>{achievedStateError}</Text>
           )}
-          <FormControl id="points" isInvalid={errors.points !== undefined}>
+          <FormControl id="points">
             <FormLabel>Allocate points</FormLabel>
-            <Input
-              type="number"
-              step="1"
-              {...register("points", {
-                required: "You must allocate points",
-                min: {
-                  value: 0,
-                  message: "You can't allocate negative points",
-                },
-                max: {
-                  value: 50000,
-                  message: "Too many points",
-                },
-              })}
-            />
-            <FormErrorMessage>{errors.points?.message}</FormErrorMessage>
+            <Text
+              p="1"
+              textAlign="center"
+              color={useColorModeValue("gray.600", "gray.300")}
+            >
+              {pointsGiven} points
+            </Text>
+            <Slider
+              defaultValue={pointsGiven}
+              min={0}
+              max={100}
+              step={5}
+              onChange={(value: number) => {
+                setPointsGiven(value)
+              }}
+            >
+              <SliderTrack bg="pink.100">
+                <Box position="relative" right={10} />
+                <SliderFilledTrack bg="pink.300" />
+              </SliderTrack>
+              <SliderThumb boxSize={6} />
+            </Slider>
           </FormControl>
           <Button
             type="submit"
