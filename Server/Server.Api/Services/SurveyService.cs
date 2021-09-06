@@ -135,7 +135,10 @@ namespace Server.Api.Services
         public async Task<IEnumerable<Survey>> GetSurveysStudentNeedsToComplete(string userId){
             var user = await userRepository.GetUserWithTeams(userId);
             var surveysAssignedToStudent = await surveysRepository.GetSurveysAssignedToStudent(user);
-            surveysAssignedToStudent = surveysAssignedToStudent.Where(s => DateTimeOffset.Compare(s.ClosingDate, DateTimeOffset.UtcNow) > 0).ToList();
+            surveysAssignedToStudent = surveysAssignedToStudent
+                                        .Where(s => DateTimeOffset.Compare(s.ClosingDate, DateTimeOffset.UtcNow) > 0)
+                                        .Where(s => DateTimeOffset.Compare(DateTimeOffset.UtcNow, s.OpeningDate) > 0)
+                                        .ToList();
             var surveyAttemptsFromStudent = await surveysRepository.GetAttemptsFromUser(userId);
             var attemptedSurveyIds = new HashSet<int>(surveyAttemptsFromStudent.Select(s => s.Id));
             return surveysAssignedToStudent.Where(s => !attemptedSurveyIds.Contains(s.Id));
