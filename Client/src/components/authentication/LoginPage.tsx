@@ -50,7 +50,7 @@ const LoginPage = () => {
 
   return (
     <Flex
-      minH={"90vh"}
+      minH={"95vh"}
       align={"center"}
       justify={"center"}
       bg={useColorModeValue("gray.50", "gray.800")}
