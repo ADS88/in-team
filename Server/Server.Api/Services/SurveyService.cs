@@ -144,7 +144,7 @@ namespace Server.Api.Services
                                         .ToList();
             var surveyAttemptsFromStudent = await surveysRepository.GetAttemptsFromUser(userId);
             var attemptedSurveyIds = new HashSet<int>(surveyAttemptsFromStudent.Select(s => s.Id));
-            _logger.LogError($"Id's are {attemptedSurveyIds}");
+            _logger.LogError($"Id's are {String.Join(",", attemptedSurveyIds)}");
             return surveysAssignedToStudent.Where(s => !attemptedSurveyIds.Contains(s.Id));
         }
     }
