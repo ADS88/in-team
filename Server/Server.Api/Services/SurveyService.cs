@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Server.Api.Dtos;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace Server.Api.Services
 {
@@ -17,13 +18,15 @@ namespace Server.Api.Services
         private readonly ITeamsRepository teamsRepository;
         private readonly IUserRepository userRepository;
         private readonly UserManager<AppUser> userManager;
-        public SurveyService(ISurveysRepository surveysRepository, IAlphasRepository alphasRepository, ITeamsRepository teamsRepository, IUserRepository userRepository, UserManager<AppUser> userManager)
+        private readonly ILogger<SurveyService> _logger;
+        public SurveyService(ISurveysRepository surveysRepository, IAlphasRepository alphasRepository, ITeamsRepository teamsRepository, IUserRepository userRepository, UserManager<AppUser> userManager, ILogger<SurveyService> logger)
         {
             this.surveysRepository = surveysRepository;
             this.alphasRepository = alphasRepository;
             this.teamsRepository = teamsRepository;
             this.userRepository = userRepository;
             this.userManager = userManager;
+            this._logger = logger;
         }
 
         public async Task<Survey> Create(string name, ICollection<int> stateIds, ICollection<int> TeamIds, DateTimeOffset start, DateTimeOffset end, int iterationId){
@@ -141,6 +144,7 @@ namespace Server.Api.Services
                                         .ToList();
             var surveyAttemptsFromStudent = await surveysRepository.GetAttemptsFromUser(userId);
             var attemptedSurveyIds = new HashSet<int>(surveyAttemptsFromStudent.Select(s => s.Id));
+            _logger.LogError($"Id's are {attemptedSurveyIds}");
             return surveysAssignedToStudent.Where(s => !attemptedSurveyIds.Contains(s.Id));
         }
     }
