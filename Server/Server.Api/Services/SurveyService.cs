@@ -143,8 +143,7 @@ namespace Server.Api.Services
                                         .Where(s => DateTimeOffset.Compare(DateTimeOffset.UtcNow, s.OpeningDate) > 0)
                                         .ToList();
             var surveyAttemptsFromStudent = await surveysRepository.GetAttemptsFromUser(userId);
-            var attemptedSurveyIds = new HashSet<int>(surveyAttemptsFromStudent.Select(s => s.Id));
-            _logger.LogError($"Id's are {String.Join(",", attemptedSurveyIds)}");
+            var attemptedSurveyIds = new HashSet<int>(surveyAttemptsFromStudent.Select(s => s.SurveyId));
             return surveysAssignedToStudent.Where(s => !attemptedSurveyIds.Contains(s.Id));
         }
     }
