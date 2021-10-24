@@ -2,6 +2,9 @@ using System;
 
 namespace Server.Api.Dtos
 {
+    /// <summary>
+    /// DTO used to unify error responses from the API
+    /// </summary>
     public class ErrorResponse
 {
     public string Type { get; set; }

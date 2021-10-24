@@ -2,6 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Server.Api.Dtos
 {
+
+/// <summary>
+/// DTO holding the users registration information
+/// </summary>
   public class UserRegistrationDto{
 
     [Required]

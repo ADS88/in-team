@@ -5,6 +5,9 @@ using Server.Api.Entities;
  
 namespace Server.Api.Data
 {
+    /// <summary>
+    /// Interface to specifify what tables to be created in the database
+    /// </summary>
     public interface IDataContext
     {
         DbSet<Course> Courses { get; init; }

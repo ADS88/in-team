@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Server.Api.Data
 {
+    /// <summary>
+    /// Class to specifify what tables to be created in the database
+    /// </summary>
     public class DataContext: IdentityDbContext<AppUser>, IDataContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)

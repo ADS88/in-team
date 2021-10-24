@@ -10,6 +10,9 @@ using AutoMapper;
 
 namespace Server.Api.Controllers
 {
+    /// <summary>
+    /// Endpoints allowing lecturers to add and remove alphas and states
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Lecturer")]
@@ -25,6 +28,10 @@ namespace Server.Api.Controllers
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Gets all Alphas within the system
+        /// </summary>
+        /// <returns>A list of all alphas in the system</returns>
         [HttpGet]
         public async Task<IEnumerable<AlphaDto>> GetAlphas()
         {
@@ -32,6 +39,11 @@ namespace Server.Api.Controllers
             return alphas;
         }
 
+        /// <summary>
+        /// Gets a specific alpha by ID
+        /// </summary>
+        /// <param name="id">The ID of the alpha to get</param>
+        /// <returns>A DTO with the alpha's details</returns>
         [HttpGet("{id}")]
         public async Task<AlphaDto> GetAlpha(int id)
         {
@@ -39,6 +51,11 @@ namespace Server.Api.Controllers
             return mapper.Map<AlphaDto>(alpha);
         }
 
+        /// <summary>
+        /// Gets a specific state by ID
+        /// </summary>
+        /// <param name="id">The ID of the state to get</param>
+        /// <returns>A DTO with the states's details</returns>
         [HttpGet("state/{id}")]
         public async Task<StateDto> GetState(int id)
         {
@@ -46,6 +63,11 @@ namespace Server.Api.Controllers
             return mapper.Map<StateDto>(state);
         }
 
+        /// <summary>
+        /// Creates a new alpha
+        /// </summary>
+        /// <param name="alphaDto">A DTO containing the new Alpha's name</param>
+        /// <returns>An action showing whether creation was successful</returns>
         [HttpPost]
         public async Task<ActionResult<CourseDto>> CreateAlpha(CreateAlphaDto alphaDto)
         {
@@ -53,6 +75,12 @@ namespace Server.Api.Controllers
             return CreatedAtAction(nameof(GetAlpha), new { id = alpha.Id }, mapper.Map<AlphaDto>(alpha));
         }
 
+        /// <summary>
+        /// Creates a new state
+        /// </summary>
+        /// <param name="stateDto">A DTO containing the new States's name</param>
+        /// <param name="alphaId">The ID of the Alpha the new state is linked to</param>
+        /// <returns>An action showing whether creation was successful</returns>
         [HttpPost("{alphaId}/state")]
         public async Task<ActionResult<CourseDto>> AddState(CreateStateDto stateDto, int alphaId)
         {
@@ -60,6 +88,12 @@ namespace Server.Api.Controllers
             return CreatedAtAction(nameof(GetAlpha), new { id = state.Id }, mapper.Map<StateDto>(state));
         }
 
+        /// <summary>
+        /// Adds a question to an existing state
+        /// </summary>
+        /// <param name="questionDto">A DTO containing the new questions content</param>
+        /// <param name="stateId">The ID of the state that the question relates to</param>
+        /// <returns>An action showing whether creation was successful</returns>
         [HttpPost("state/{stateId}/question")]
         public async Task<ActionResult<CourseDto>> AddQuestion(CreateQuestionDto questionDto, int stateId)
         {

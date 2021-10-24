@@ -1,10 +1,12 @@
-using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System;
 
 namespace Server.Api.Dtos
 {
+    /// <summary>
+    /// Contains a student's survey answers and badges gifted
+    /// </summary>
     public record AnswerSurveyDto
     {
       [Required]
@@ -15,6 +17,9 @@ namespace Server.Api.Dtos
 
     }
 
+    /// <summary>
+    /// A single survey question's answer
+    /// </summary>
     public record SingleAnswer {
 
       [Required]
@@ -25,6 +30,9 @@ namespace Server.Api.Dtos
       public int LikertRating { get; init; }
     }
 
+    /// <summary>
+    /// A badge gifted while answering the survey
+    /// </summary>
     public record BadgeGiftDto {
 
       [Required]

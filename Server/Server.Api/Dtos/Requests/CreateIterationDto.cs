@@ -3,6 +3,9 @@ using System;
 
 namespace Server.Api.Dtos
 {
+    /// <summary>
+    /// DTO to create a new iteration within a course.
+    /// </summary>
     public record CreateIterationDto
     {
 

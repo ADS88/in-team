@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Server.Api.Dtos
 {
+    /// <summary>
+    /// DTO containing information about a course
+    /// </summary>
     public record CourseDto
     {
         public int Id { get; init; }

@@ -3,6 +3,9 @@ using System;
 
 namespace Server.Api.Dtos
 {
+    /// <summary>
+    /// DTO containing a single question related to a state
+    /// </summary>
     public class QuestionDto
     {
         public int Id { get; init; }

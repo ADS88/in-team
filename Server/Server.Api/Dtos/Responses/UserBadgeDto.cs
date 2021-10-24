@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Server.Api.Dtos
 {
+    /// <summary>
+    /// DTO showing how many badges a user has of each type
+    /// </summary>
     public record UserBadgeDto
     {
         [Required]

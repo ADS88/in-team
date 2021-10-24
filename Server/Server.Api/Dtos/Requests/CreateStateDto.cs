@@ -3,6 +3,9 @@ using System;
 
 namespace Server.Api.Dtos
 {
+    /// <summary>
+    /// DTO to create a new state for an alpha
+    /// </summary>
     public record CreateStateDto
     {
         [Required]

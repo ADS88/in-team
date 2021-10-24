@@ -3,6 +3,9 @@ using System;
 
 namespace Server.Api.Dtos
 {
+    /// <summary>
+    /// DTO containing information about an iteration of a course
+    /// </summary>
     public record IterationDto
     {
          public int Id { get; init; }

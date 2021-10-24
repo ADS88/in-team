@@ -18,6 +18,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace Server.Api.Controllers
 {
+    /// <summary>
+    /// Controller containing endpoints related to authentication and authorization
+    /// </summary>
     [Route("api/[controller]")]
     public class AuthManagementController : ControllerBase
     {
@@ -32,6 +35,11 @@ namespace Server.Api.Controllers
             this.configuration = configuration;
         }
 
+        /// <summary>
+        /// Endpoint that allows a user to login to the application
+        /// </summary>
+        /// <param name="user">A login request containing the users credentials</param>
+        /// <returns>a JWT token if the login is successful, else appropriate error</returns>
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest user){
             if(!ModelState.IsValid){
@@ -71,6 +79,11 @@ namespace Server.Api.Controllers
                 });
         }
 
+        /// <summary>
+        /// Endpoint that allows a user to register a new account 
+        /// </summary>
+        /// <param name="user">Details about the user and login credentials</param>
+        /// <returns>A 201 response if creation is successful, else appropriate HTTP error code</returns>
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationDto user){
             if(!ModelState.IsValid){
@@ -130,6 +143,13 @@ namespace Server.Api.Controllers
             }
 
         }
+
+        /// <summary>
+        /// Generates a JWT token to use for further requests
+        /// </summary>
+        /// <param name="user">The user to generate the token for</param>
+        /// <param name="role">The role the user has in the application for authorization</param>
+        /// <returns>a JWT token as a String</returns>
         private string GenerateJwtToken(IdentityUser user, string role){
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(jwtConfig.Secret);

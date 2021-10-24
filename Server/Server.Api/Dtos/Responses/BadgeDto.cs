@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Server.Api.Dtos
 {
+    /// <summary>
+    /// Information about a single badge
+    /// </summary>
     public record BadgeDto
     {
         [Required]

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Server.Api.Dtos
 {
+    /// <summary>
+    /// DTO holding the result of the teaching team grading an iteration
+    /// </summary>
     public record AchievedStateDto
     {
       [Required]
@@ -11,6 +14,9 @@ namespace Server.Api.Dtos
       public int Points { get; init; }
     }
 
+    /// <summary>
+    /// The state achieved for each alpha
+    /// </summary>
     public record SingleAchievedState 
     {
       [Required]

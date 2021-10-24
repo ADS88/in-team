@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Server.Api.Dtos
 {
+    /// <summary>
+    /// DTO to create a new team of students within a course
+    /// </summary>
     public record CreateTeamDto
     {
         [Required]

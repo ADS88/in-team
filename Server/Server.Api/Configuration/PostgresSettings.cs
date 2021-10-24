@@ -1,5 +1,8 @@
 namespace Server.Api.Configuration
 {
+    /// <summary>
+    /// Class to hold the database connection string
+    /// </summary>
     public class PostgresSettings
     {
         public string Host {get; set;}

@@ -13,6 +13,9 @@ using System;
 
 namespace Server.Api.Controllers
 {
+    /// <summary>
+    /// Controller used to CRUD students
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -30,6 +33,10 @@ namespace Server.Api.Controllers
             this.userManager = userManager;
         }
 
+        /// <summary>
+        /// Endpoint allowing lecturers to get all students in the app
+        /// </summary>
+        /// <returns>A list of all students in the application</returns>
         [HttpGet]
         [Authorize(Roles = "Lecturer")]
         public async Task<IEnumerable<UserDto>> GetAllStudents()
@@ -38,6 +45,11 @@ namespace Server.Api.Controllers
             return students;
         }
 
+        /// <summary>
+        /// Endpoint to get a student by ID
+        /// </summary>
+        /// <param name="id">the ID of the student</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<FullUserDto>> GetCurrentStudent(string id)
         {
@@ -48,6 +60,11 @@ namespace Server.Api.Controllers
             return mapper.Map<FullUserDto>(student);
         }
 
+        /// <summary>
+        /// Endpoint to get a students badges
+        /// </summary>
+        /// <param name="id">The ID of the student</param>
+        /// <returns>A list of the students badges</returns>
         [HttpGet("{id}/badges")]
         public async Task<ActionResult<IEnumerable<UserBadgeDto>>> GetStudentBadges(string id)
         {
@@ -58,6 +75,12 @@ namespace Server.Api.Controllers
             return Ok(badges);
         }
 
+        /// <summary>
+        /// Endpoint allowing a user to change their profile icon
+        /// </summary>
+        /// <param name="dto">The new profile icon that they want</param>
+        /// <param name="id">The ID of the user who's icon to change</param>
+        /// <returns>HTTP 200 if change is successful, else appropriate HTTP error code</returns>
         [HttpPatch("{id}/profile-icon")]
         public async Task<ActionResult> UpdateProfileIcon(UpdateProfileIconDto dto, string id)
         {
@@ -80,6 +103,12 @@ namespace Server.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Endpoint to get all students eligible for a course
+        /// </summary>
+        /// <param name="teamId">The ID of the team we are trying to add the user to</param>
+        /// <param name="search">The users first or last name</param>
+        /// <returns></returns>
         [HttpGet("course/{teamId}")]
         public async Task<IEnumerable<UserDto>> GetStudentsEligibleForCourse(int teamId, [FromQuery]string search)
         {

@@ -5,6 +5,10 @@ using Server.Api.Entities;
 
 namespace Server.Api.Dtos
 {
+
+    /// <summary>
+    /// DTO containing all questions in a survey
+    /// </summary>
     public record SurveyQuestionsDto
     {
 

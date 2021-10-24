@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using Server.Api.Entities;
 namespace Server.Api.Dtos
 {
+
+    /// <summary>
+    /// DTO containing a users full information
+    /// </summary>
      public record FullUserDto
     {
         [Required]

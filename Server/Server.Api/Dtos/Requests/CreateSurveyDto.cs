@@ -4,6 +4,10 @@ using System;
 
 namespace Server.Api.Dtos
 {
+
+    /// <summary>
+    /// DTO to create a new survey to distribute to students
+    /// </summary>
     public record CreateSurveyDto
     {
 

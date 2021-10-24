@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Server.Api.Entities;
 
 namespace Server.Api.Dtos
 {
+    /// <summary>
+    /// Information about a single Alpha
+    /// </summary>
     public record AlphaDto
     {
     

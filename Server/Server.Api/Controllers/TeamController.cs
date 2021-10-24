@@ -10,6 +10,10 @@ using System.Linq;
 
 namespace Server.Api.Controllers
 {
+
+    /// <summary>
+    /// Controller class allowing users to CRUD teams
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -25,6 +29,10 @@ namespace Server.Api.Controllers
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Endpoint to get all teams in the application
+        /// </summary>
+        /// <returns>A list of teams</returns>
         [HttpGet]
         [Authorize(Roles = "Lecturer")]
         public async Task<IEnumerable<TeamDto>> GetTeams()
@@ -33,6 +41,11 @@ namespace Server.Api.Controllers
             return teams;
         }
 
+        /// <summary>
+        /// Endpoint to get a specific team by ID
+        /// </summary>
+        /// <param name="id">The ID of the team to get</param>
+        /// <returns>The team if it is found, otherwise the appropriate HTTP error code</returns>
         [HttpGet("{id}")]
         [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult<TeamDto>> GetTeam(int id)
@@ -45,6 +58,12 @@ namespace Server.Api.Controllers
             return mapper.Map<TeamDto>(team);
         }
 
+
+        /// <summary>
+        /// Endpoint to delete a team
+        /// </summary>
+        /// <param name="id">The ID of the team to delete</param>
+        /// <returns>200 if the team is successfully deleted, else appropriate HTTP error code</returns>
         [HttpDelete("{id}")]
         [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult> DeleteTeam(int id)
@@ -57,6 +76,11 @@ namespace Server.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Endopoint to create a new team
+        /// </summary>
+        /// <param name="teamDto">A list of users in the team</param>
+        /// <returns>The team if it is created, else appropriate HTTP error code</returns>
         [HttpPost]
         [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult<TeamDto>> CreateTeam(CreateTeamDto teamDto)
@@ -65,6 +89,12 @@ namespace Server.Api.Controllers
             return CreatedAtAction(nameof(GetTeam), new { id = team.Id }, mapper.Map<TeamDto>(team));
         }
 
+        /// <summary>
+        /// Endpoint to add a student to a team
+        /// </summary>
+        /// <param name="teamId">The ID of the team</param>
+        /// <param name="studentId">The ID of the student to be added</param>
+        /// <returns>HTTP 200 if the student is added, else appropriate HTTP error code</returns>
         [HttpPost("{teamId}/addstudent/{studentId}")]
         [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult<TeamDto>> CreateTeam(int teamId, string studentId)
@@ -73,6 +103,14 @@ namespace Server.Api.Controllers
             return Ok();
         }
 
+
+        /// <summary>
+        /// Endpoint to grade a team for a specific iteration
+        /// </summary>
+        /// <param name="dto">The states that the team achieved, and the points to be awarded</param>
+        /// <param name="teamId">The ID of the graded team</param>
+        /// <param name="iterationId">The ID of the iteration the team is being graded for</param>
+        /// <returns></returns>
         [HttpPost("{teamId}/achievestates/{iterationId}")]
         [Authorize(Roles = "Lecturer")]
         public async Task<ActionResult<TeamDto>> AchieveStates(AchievedStateDto dto, int teamId, int iterationId)
@@ -81,6 +119,11 @@ namespace Server.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Endpoint to get the current states that the team is in for each alpha
+        /// </summary>
+        /// <param name="teamId">The ID of the team to get states for</param>
+        /// <returns>A list of states that the team has achieved</returns>
         [HttpGet("{teamId}/currentstates")]
         public async Task<ActionResult<TeamDto>> GetCurrentStates(int teamId)
         {
@@ -88,6 +131,13 @@ namespace Server.Api.Controllers
             return Ok(currentStates);
         }
 
+
+        /// <summary>
+        /// Gets the averages of survey results for a specific team and iteration
+        /// </summary>
+        /// <param name="teamId">The ID of the team to be graded</param>
+        /// <param name="iterationId">The iteration the results come from</param>
+        /// <returns>A summary of the teams survey answers from that iteration</returns>
         [HttpGet("{teamId}/surveyresults/{iterationId}")]
         public async Task<ActionResult<TeamDto>> GetSurveyResults(int teamId, int iterationId)
         {

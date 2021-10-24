@@ -5,6 +5,9 @@ using Server.Api.Entities;
 
 namespace Server.Api.Dtos
 {
+    /// <summary>
+    /// DTO containing all information about a survey
+    /// </summary>
     public record SurveyDto
     {
         [Required]

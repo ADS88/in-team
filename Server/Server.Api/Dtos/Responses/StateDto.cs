@@ -5,6 +5,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Server.Api.Dtos
 {
+    /// <summary>
+    /// DTO containing a state of an Alpha
+    /// </summary>
     public record StateDto
     {
         [Required]
