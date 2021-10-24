@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Server.Api.Entities
 {
+    /// <summary>
+    /// Table storing iterations (phases of a course)
+    /// </summary>
     public record Iteration
     {
          public int Id { get; init; }

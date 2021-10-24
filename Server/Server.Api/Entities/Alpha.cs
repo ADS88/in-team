@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Server.Api.Entities
 {
+    /// <summary>
+    /// Table holding all Alphas
+    /// </summary>
     public record Alpha
     {
         public int Id { get; init; }

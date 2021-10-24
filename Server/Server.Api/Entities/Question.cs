@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Server.Api.Entities
 {
+    /// <summary>
+    /// Table storing questions to know if a state of an alpha has been achieved
+    /// </summary>
     public record Question
     {
         public int Id { get; init; }

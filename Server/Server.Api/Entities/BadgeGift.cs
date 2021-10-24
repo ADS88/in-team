@@ -1,9 +1,10 @@
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
 
 namespace Server.Api.Entities
 {
+    /// <summary>
+    /// Table storing badges gifted to users
+    /// </summary>
     public record BadgeGift
     {
         public int Id { get; init; }

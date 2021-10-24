@@ -1,10 +1,12 @@
-using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Server.Api.Entities
 {
+    /// <summary>
+    /// Table storing users answers to surveys
+    /// </summary>
     public record SurveyAttempt
     {
         public int Id { get; init; }

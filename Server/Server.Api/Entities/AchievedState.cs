@@ -3,6 +3,9 @@ using System;
 
 namespace Server.Api.Entities
 {
+    /// <summary>
+    /// Table showing what states a team has achieved
+    /// </summary>
     public record AchievedState
     {
          public int Id { get; init; }

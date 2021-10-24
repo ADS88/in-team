@@ -9,6 +9,10 @@ namespace Server.Api
 {
     public class Program
     {
+        /// <summary>
+        /// Main entry point to the program
+        /// </summary>
+        /// <param name="args">Arguments passed in through the command line</param>
         public static void Main(string[] args)
         {
             CreateHostBuilder(args)

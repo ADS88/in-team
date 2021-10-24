@@ -4,6 +4,9 @@ using Server.Api.Dtos;
 
 namespace Server.Api.Helpers
 {
+    /// <summary>
+    /// Class to automatically map database objects to DTOs used in HTTP responses
+    /// </summary>
     public class ApplicationMapper : Profile
     {
         public ApplicationMapper(){

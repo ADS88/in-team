@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Server.Api.Entities
 {
+    /// <summary>
+    /// Table holding survey answers
+    /// </summary>
     public record Answer
     {
         public int Id { get; init; }

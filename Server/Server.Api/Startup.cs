@@ -131,6 +131,10 @@ namespace Server.Api
             CreateRoles(roleManager);
         }
 
+        /// <summary>
+        /// Sets up dependency injection for service classes
+        /// </summary>
+        /// <param name="services">The collection of services</param>
         private void AddServices(IServiceCollection services){
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<ITeamService, TeamService>();
@@ -139,6 +143,10 @@ namespace Server.Api
             services.AddScoped<ISurveyService, SurveyService>();
         }
 
+        /// <summary>
+        /// Sets up dependency injection for repository classes
+        /// </summary>
+        /// <param name="services">The collection of services</param>
         private void AddRepositories(IServiceCollection services){
             services.AddScoped<ICoursesRepository, CoursesRepository>();
             services.AddScoped<ITeamsRepository, TeamsRepository>();
@@ -147,6 +155,11 @@ namespace Server.Api
             services.AddScoped<ISurveysRepository, SurveysRepository>();
         }
 
+        /// <summary>
+        /// Gets the database connection string from environment variables
+        /// And formats it to meet the format Heroku expects
+        /// </summary>
+        /// <returns></returns>
         private string GetProductionDatabaseConnectionString(){
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             var databaseUri = new Uri(databaseUrl);
@@ -164,6 +177,10 @@ namespace Server.Api
             return builder.ToString() +  ";SSL Mode=Require;Trust Server Certificate=true";
         }
 
+        /// <summary>
+        /// Creates the student and lecturer roles on startup if they do not already exist
+        /// </summary>
+        /// <param name="roleManager">Object used to add roles</param>
         private void CreateRoles(RoleManager<IdentityRole> roleManager){
             string[] roleNames = {Roles.STUDENT, Roles.LECTURER};
             foreach (var roleName in roleNames){

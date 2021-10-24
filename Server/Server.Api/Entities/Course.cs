@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Server.Api.Entities
 {
+    /// <summary>
+    /// Table storing courses
+    /// </summary>
     public record Course
     {
         public int Id { get; init; }
