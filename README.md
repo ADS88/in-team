@@ -40,17 +40,16 @@ This application can be run using the provided docker-compose script, or by runn
 
 #### Development Environment variables ####
 Provide the following user secrets using .NET secret manager
-PostgresSettings:Password - The database password for local development
-LecturerPassword:Password = The password required to register an account as a **Lecturer** for local development
-JwtConfig:Secret = The private key the backend uses for JWT encryption for local development
+- PostgresSettings:Password - The database password for local development
+- LecturerPassword:Password = The password required to register an account as a **Lecturer** for local development
+- JwtConfig:Secret = The private key the backend uses for JWT encryption for local development
 
 #### Production Environment variables ####
 If rehosting the application, you will need to provide values for the following ENV variables
-DATABASE_URL - The URL string to connect to your database
-JWT_KEY - The private key the backend uses for JWT encryption
-LECTURER_PASSWORD - The password required to register an account as a **Lecturer**
-
-REACT_APP_API_URL - Configure this where your frontend is deployed (Netlify in this case) to point to your production API server
+- DATABASE_URL - The URL string to connect to your database
+- JWT_KEY - The private key the backend uses for JWT encryption
+- LECTURER_PASSWORD - The password required to register an account as a **Lecturer**
+- REACT_APP_API_URL - Configure this where your frontend is deployed (Netlify in this case) to point to your production API server
 
 ### Running development without Docker Compose ###
 1) Open the client directory and run the command npm run start
