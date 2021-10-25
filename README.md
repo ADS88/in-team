@@ -41,8 +41,8 @@ This application can be run using the provided docker-compose script, or by runn
 #### Development Environment variables ####
 Provide the following user secrets using .NET secret manager
 - PostgresSettings:Password - The database password for local development
-- LecturerPassword:Password = The password required to register an account as a **Lecturer** for local development
-- JwtConfig:Secret = The private key the backend uses for JWT encryption for local development
+- LecturerPassword:Password - The password required to register an account as a **Lecturer** for local development
+- JwtConfig:Secret - The private key the backend uses for JWT encryption for local development
 
 #### Production Environment variables ####
 If rehosting the application, you will need to provide values for the following ENV variables
