@@ -29,6 +29,7 @@ const AddIteration = ({ courseId, addIterationToUI }: AddIterationProps) => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<AddIterationFormValues>()
 
@@ -40,6 +41,7 @@ const AddIteration = ({ courseId, addIterationToUI }: AddIterationProps) => {
       startDate: data.startDate,
       endDate: data.endDate,
     })
+    reset()
   }
 
   return (

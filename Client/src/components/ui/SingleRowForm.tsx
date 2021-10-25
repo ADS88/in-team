@@ -28,11 +28,17 @@ export default function SingleRowForm({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<SingleRowFormValues>()
 
   return (
-    <form onSubmit={handleSubmit(form => addToList(form.input))}>
+    <form
+      onSubmit={handleSubmit(form => {
+        addToList(form.input)
+        reset({ input: "" })
+      })}
+    >
       <Flex direction="row" align="flex-end">
         <FormControl id="field" isInvalid={errors.input !== undefined}>
           <FormLabel>{capitalize(content)} name</FormLabel>

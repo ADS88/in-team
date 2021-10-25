@@ -5,6 +5,9 @@ export interface SurveyResultProps {
   alphaResult: AlphaResult
 }
 
+const toDecimalPlaces = (num: number, numDecimalPlaces: number) =>
+  (Math.round(num * 100) / 100).toFixed(numDecimalPlaces)
+
 //Shows the survey result for a single alpha
 const SurveyResult = ({ alphaResult }: SurveyResultProps) => {
   return (
@@ -16,11 +19,11 @@ const SurveyResult = ({ alphaResult }: SurveyResultProps) => {
         {alphaResult.states.map(state => (
           <Stack>
             <Text fontSize="md">
-              {state.stateName}: {state.average} / 5
+              {state.stateName}: {toDecimalPlaces(state.average, 1)} / 5
             </Text>
             {state.answerSummaries.map(answer => (
               <Text fontSize="sm">
-                {answer.content}: {answer.average} / 5
+                {answer.content}: {toDecimalPlaces(answer.average, 1)} / 5
               </Text>
             ))}
           </Stack>
