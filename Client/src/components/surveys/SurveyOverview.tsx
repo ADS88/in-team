@@ -5,6 +5,7 @@ interface SurveyOverviewProps {
   survey: Survey
 }
 
+//Component that shows a basic overview of a survey including it's opening/closing dates, name, and assigned teams.
 export default function SurveyOverview({ survey }: SurveyOverviewProps) {
   const teamNames = survey.teams?.map(team => team.name).join(", ")
 

@@ -1,3 +1,4 @@
+//Type for the different profile icons a user can have
 export type IconName =
   | "angler"
   | "hamburger"

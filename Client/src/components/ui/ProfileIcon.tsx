@@ -67,6 +67,7 @@ const icons = {
   robot: GiRobotAntennas,
 }
 
+//Reusable component that displays a profile icon from the provided string
 const ProfileIcon = (props: ProfileIconProps) => {
   const icon = icons[props.iconName]
 

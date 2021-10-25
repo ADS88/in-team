@@ -6,6 +6,7 @@ import { Stack, Flex, Heading, useColorModeValue } from "@chakra-ui/react"
 import SurveyOverview from "./SurveyOverview"
 import Survey from "../../models/survey"
 
+//Page that shows all surveys in the application
 const SurveyPage = () => {
   const [surveys, setSurveys] = useState<Survey[]>([])
 

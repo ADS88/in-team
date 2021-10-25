@@ -28,6 +28,7 @@ interface RegisterFormValues {
   lecturerPassword: string
 }
 
+//Page allowing users to register an account with the application
 const RegisterPage = () => {
   const authContext = useContext(AuthContext)
 

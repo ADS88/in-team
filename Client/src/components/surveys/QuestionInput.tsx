@@ -18,6 +18,7 @@ export interface QuestionInputProps {
   updateAnswer: (questionId: number, answer: LikertRating) => void
 }
 
+//Component letting the student answer a question using a sliding likert scale
 const QuestionInput = ({ question, updateAnswer }: QuestionInputProps) => {
   const states = {
     1: "Strongly disagree",

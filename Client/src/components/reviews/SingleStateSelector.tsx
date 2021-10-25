@@ -9,6 +9,7 @@ interface SingleStateSelectorProps {
   dispatch: (action: Action) => void
 }
 
+//Allows the teaching team to select a single state achieved for an alpha
 const SingleStateSelector = (props: SingleStateSelectorProps) => {
   const [states, setStates] = useState<State[]>([])
   const [alphaName, setAlphaName] = useState("")

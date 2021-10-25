@@ -4,6 +4,7 @@ interface CardProps {
   title: string
 }
 
+//Reusable card component, provides a box shadow and padding.
 const Card = ({ title }: CardProps) => {
   return (
     <Box

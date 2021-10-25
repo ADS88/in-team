@@ -7,6 +7,7 @@ interface TeamsCurrentStatesProps {
   teamId: string
 }
 
+//Reusable component that shows what states a team has currently achieved for each alpha.
 const TeamsCurrentStates = ({ teamId }: TeamsCurrentStatesProps) => {
   useEffect(() => {
     axios

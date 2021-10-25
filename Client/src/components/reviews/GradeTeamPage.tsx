@@ -50,6 +50,8 @@ function reducer(
   }
 }
 
+//Page that allows the teaching team to see a summary of teams survey responses and previous states
+//They can use this information to determine what states a team has achieved in an iteration, and how many points to award them.
 const GradeTeamPage = () => {
   const { teamId, iterationId } =
     useParams<{ teamId: string; iterationId: string }>()

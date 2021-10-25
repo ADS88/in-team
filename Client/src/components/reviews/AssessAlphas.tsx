@@ -11,6 +11,7 @@ interface AssessAlphasProps {
   state: Map<number, number | null>
 }
 
+//Component that allows the teaching team to choose what states a team has achieved.
 const AssessAlphas = (props: AssessAlphasProps) => {
   useEffect(() => {
     axios.get("alpha").then(response => setAllAlphas(response.data))

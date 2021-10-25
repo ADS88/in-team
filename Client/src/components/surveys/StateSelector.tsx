@@ -11,6 +11,7 @@ interface StateSelectorProps {
   dispatch: (action: Action) => void
 }
 
+//Component allowing the teaching team to choose which states of an alpha to make part of a survey.
 const StateSelector = (props: StateSelectorProps) => {
   const [alphaName, setAlphaName] = useState("")
   const [states, setStates] = useState<State[]>([])

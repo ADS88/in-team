@@ -6,6 +6,7 @@ import State from "../../models/state"
 import SingleRowForm from "../ui/SingleRowForm"
 import Card from "../ui/Card"
 
+//Page for showing all alphas, and allowing users to enter a new state alpha
 const AlphaPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const [states, setStates] = useState<State[]>([])
   const [alphaName, setAlphaName] = useState("")

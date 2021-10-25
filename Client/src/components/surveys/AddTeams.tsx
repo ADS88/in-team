@@ -10,6 +10,7 @@ interface AddTeamsProps {
   updateTeams: (newTeamIds: number[]) => void
 }
 
+//Component allowing the teaching team to choose which teams answer a survey.
 const AddTeams = (props: AddTeamsProps) => {
   const [allTeams, setAllTeams] = useState<Team[]>([])
 

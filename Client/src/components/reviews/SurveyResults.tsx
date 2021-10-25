@@ -10,6 +10,7 @@ interface SurveyResultsProps {
   iterationId: string
 }
 
+//Shows the survey results for each state within an alpha
 const SurveyResults = ({ teamId, iterationId }: SurveyResultsProps) => {
   const [results, setResults] = useState<AlphaResult[]>([])
 

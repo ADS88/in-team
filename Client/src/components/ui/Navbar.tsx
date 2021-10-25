@@ -27,6 +27,7 @@ import { useHistory } from "react-router-dom"
 import { AuthContext } from "../../store/auth-context"
 import { useContext } from "react"
 
+//The main navigation bar of the application.
 export default function WithSubnavigation() {
   const { colorMode, toggleColorMode } = useColorMode()
   const { isOpen, onToggle } = useDisclosure()

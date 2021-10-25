@@ -11,6 +11,7 @@ interface BadgeGiftProps {
   updateBadgeGift: (badgeId: number, studentId: string) => void
 }
 
+//Component allowing students to gift a badge to another student during a survey
 const BadgeGift = (props: BadgeGiftProps) => {
   const getDescriptionFromBadge = (badge: IBadge) => {
     switch (badge.name) {

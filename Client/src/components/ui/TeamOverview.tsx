@@ -7,6 +7,7 @@ interface TeamOverviewProps {
   team: Team
 }
 
+//Reusable component that shows a basic overview of a team, and its members.
 const TeamOverview = ({ team }: TeamOverviewProps) => {
   return (
     <>

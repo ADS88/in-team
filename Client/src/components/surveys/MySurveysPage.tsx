@@ -14,6 +14,7 @@ import { useHistory } from "react-router"
 
 import { GiIsland } from "react-icons/gi"
 
+//Page that shows a student what surveys they are being asked to complete
 const MySurveysPage = () => {
   const [surveys, setSurveys] = useState<Survey[]>([])
   const [isLoading, setIsLoading] = useState(true)

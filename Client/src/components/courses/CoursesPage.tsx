@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom"
 import { Heading, Stack, Flex, useColorModeValue } from "@chakra-ui/react"
 import SingleRowForm from "../ui/SingleRowForm"
 
+//Page that shows all courses added to the application
 const CoursesPage = () => {
   const [courses, setCourses] = useState<Course[]>([])
   const history = useHistory()

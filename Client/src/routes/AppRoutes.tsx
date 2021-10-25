@@ -7,6 +7,8 @@ import studentRoutes from "./student-routes"
 import IRoute from "./IRoute"
 import { Route, RouteChildrenProps, Switch, Redirect } from "react-router-dom"
 
+//Component to hold all possible routes accessible within the application
+//Used to reduce complexity of the App component, and for better seperation of concerns.
 const AppRoutes = () => {
   const authContext = useContext(AuthContext)
   const routes = []

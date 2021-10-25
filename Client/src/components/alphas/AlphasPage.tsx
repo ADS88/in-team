@@ -6,6 +6,7 @@ import Card from "../ui/Card"
 import Alpha from "../../models/alpha"
 import SingleRowForm from "../ui/SingleRowForm"
 
+//Page to show all alphas in the application, and allowing the adding of a new alpha
 const AlphasPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const [alphas, setAlphas] = useState<Alpha[]>([])
   const history = useHistory()

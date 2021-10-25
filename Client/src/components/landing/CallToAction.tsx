@@ -1,6 +1,7 @@
 import { Box, Heading, Container, Text, Button, Stack } from "@chakra-ui/react"
 import { useHistory } from "react-router"
 
+//The Call to action on the main page. Gives basic application details and asks the user to create an account.
 const CallToAction = () => {
   const history = useHistory()
 

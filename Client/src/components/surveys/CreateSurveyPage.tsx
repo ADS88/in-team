@@ -58,6 +58,7 @@ function reducer(
   }
 }
 
+//Page allowing the teaching team to create a new survey to distribute to teams.
 const CreateSurveyPage = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const [iterations, setIterations] = useState<Iteration[]>([])

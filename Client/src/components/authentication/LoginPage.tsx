@@ -23,6 +23,7 @@ interface LoginFormValues {
   password: string
 }
 
+//Page allowing the user to log in to the application using email and password
 const LoginPage = () => {
   const authContext = useContext(AuthContext)
 

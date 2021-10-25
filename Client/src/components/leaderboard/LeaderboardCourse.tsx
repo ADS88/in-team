@@ -6,6 +6,7 @@ interface LeaderboardCourseProps {
   course: Course
 }
 
+//Shows the leaderboard for a specific course
 const LeaderboardCourse = ({ course }: LeaderboardCourseProps) => {
   return (
     <Box alignItems="left">

@@ -4,6 +4,7 @@ import LeaderboardCourse from "./LeaderboardCourse"
 import { useEffect, useState } from "react"
 import Course from "../../models/course"
 
+//A page that shows the leaderboard for all courses
 const LeaderboardPage = () => {
   const [courses, setCourses] = useState<Course[]>([])
 

@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react"
 import Iteration from "../../models/iteration"
 
+//Page showing data related to specific iteration. Includes start date, end date, and name.
 const IterationPage = () => {
   const { courseId, iterationId } =
     useParams<{ courseId: string; iterationId: string }>()

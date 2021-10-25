@@ -16,6 +16,7 @@ import AddIteration from "./AddIteration"
 import SingleRowForm from "../ui/SingleRowForm"
 import Card from "../ui/Card"
 
+//Page that shows key course information, such teams and iterations.
 const CoursePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const [teams, setTeams] = useState<Team[]>([])
   const [iterations, setIterations] = useState<Iteration[]>([])

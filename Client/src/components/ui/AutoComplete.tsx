@@ -8,6 +8,7 @@ interface AutoCompleteProps {
   addToTeam: (student: Student) => void
 }
 
+//Reusable autocomplete component, allowing users to type in a text box.
 const AutoComplete = (props: AutoCompleteProps) => {
   const [search, setSearch] = useState("")
   const [suggestions, setSuggestions] = useState<Student[]>([])

@@ -6,6 +6,7 @@ import Question from "../../models/question"
 import SingleRowForm from "../ui/SingleRowForm"
 import Card from "../ui/Card"
 
+//Page showing a state of an alpha, and allowing questions to be added to that state
 const StatePage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const [questions, setQuestions] = useState<Question[]>([])
   const [stateName, setStateName] = useState("")

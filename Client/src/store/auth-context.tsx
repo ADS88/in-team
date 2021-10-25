@@ -21,6 +21,7 @@ const context: IAuthContext = {
 
 export const AuthContext = React.createContext(context)
 
+//Provider class containing global authentication state
 const AuthContextProvider = (props: React.PropsWithChildren<{}>) => {
   const initialToken = localStorage.getItem("token")
   const initialId = localStorage.getItem("userId")

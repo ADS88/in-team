@@ -5,6 +5,7 @@ export interface SurveyResultProps {
   alphaResult: AlphaResult
 }
 
+//Shows the survey result for a single alpha
 const SurveyResult = ({ alphaResult }: SurveyResultProps) => {
   return (
     <Stack>

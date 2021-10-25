@@ -18,6 +18,8 @@ import { Badge as IBadge } from "../../models/badge"
 import BadgeGift from "./BadgeGift"
 import Student from "../../models/student"
 
+//Page shown to a student when answering a survey.
+//On this page they answer a series of questions using a likert scale, and can award badges to teammates.
 const AnswerSurveyPage = () => {
   const { id } = useParams<{ id: string }>()
   const [survey, setSurvey] = useState<Survey | null>()

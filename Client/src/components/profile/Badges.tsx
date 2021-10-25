@@ -6,6 +6,7 @@ interface BadgesProps {
   badges: Badge[]
 }
 
+//Shows a users badges, and how many of each badge the user has received.
 const Badges = (props: BadgesProps) => {
   return (
     <SimpleGrid

@@ -6,6 +6,7 @@ interface LeaderboardTeamProps {
   position: number
 }
 
+//Shows a single teams position within the leaderboard
 const LeaderboardTeam = ({ team, position }: LeaderboardTeamProps) => {
   return (
     <SimpleGrid columns={2} gridGap="16" py="4">

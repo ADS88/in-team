@@ -7,6 +7,7 @@ interface AddStudentProps {
   courseId: number
 }
 
+//Component to add a student to a course. Text field has autocomplete for convenience.
 export default function AddStudent({ courseId }: AddStudentProps) {
   useEffect(() => {
     getAllStudents().then(response => setAllStudents(response.data))

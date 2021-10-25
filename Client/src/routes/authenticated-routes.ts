@@ -3,6 +3,7 @@ import AnswerSurveyPage from "../components/surveys/AnswerSurveyPage"
 import ProfilePage from "../components/profile/ProfilePage"
 import LeaderboardPage from "../components/leaderboard/LeaderboardPage"
 
+//All routes within the application that require authentication to access
 const authenticatedRoutes: IRoute[] = [
   {
     path: "/answersurvey/:id",

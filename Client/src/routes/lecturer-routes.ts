@@ -10,6 +10,7 @@ import CreateSurveyPage from "../components/surveys/CreateSurveyPage"
 import IterationPage from "../components/courses/IterationPage"
 import GradeTeamPage from "../components/reviews/GradeTeamPage"
 
+//Routes within the application that only lecturers can access
 const lecturerRoutes: IRoute[] = [
   {
     path: "/course/:id",

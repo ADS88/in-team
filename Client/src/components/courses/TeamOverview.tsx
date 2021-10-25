@@ -6,6 +6,7 @@ interface TeamOverviewProps {
   id: number
 }
 
+//Provides a basic overview of a team.
 const TeamOverview = ({ name, id }: TeamOverviewProps) => {
   const history = useHistory()
 

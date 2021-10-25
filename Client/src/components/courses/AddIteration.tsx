@@ -23,6 +23,7 @@ interface AddIterationProps {
   addIterationToUI: (iteration: Iteration) => void
 }
 
+//Component to add a new iteration (for example, a sprint) to a course
 const AddIteration = ({ courseId, addIterationToUI }: AddIterationProps) => {
   const {
     register,

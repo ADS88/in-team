@@ -20,6 +20,7 @@ interface SingleRowFormProps {
 const capitalize = (string: string) =>
   string.charAt(0).toUpperCase() + string.slice(1)
 
+//Reusable component for a form that only contains a single text field.
 export default function SingleRowForm({
   addToList,
   content,

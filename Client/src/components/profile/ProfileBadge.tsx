@@ -7,6 +7,7 @@ interface ProfileBadgeProps {
   count: number
 }
 
+//Component for a single badge, and the number of times a user has achieved it.
 const ProfileBadge = (props: ProfileBadgeProps) => {
   const capitalize = (string: string) =>
     string.charAt(0).toUpperCase() + string.slice(1)

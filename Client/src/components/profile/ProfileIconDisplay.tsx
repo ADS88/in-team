@@ -20,6 +20,7 @@ interface ProfileIconDisplayProps {
   profileId: string
 }
 
+//Component to show a users profile icon, also allows a user to change their profile icon if visiting their own profile.
 const ProfileIconDisplay = (props: ProfileIconDisplayProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 

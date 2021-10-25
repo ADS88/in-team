@@ -19,6 +19,7 @@ import TeamOverview from "../ui/TeamOverview"
 
 export interface ProfilePageProps {}
 
+//Holds all information related to a particular user.
 const ProfilePage = () => {
   const authContext = useContext(AuthContext)
 

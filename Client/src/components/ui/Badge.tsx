@@ -20,6 +20,7 @@ const badges = {
   improving: GiTeamIdea,
 }
 
+//Reusable bade component, showing a singular badge.
 const Badge = (props: BadgeProps) => {
   const badge = badges[props.name]
 

@@ -11,6 +11,8 @@ interface AddQuestionsProps {
   state: Map<number, number[]>
 }
 
+//Component that allows the teaching team to add states and alphas to a survey.
+//The questions related to chosen states will become part of the survey
 const AddQuestions = (props: AddQuestionsProps) => {
   const [allAlphas, setAllAlphas] = useState<Alpha[]>([])
   const [newAlphaId, setNewAlphaId] = useState<number | null>(null)

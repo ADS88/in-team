@@ -8,6 +8,7 @@ import AutoComplete from "../ui/AutoComplete"
 import Team from "../../models/team"
 import TeamOverview from "../ui/TeamOverview"
 
+//Shows all a teams members, the team's points, and the current state the team has achieved.
 const TeamPage: React.FunctionComponent<RouteComponentProps<any>> = props => {
   const teamId = props.match.params.id
   const [team, setTeam] = useState<Team | null>(null)

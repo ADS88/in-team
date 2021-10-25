@@ -1,3 +1,4 @@
+//Type for a single iteration of a course
 interface Iteration {
   id: number
   name: string

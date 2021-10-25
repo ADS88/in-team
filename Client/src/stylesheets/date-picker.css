@@ -1,3 +1,4 @@
+/* Custom styles for the datepicker to match ChakraUI CSS/Component framework */
 .light-theme {
   --light-gray: var(--chakra-colors-gray-200);
   --gray: var(--chakra-colors-gray-300);

@@ -1,6 +1,7 @@
 import CallToAction from "./CallToAction"
 import { Flex, useColorModeValue } from "@chakra-ui/react"
 
+//Container for the main page the user sees upon first visiting the website
 function LandingPage() {
   return (
     <Flex

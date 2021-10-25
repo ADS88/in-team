@@ -8,6 +8,8 @@ interface TeamMemberOverviewProps {
   student: Student
 }
 
+//Shows a simplified view of a team member, including their first name, last name, and profile icon.
+//Mainly used when displaying teams to provide a quick summary of team members.
 const TeamMemberOverview = ({ student }: TeamMemberOverviewProps) => {
   const history = useHistory()
 
