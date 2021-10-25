@@ -1,10 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Server.Api.Entities;
 
 namespace Server.Api.Repositories
 {
+    /// <summary>
+    /// Interface for survey database operations
+    /// </summary>
     public interface ISurveysRepository
     {
         Task Create(Survey survey);

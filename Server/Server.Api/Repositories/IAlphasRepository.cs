@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Server.Api.Repositories
 {
+    /// <summary>
+    /// Interface for Alpha database operations
+    /// </summary>
     public interface IAlphasRepository
     {
         Task<IEnumerable<Alpha>> GetAlphas();

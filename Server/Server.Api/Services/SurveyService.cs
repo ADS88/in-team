@@ -29,6 +29,16 @@ namespace Server.Api.Services
             this._logger = logger;
         }
 
+        /// <summary>
+        /// Creates a new survey
+        /// </summary>
+        /// <param name="name">The name of the survey</param>
+        /// <param name="stateIds">The IDs of states assessed in this survey</param>
+        /// <param name="TeamIds">The IDs of teams the survey will be distributed to</param>
+        /// <param name="start">The date which the survey opens for answers</param>
+        /// <param name="end">The date which the survey closes for answers</param>
+        /// <param name="iterationId">The iteration that the survey relates to</param>
+        /// <returns></returns>
         public async Task<Survey> Create(string name, ICollection<int> stateIds, ICollection<int> TeamIds, DateTimeOffset start, DateTimeOffset end, int iterationId){
             var questions = new List<Question>();
             foreach(var stateId in stateIds){
@@ -55,6 +65,13 @@ namespace Server.Api.Services
             return survey;
         }
 
+        /// <summary>
+        /// Logic for a student to answer a survey
+        /// </summary>
+        /// <param name="dto">a DTO containing the users answers and badges given</param>
+        /// <param name="surveyId">The ID of the survey to be answered</param>
+        /// <param name="userId">The ID of the user who is answering the survey</param>
+        /// <returns></returns>
         public async Task<SurveyAttempt> AnswerSurvey(AnswerSurveyDto dto, int surveyId, string userId){
 
             var user = await userManager.FindByIdAsync(userId);
@@ -97,18 +114,38 @@ namespace Server.Api.Services
             return surveyAttempt;
         }
 
+        /// <summary>
+        /// Gets a specific survey by ID
+        /// </summary>
+        /// <param name="id">The ID of the survey</param>
+        /// <returns>A survey, or null</returns>
         public async Task<Survey> Get(int id){
             return await surveysRepository.Get(id);
         }
 
+        /// <summary>
+        /// Gets all surveys in the application
+        /// </summary>
+        /// <returns>An enumerable of surveys</returns>
         public async Task<IEnumerable<Survey>> GetAll(){
             return await surveysRepository.GetAll();
         }
 
+        /// <summary>
+        /// Gets a list of all badges in the application
+        /// </summary>
+        /// <returns>An enumerable of badges</returns>
         public async Task<IEnumerable<Badge>> GetBadges(){
             return await surveysRepository.GetBadges();
         }
 
+        /// <summary>
+        /// Find team members from a specific survey. Used to figure out who users
+        /// Can gift badges to when completing surveys
+        /// </summary>
+        /// <param name="surveyId">The ID of the survey</param>
+        /// <param name="userId">The ID of the user completing the survey</param>
+        /// <returns>An enumerable of users</returns>
         public async Task<IEnumerable<AppUser>> FindTeamMembersFromSurvey(int surveyId, string userId){
             var survey = await surveysRepository.GetSurveyWithTeams(surveyId);
             var members = new List<AppUser>();
@@ -123,6 +160,12 @@ namespace Server.Api.Services
             
         }
 
+        /// <summary>
+        /// Finds the team related to a user and survey
+        /// </summary>
+        /// <param name="surveyId">The ID of the survey</param>
+        /// <param name="userId">The ID of the user</param>
+        /// <returns>The team that the survey relates to, or null</returns>
         private async Task<Team> FindTeamFromSurveyAndUser(int surveyId, string userId){
             var survey = await surveysRepository.GetSurveyWithTeams(surveyId);
              foreach(var team in survey.Teams){
@@ -135,6 +178,11 @@ namespace Server.Api.Services
             return null;
         }
 
+        /// <summary>
+        /// Gets a list of surveys that a student needs to complete
+        /// </summary>
+        /// <param name="userId">The ID of the student</param>
+        /// <returns>An enumerable of surveys</returns>
         public async Task<IEnumerable<Survey>> GetSurveysStudentNeedsToComplete(string userId){
             var user = await userRepository.GetUserWithTeams(userId);
             var surveysAssignedToStudent = await surveysRepository.GetSurveysAssignedToStudent(user);

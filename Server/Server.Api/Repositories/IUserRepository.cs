@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace Server.Api.Repositories
 {
+    /// <summary>
+    /// Interface for user database operations
+    /// </summary>
     public interface IUserRepository
     {
         Task<IEnumerable<AppUser>> GetAll();

@@ -1,4 +1,3 @@
-using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,6 +6,9 @@ using Server.Api.Dtos;
 
 namespace Server.Api.Services
 {
+    /// <summary>
+    /// An interface for business logic related to surveys
+    /// </summary>
     public interface ISurveyService
     {
         Task<Survey> Create(string name, ICollection<int> stateIds, ICollection<int> teamIds, DateTimeOffset start, DateTimeOffset end, int iterationId);

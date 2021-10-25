@@ -7,6 +7,9 @@ using Server.Api.Dtos;
 namespace Server.Api.Services
 
 {
+    /// <summary>
+    /// An interface for business logic related to courses
+    /// </summary>
     public interface ICourseService
     {
         Task<Course> GetById(int id);

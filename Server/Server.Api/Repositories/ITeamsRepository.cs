@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace Server.Api.Repositories
 {
+    /// <summary>
+    /// Interface for team database operations
+    /// </summary>
     public interface ITeamsRepository
     {
         Task<Team> Get(int id);

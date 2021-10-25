@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Server.Api.Services
 {
+    /// <summary>
+    /// An interface for business logic related to alphas
+    /// </summary>
     public interface IAlphaService
     {
         Task<IEnumerable<Alpha>> GetAlphas();

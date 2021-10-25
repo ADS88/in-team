@@ -6,6 +6,9 @@ using Server.Api.Dtos;
 
 namespace Server.Api.Services
 {
+    /// <summary>
+    /// An interface for business logic related to teams
+    /// </summary>
     public interface ITeamService
     {
         Task<Team> GetById(int id);

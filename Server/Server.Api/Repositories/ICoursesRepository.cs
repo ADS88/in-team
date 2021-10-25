@@ -1,11 +1,12 @@
-using System.Collections;
-using System;
 using System.Collections.Generic;
 using Server.Api.Entities;
 using System.Threading.Tasks;
 
 namespace Server.Api.Repositories
 {
+    /// <summary>
+    /// Interface for course database operations
+    /// </summary>
     public interface ICoursesRepository
     {
         Task<Course> Get(int id);

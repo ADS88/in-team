@@ -5,6 +5,9 @@ using Server.Api.Dtos;
 
 namespace Server.Api.Services
 {
+    /// <summary>
+    /// An interface for business logic related to users
+    /// </summary>
     public interface IUserService
     {
         Task<IEnumerable<AppUser>> GetAll();
